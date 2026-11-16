@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="faceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle with subtle border -->
+  <rect width="400" height="400" rx="200" fill="url(#bgGrad)"/>
+  <circle cx="200" cy="200" r="196" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="10 6" opacity="0.4"/>
+  
+  <!-- Subtle tech pattern / initials backdrop -->
+  <text x="200" y="145" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="28" font-weight="800" fill="#3b82f6" opacity="0.3" letter-spacing="4">DHANUSH</text>
+
+  <!-- Modern stylized developer avatar silhouette -->
+  <g transform="translate(0, 10)">
+    <!-- Shoulders / Torso -->
+    <path d="M100,340 C100,270 140,240 200,240 C260,240 300,270 300,340 Z" fill="url(#accentGrad)" opacity="0.9"/>
+    <!-- Collar / Hoodie V-neck -->
+    <path d="M175,240 L200,280 L225,240 Z" fill="#0f172a" opacity="0.6"/>
+    <!-- Head -->
+    <circle cx="200" cy="180" r="55" fill="url(#faceGrad)"/>
+    <!-- Stylized hair -->
+    <path d="M145,170 C145,120 170,115 200,115 C230,115 255,120 255,170 C245,135 225,130 200,130 C175,130 155,135 145,170 Z" fill="#1e293b"/>
+    <!-- Code brackets icon badge on shoulder -->
+    <circle cx="280" cy="290" r="28" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="280" y="297" text-anchor="middle" font-family="monospace" font-size="20" font-weight="bold" fill="#60a5fa">&lt;/&gt;</text>
+  </g>
+</svg>
