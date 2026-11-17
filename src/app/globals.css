@@ -4,34 +4,34 @@
    ========================================================================== */
 
 :root {
-  /* Restrained Dark Navy Theme (Default) */
-  --bg-primary: #0a0f1d;          /* Deep dark navy */
-  --bg-secondary: #0f172a;        /* Navy slate surface */
-  --bg-tertiary: #1e293b;         /* Elevated navy surface */
-  --bg-card: #0f172a;
-  --bg-card-hover: #131d35;
+  /* AURAL Obsidian Noir Theme (Default) */
+  --bg-primary: #07090e;          /* Rich deep obsidian noir */
+  --bg-secondary: #0c101a;        /* Machined dark slate surface */
+  --bg-tertiary: #131926;         /* Elevated hardware surface */
+  --bg-card: #0c101a;
+  --bg-card-hover: #111726;
 
   --text-primary: #f8fafc;        /* High-contrast crisp white */
   --text-secondary: #94a3b8;      /* Cool slate grey */
   --text-muted: #64748b;          /* Muted meta grey */
-  --text-inverse: #0a0f1d;
+  --text-inverse: #07090e;
 
-  /* Single Controlled Primary Accent (Technical Cobalt Blue) */
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-light: #60a5fa;
-  --accent-subtle: rgba(59, 130, 246, 0.08);
-  --accent-border: rgba(59, 130, 246, 0.25);
+  /* Single Controlled Primary Accent (Luminous Acoustic Cyan) */
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --accent-light: #7dd3fc;
+  --accent-subtle: rgba(56, 189, 248, 0.09);
+  --accent-border: rgba(56, 189, 248, 0.28);
 
-  /* Subtle Structural Borders */
-  --border: #1e293b;
-  --border-subtle: #141d30;
-  --border-hover: #334155;
+  /* Subtle Structural Hairline Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-hover: rgba(56, 189, 248, 0.32);
 
   /* Form & Input */
-  --input-bg: #0f172a;
-  --input-border: #1e293b;
-  --input-focus: #3b82f6;
+  --input-bg: #0c101a;
+  --input-border: rgba(255, 255, 255, 0.09);
+  --input-focus: #38bdf8;
 
   /* Status Tokens */
   --status-success: #10b981;
@@ -85,36 +85,6 @@
   --max-width-xl: 1120px;
 }
 
-/* Light Theme Variables */
-[data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f8fafc;
-
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --text-inverse: #ffffff;
-
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-light: #3b82f6;
-  --accent-subtle: rgba(37, 99, 235, 0.08);
-  --accent-border: rgba(37, 99, 235, 0.2);
-
-  --border: #e2e8f0;
-  --border-subtle: #f1f5f9;
-  --border-hover: #cbd5e1;
-
-  --input-bg: #ffffff;
-  --input-border: #cbd5e1;
-  --input-focus: #2563eb;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
 
 /* ==========================================================================
    CSS RESET & BASE STYLES
@@ -254,8 +224,310 @@ img {
 }
 
 /* ==========================================================================
-   HERO LANDING STYLES (Refined Two-Column Architecture)
+   AURAL LANDING PAGE STYLES (ThreeUI Inspired)
+   Precision hardware, material field, tactile telemetry, 3D tilt.
    ========================================================================== */
+
+/* 1. Material Field Background */
+.aural-material-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.aural-material-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.aural-material-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 20%, rgba(7, 9, 14, 0) 15%, rgba(7, 9, 14, 0.7) 80%, var(--bg-primary) 100%),
+              linear-gradient(to bottom, rgba(7, 9, 14, 0) 65%, var(--bg-primary) 100%);
+  pointer-events: none;
+}
+
+/* 2. Aural Hero Section */
+.aural-hero-section {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-16);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.aural-hero-container {
+  position: relative;
+  z-index: 1;
+}
+
+.aural-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.85fr);
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.aural-hero-lead {
+  display: flex;
+  flex-direction: column;
+}
+
+.aural-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.aural-hero-greeting {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.aural-hero-name {
+  font-size: clamp(2.75rem, 5.5vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: #ffffff;
+  margin-bottom: var(--space-2);
+  text-shadow: 0 2px 24px rgba(56, 189, 248, 0.14);
+}
+
+.aural-hero-headline {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: var(--space-4);
+}
+
+.aural-hero-intro {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-8);
+  max-width: 540px;
+}
+
+/* 3. Aural 3D Hero Card */
+.aural-hero-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.aural-hero-card {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  background: linear-gradient(165deg, rgba(16, 22, 36, 0.95) 0%, rgba(10, 14, 22, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(56, 189, 248, 0.08);
+  transition: transform 0.12s ease-out, box-shadow var(--transition-normal);
+  transform-style: preserve-3d;
+  user-select: none;
+}
+
+.aural-hero-card:hover {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(56, 189, 248, 0.15);
+}
+
+.aural-corner {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-muted);
+  opacity: 0.6;
+  z-index: 3;
+  pointer-events: none;
+}
+.aural-corner-tl { top: 6px; left: 6px; }
+.aural-corner-tr { top: 6px; right: 6px; }
+.aural-corner-bl { bottom: 6px; left: 6px; }
+.aural-corner-br { bottom: 6px; right: 6px; }
+
+.aural-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  mix-blend-mode: overlay;
+}
+
+.aural-portrait-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #05070b;
+  overflow: hidden;
+}
+
+.aural-portrait-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 14, 22, 0.8) 0%, rgba(10, 14, 22, 0) 35%);
+  pointer-events: none;
+}
+
+/* 4. Aural Telemetry Ribbon */
+.aural-telemetry-ribbon-section {
+  position: relative;
+  z-index: 2;
+  background-color: #07090e;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.aural-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background-color: var(--border);
+}
+
+.aural-telemetry-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-5);
+  background-color: #0a0d15;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.aural-telemetry-card:hover {
+  background-color: #0f1524;
+}
+
+.aural-telemetry-card:hover .aural-telemetry-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+.aural-telemetry-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.aural-telemetry-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.aural-telemetry-item-icon {
+  color: var(--text-muted);
+}
+
+.aural-telemetry-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.aural-telemetry-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.aural-telemetry-value {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.aural-telemetry-detail {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.aural-telemetry-arrow {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  color: var(--text-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+/* 5. Aural Section Index & Architectural Framing */
+.aural-section-index {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+}
+
+/* 6. Aural About Section */
+.aural-about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+  gap: var(--space-8);
+  align-items: stretch;
+}
+
+.aural-about-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+
+.aural-about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.aural-about-stat-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Existing Hero Class Fallbacks */
 
 .hero-section {
   padding-top: var(--space-16);
@@ -776,8 +1048,13 @@ img {
    ========================================================================== */
 
 @media (max-width: 1024px) {
-  .hero-grid {
+  .hero-grid,
+  .aural-hero-grid {
     gap: var(--space-8);
+  }
+
+  .aural-telemetry-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .grid-cols-3 {
@@ -786,18 +1063,24 @@ img {
 }
 
 @media (max-width: 860px) {
-  .hero-grid {
+  .hero-grid,
+  .aural-hero-grid {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
 
-  .hero-portrait-wrapper {
+  .hero-portrait-wrapper,
+  .aural-hero-card-wrapper {
     order: -1;
     justify-content: flex-start;
   }
 
   .hero-portrait-frame {
     max-width: 220px;
+  }
+
+  .aural-hero-card {
+    max-width: 260px;
   }
 
   .hero-social-group {
@@ -809,6 +1092,14 @@ img {
   .container {
     padding-left: var(--space-4);
     padding-right: var(--space-4);
+  }
+
+  .aural-telemetry-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aural-about-grid {
+    grid-template-columns: 1fr;
   }
 
   .grid-cols-2,
@@ -823,21 +1114,29 @@ img {
 }
 
 @media (max-width: 480px) {
-  .hero-section {
-    padding-top: var(--space-10);
-    padding-bottom: var(--space-12);
+  .hero-section,
+  .aural-hero-section {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-10);
   }
 
-  .hero-portrait-frame {
-    max-width: 180px;
+  .aural-telemetry-grid {
+    grid-template-columns: 1fr;
   }
 
-  .hero-actions {
+  .hero-portrait-frame,
+  .aural-hero-card {
+    max-width: 210px;
+  }
+
+  .hero-actions,
+  .aural-hero-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .hero-actions .btn {
+  .hero-actions .btn,
+  .aural-hero-actions .btn {
     width: 100%;
   }
 

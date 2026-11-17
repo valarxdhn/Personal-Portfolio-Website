@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,9 +9,11 @@ import {
   Mail,
   GraduationCap,
   MapPin,
-  BookOpen,
 } from "lucide-react";
 import Button from "@/components/Button";
+import MaterialField from "@/components/MaterialField";
+import HeroCard from "@/components/HeroCard";
+import TelemetryRibbon from "@/components/TelemetryRibbon";
 import ProjectCard from "@/components/ProjectCard";
 import ResearchCard from "@/components/ResearchCard";
 import CertificatesSection from "@/components/CertificatesSection";
@@ -34,30 +35,31 @@ export default function HomePage() {
   return (
     <>
       {/* ===================================================================
-          1. REFINED TWO-COLUMN HERO SECTION
+          1. AURAL HERO EXPERIENCE (ThreeUI Inspired)
+          Interactive Material Field + Precision Telemetry + 3D Hero Card
           =================================================================== */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-grid">
-            {/* Left Column: Developer Identity & Actions */}
-            <div className="hero-content">
-              <div className="hero-identifier">
-                <span>Computer Science Engineering Student</span>
-              </div>
+      <section className="aural-hero-section">
+        {/* Procedural Acoustic Material Field (WebGL / Canvas) */}
+        <MaterialField />
 
-              <p className="hero-greeting">Hi, I'm</p>
-              <h1 className="hero-name">{personalData.name}</h1>
-              <p className="hero-headline">{personalData.headline}</p>
+        <div className="container aural-hero-container">
+            {/* Hero Two-Column Architecture */}
+          <div className="aural-hero-grid">
+            {/* Left Column: Lead Content & Actions */}
+            <div className="aural-hero-lead">
+              <p className="aural-hero-greeting">Hi, I'm</p>
+              <h1 className="aural-hero-name">{personalData.name}</h1>
+              <p className="aural-hero-headline">{personalData.headline}</p>
 
-              <p className="hero-intro">
+              <p className="aural-hero-intro">
                 I build practical software applications with an interest in backend engineering, data structures, and applied AI.
                 Currently an undergraduate at Sahyadri College of Engineering and Management (First-Year CGPA: 8.85).
               </p>
 
-              {/* CTAs and Social Links */}
-              <div className="hero-actions">
-                <Button href="/projects" variant="primary">
-                  <span>View Projects</span>
+              {/* Action Controls */}
+              <div className="aural-hero-actions">
+                <Button href="#projects" variant="primary">
+                  <span>Explore Engineering</span>
                   <ArrowRight size={15} aria-hidden="true" />
                 </Button>
 
@@ -68,16 +70,16 @@ export default function HomePage() {
                     download="Dhanush_Resume.pdf"
                   >
                     <FileDown size={15} aria-hidden="true" />
-                    <span>Download Resume</span>
+                    <span>Download Dossier (PDF)</span>
                   </Button>
                 ) : (
                   <Button
                     href="mailto:contact@dhanush.dev?subject=Resume%20Request%20-%20Dhanush"
                     variant="secondary"
-                    title="Direct email request (Resume PDF pending upload)"
+                    title="Direct email transmission (Resume PDF pending upload)"
                   >
                     <FileDown size={15} aria-hidden="true" />
-                    <span>Request Resume</span>
+                    <span>Request Dossier</span>
                   </Button>
                 )}
 
@@ -105,33 +107,81 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Quick Metadata */}
-              <div className="hero-meta">
-                <span className="hero-meta-item">
-                  <MapPin size={13} color="var(--accent)" aria-hidden="true" />
-                  <span>{personalData.location}</span>
-                </span>
-                <span className="hero-meta-item">
-                  <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
-                  <span>{personalData.college}</span>
-                </span>
-                <span className="hero-meta-item">
-                  <span>First-Year CGPA: <strong>{personalData.cgpa}</strong></span>
-                </span>
+            </div>
+
+            {/* Right Column: 3D Perspective Tactile Card */}
+            <HeroCard />
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================================
+          2. TELEMETRY SPECS RIBBON (Hardware Benchmark Strip)
+          =================================================================== */}
+      <TelemetryRibbon />
+
+      {/* ===================================================================
+          3. ABOUT & ENGINEERING PHILOSOPHY SECTION
+          =================================================================== */}
+      <section id="about" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="section-heading">
+            <span className="aural-section-index">01 // CORE PROFILE</span>
+            <h2 className="section-title">Engineering Background</h2>
+            <p className="section-subtitle">
+              Computer science undergraduate education grounded in data structures, systems programming, and applied computational research.
+            </p>
+          </div>
+
+          <div className="aural-about-grid">
+            <div className="aural-about-main">
+              <h3 style={{ fontSize: "var(--text-lg)", fontWeight: 700, marginBottom: "var(--space-3)", color: "var(--text-primary)" }}>
+                Curiosity Driven Software Engineering
+              </h3>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-4)" }}>
+                {personalData.introduction}
+              </p>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, margin: 0 }}>
+                I prioritize architectural clarity, algorithmic efficiency, and measurable utility over superficial complexity. Whether developing transit prediction engines, EV routing optimization, or machine learning risk classifiers, my focus is delivering deterministic, production-ready code.
+              </p>
+
+              <div style={{ marginTop: "var(--space-6)" }}>
+                <Button href="/about" variant="outline" size="sm">
+                  <span>Read Full Academic Profile</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </Button>
               </div>
             </div>
 
-            {/* Right Column: Actual Portrait Presentation */}
-            <div className="hero-portrait-wrapper">
-              <div className="hero-portrait-frame">
-                <Image
-                  src={personalData.profileImage}
-                  alt={personalData.profileImageAlt}
-                  fill
-                  sizes="(max-width: 860px) 220px, 320px"
-                  priority
-                  style={{ objectFit: "cover", objectPosition: "center 20%" }}
-                />
+            <div className="aural-about-sidebar">
+              <div className="aural-about-stat-card">
+                <span className="aural-stat-label">INSTITUTION &amp; PROGRAM</span>
+                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--text-primary)" }}>
+                  Sahyadri College of Eng. &amp; Management
+                </span>
+                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
+                  B.E. Computer Science &amp; Engineering
+                </span>
+              </div>
+
+              <div className="aural-about-stat-card">
+                <span className="aural-stat-label">FIRST-YEAR STANDING</span>
+                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--accent)" }}>
+                  8.85 / 10.0 CGPA
+                </span>
+                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
+                  Top Academic Distinction
+                </span>
+              </div>
+
+              <div className="aural-about-stat-card">
+                <span className="aural-stat-label">RESEARCH DEFENSE</span>
+                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--text-primary)" }}>
+                  ICRICS 2026 &amp; IJIRT Vol. 13
+                </span>
+                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
+                  Published Paper ID #206803
+                </span>
               </div>
             </div>
           </div>
@@ -139,7 +189,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          2. SELECTED PROJECTS SECTION
+          4. SELECTED PROJECTS SECTION
           =================================================================== */}
       <section id="projects" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
@@ -154,7 +204,7 @@ export default function HomePage() {
             }}
           >
             <div>
-              <span className="section-eyebrow">Portfolio</span>
+              <span className="aural-section-index">02 // ARCHITECTURAL REPOSITORIES</span>
               <h2 className="section-title">Selected Projects</h2>
               <p className="section-subtitle">
                 Software engineering applications addressing railway delay tracking, EV charging slot discovery, and collegiate event management.
@@ -171,7 +221,7 @@ export default function HomePage() {
                 gap: "4px",
               }}
             >
-              <span>All Projects</span>
+              <span>All Projects Archive</span>
               <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
@@ -185,12 +235,12 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          3. TECHNICAL SKILLS SECTION
+          5. TECHNICAL SKILLS SECTION
           =================================================================== */}
-      <section className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+      <section id="skills" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <div className="section-heading">
-            <span className="section-eyebrow">Competencies</span>
+            <span className="aural-section-index">03 // CORE COMPETENCIES</span>
             <h2 className="section-title">Technical Skills</h2>
             <p className="section-subtitle">
               Programming languages, core foundations, and developer tools applied in coursework, algorithmic problem-solving, and web development.
@@ -204,25 +254,30 @@ export default function HomePage() {
               gap: "var(--space-6)",
             }}
           >
-            {skillCategories.map((category) => (
+            {skillCategories.map((category, idx) => (
               <div
                 key={category.name}
                 style={{
-                  padding: "var(--space-5)",
+                  padding: "var(--space-6)",
                   backgroundColor: "var(--bg-secondary)",
                   border: "1px solid var(--border)",
                   borderRadius: "var(--radius-lg)",
                 }}
               >
-                <h3
-                  style={{
-                    fontSize: "var(--text-base)",
-                    fontWeight: 700,
-                    marginBottom: "var(--space-1)",
-                  }}
-                >
-                  {category.name}
-                </h3>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "var(--space-2)" }}>
+                  <h3
+                    style={{
+                      fontSize: "var(--text-base)",
+                      fontWeight: 700,
+                      margin: 0,
+                    }}
+                  >
+                    {category.name}
+                  </h3>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)" }}>
+                    0{idx + 1} //
+                  </span>
+                </div>
                 <p
                   style={{
                     fontSize: "var(--text-xs)",
@@ -257,18 +312,18 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          4. CERTIFICATIONS & ACHIEVEMENTS SECTION
+          6. CERTIFICATIONS & ACHIEVEMENTS SECTION
           =================================================================== */}
       <CertificatesSection />
 
       {/* ===================================================================
-          5. RESEARCH & PUBLICATIONS SECTION
+          7. RESEARCH & PUBLICATIONS SECTION
           =================================================================== */}
-      <section className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+      <section id="research" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <div className="section-heading">
-            <span className="section-eyebrow">Academic Research</span>
-            <h2 className="section-title">Research & Publications</h2>
+            <span className="aural-section-index">05 // ACADEMIC RESEARCH</span>
+            <h2 className="section-title">Research &amp; Publications</h2>
             <p className="section-subtitle">
               Published journal article and international conference defense covering applied machine learning and early-warning systems.
             </p>
@@ -282,7 +337,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          5. CONTACT SECTION
+          8. DIRECT TRANSMISSION / CONTACT SECTION
           =================================================================== */}
       <section id="contact" className="section">
         <div className="container">
@@ -295,7 +350,7 @@ export default function HomePage() {
             }}
           >
             <div>
-              <span className="section-eyebrow">Get In Touch</span>
+              <span className="aural-section-index">06 // DIRECT TRANSMISSION</span>
               <h2 className="section-title">Contact</h2>
               <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-6)" }}>
                 I am actively seeking software engineering internships, technical collaborations, and research discussions. Feel free to send a message or contact directly via email.

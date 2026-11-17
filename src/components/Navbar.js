@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Code2 } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
 import { personalData } from "@/data/personal";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Projects", href: "/projects" },
+  { name: "Achievements", href: "/achievements" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -38,9 +38,11 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: scrolled ? "var(--bg-card)" : "var(--bg-primary)",
+        backgroundColor: scrolled ? "rgba(12, 16, 26, 0.92)" : "rgba(7, 9, 14, 0.82)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         borderBottom: "1px solid var(--border)",
-        transition: "background-color var(--transition-fast)",
+        transition: "background-color var(--transition-fast), border-color var(--transition-fast)",
       }}
     >
       <div
@@ -118,9 +120,6 @@ export default function Navbar() {
             );
           })}
 
-          <div style={{ marginLeft: "var(--space-2)", paddingLeft: "var(--space-2)", borderLeft: "1px solid var(--border)" }}>
-            <ThemeToggle />
-          </div>
         </nav>
 
         {/* Mobile Nav Toggle */}
@@ -128,9 +127,6 @@ export default function Navbar() {
           className="mobile-nav-toggle-group"
           style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
         >
-          <div className="mobile-theme-toggle">
-            <ThemeToggle />
-          </div>
           <button
             type="button"
             className="btn btn-ghost btn-icon mobile-menu-btn"
