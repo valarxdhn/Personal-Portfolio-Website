@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Code2 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import { personalData } from "@/data/personal";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -79,7 +80,7 @@ export default function Navbar() {
           >
             <Code2 size={16} aria-hidden="true" />
           </span>
-          <span>Dhanush M K</span>
+          <span>{personalData.name}</span>
         </Link>
 
         {/* Desktop Navigation Links */}

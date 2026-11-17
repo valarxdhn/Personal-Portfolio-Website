@@ -64,14 +64,14 @@ export default function HomePage() {
                   <Button
                     href="/documents/resume.pdf"
                     variant="secondary"
-                    download="Dhanush_MK_Resume.pdf"
+                    download="Dhanush_Resume.pdf"
                   >
                     <FileDown size={15} aria-hidden="true" />
                     <span>Download Resume</span>
                   </Button>
                 ) : (
                   <Button
-                    href="mailto:contact@dhanush.dev?subject=Resume%20Request%20-%20Dhanush%20M%20K"
+                    href="mailto:contact@dhanush.dev?subject=Resume%20Request%20-%20Dhanush"
                     variant="secondary"
                     title="Direct email request (Resume PDF pending upload)"
                   >
