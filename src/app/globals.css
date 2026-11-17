@@ -5,11 +5,11 @@
 
 :root {
   /* AURAL Obsidian Noir Theme (Default) */
-  --bg-primary: #07090e;          /* Rich deep obsidian noir */
-  --bg-secondary: #0c101a;        /* Machined dark slate surface */
-  --bg-tertiary: #131926;         /* Elevated hardware surface */
-  --bg-card: #0c101a;
-  --bg-card-hover: #111726;
+  --bg-primary: #0B0F17;          /* Rich deep obsidian noir */
+  --bg-secondary: #0f1420;        /* Machined dark slate surface */
+  --bg-tertiary: #141c2c;         /* Elevated hardware surface */
+  --bg-card: #0f1420;
+  --bg-card-hover: #162032;
 
   --text-primary: #f8fafc;        /* High-contrast crisp white */
   --text-secondary: #94a3b8;      /* Cool slate grey */
@@ -228,6 +228,66 @@ img {
    Precision hardware, material field, tactile telemetry, 3D tilt.
    ========================================================================== */
 
+/* ==========================================================================
+   GLOBAL LIVE BACKGROUND (Technical Cyan Grid & Cursor Spotlight)
+   ========================================================================== */
+
+.live-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Subtle Technical Cyan Grid (48px spacing, ~0.035 opacity) */
+.live-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.035) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 30%, black 40%, rgba(0, 0, 0, 0.3) 75%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 30%, black 40%, rgba(0, 0, 0, 0.3) 75%, transparent 100%);
+}
+
+/* Atmospheric Horizon Glow */
+.live-bg-ambient {
+  position: absolute;
+  top: -240px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.045) 0%, rgba(56, 189, 248, 0.015) 45%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* Interactive Cursor Spotlight */
+.live-bg-spotlight {
+  position: absolute;
+  top: -300px;
+  left: -300px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.075) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 70%);
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: opacity 0.4s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-bg-spotlight {
+    display: none !important;
+  }
+}
+
 /* 1. Material Field Background */
 .aural-material-field {
   position: absolute;
@@ -248,8 +308,8 @@ img {
 .aural-material-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 20%, rgba(7, 9, 14, 0) 15%, rgba(7, 9, 14, 0.7) 80%, var(--bg-primary) 100%),
-              linear-gradient(to bottom, rgba(7, 9, 14, 0) 65%, var(--bg-primary) 100%);
+  background: radial-gradient(ellipse at 50% 20%, rgba(11, 15, 23, 0) 15%, rgba(11, 15, 23, 0.6) 80%, rgba(11, 15, 23, 0.9) 100%),
+              linear-gradient(to bottom, rgba(11, 15, 23, 0) 65%, rgba(11, 15, 23, 0.9) 100%);
   pointer-events: none;
 }
 
@@ -264,7 +324,7 @@ img {
   padding-bottom: var(--space-16);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  background-color: var(--bg-primary);
+  background-color: transparent;
 }
 
 .aural-hero-container {

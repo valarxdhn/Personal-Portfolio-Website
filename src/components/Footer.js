@@ -18,7 +18,9 @@ export default function Footer() {
     <footer
       style={{
         borderTop: "1px solid var(--border)",
-        backgroundColor: "var(--bg-secondary)",
+        backgroundColor: "rgba(11, 15, 23, 0.78)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         marginTop: "auto",
         paddingTop: "var(--space-10)",
         paddingBottom: "var(--space-10)",
