@@ -27,8 +27,8 @@ export default function SkillsPage() {
             marginBottom: "var(--space-12)",
           }}
         >
-          {skillCategories.map((category) => (
-            <SkillCard key={category.name} category={category} />
+          {skillCategories.map((category, idx) => (
+            <SkillCard key={category.name} category={category} index={idx} />
           ))}
         </div>
 

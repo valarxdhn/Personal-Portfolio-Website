@@ -1,4 +1,16 @@
-import { Code2, Cpu, Terminal, Coffee, Database, GitBranch, Github, Layers } from "lucide-react";
+"use client";
+
+import { useState, useRef, useCallback, useEffect } from "react";
+import {
+  Code2,
+  Cpu,
+  Terminal,
+  Coffee,
+  Database,
+  GitBranch,
+  Github,
+  Layers,
+} from "lucide-react";
 
 const skillIconMap = {
   Code2,
@@ -10,61 +22,109 @@ const skillIconMap = {
   Github,
 };
 
-export default function SkillCard({ category }) {
+/**
+ * SkillCard Component
+ * Premium Interactive 3D Technology Card.
+ *
+ * Features:
+ * - Subtle 3D perspective tilt reacting to cursor location.
+ * - Interactive individual skill pills with tactile elevation and icon accentuation.
+ * - Specular micro-glare illumination across card surface.
+ * - Respects prefers-reduced-motion and touch devices.
+ */
+export default function SkillCard({ category, index = 0 }) {
+  const cardRef = useRef(null);
+  const [transform, setTransform] = useState("perspective(800px) rotateX(0deg) rotateY(0deg)");
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    const coarseQuery = window.matchMedia("(pointer: coarse), (hover: none)");
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const update = () => {
+      setIsCoarsePointer(coarseQuery.matches || motionQuery.matches);
+    };
+
+    update();
+    coarseQuery.addEventListener("change", update);
+    motionQuery.addEventListener("change", update);
+    return () => {
+      coarseQuery.removeEventListener("change", update);
+      motionQuery.removeEventListener("change", update);
+    };
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (isCoarsePointer || !cardRef.current) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -5.0;
+    const rotateY = ((x - centerX) / centerX) * 5.0;
+
+    setTransform(`perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px)`);
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.16,
+    });
+  }, [isCoarsePointer]);
+
+  const handleMouseLeave = useCallback(() => {
+    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
+  }, []);
+
   if (!category) return null;
 
   return (
     <div
-      className="card"
-      style={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "var(--bg-secondary)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius-lg)",
-        padding: "var(--space-6)",
-      }}
+      ref={cardRef}
+      className="interactive-skill-card"
+      style={{ transform }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      <div style={{ marginBottom: "var(--space-3)" }}>
-        <h3 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: "0 0 2px 0" }}>
-          {category.name}
-        </h3>
-        <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0 }}>
-          {category.description}
-        </p>
+      {/* Specular Glare Overlay */}
+      <div
+        className="skill-card-glare"
+        style={{
+          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.22) 0%, rgba(56, 189, 248, 0.1) 35%, transparent 70%)`,
+          opacity: glare.opacity,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Header Info */}
+      <div className="skill-card-header">
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "var(--space-2)" }}>
+          <h3 className="skill-card-title">{category.name}</h3>
+          <span className="skill-card-index">0{index + 1} //</span>
+        </div>
+        <p className="skill-card-desc">{category.description}</p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))",
-          gap: "var(--space-2)",
-          marginTop: "auto",
-          paddingTop: "var(--space-3)",
-        }}
-      >
+      {/* Interactive Skill Pills Grid */}
+      <div className="skill-pills-container">
         {category.skills.map((skill) => {
           const IconComponent = skillIconMap[skill.icon] || Code2;
           return (
             <div
               key={skill.name}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                padding: "0.5rem 0.65rem",
-                borderRadius: "var(--radius-sm)",
-                backgroundColor: "var(--bg-tertiary)",
-                border: "1px solid var(--border)",
-              }}
+              className="interactive-skill-pill"
+              tabIndex={0}
+              role="group"
+              aria-label={skill.name}
             >
-              <span style={{ color: "var(--accent)", display: "inline-flex" }}>
-                <IconComponent size={14} aria-hidden="true" />
+              <span className="skill-pill-icon" aria-hidden="true">
+                <IconComponent size={15} />
               </span>
-              <span style={{ fontSize: "var(--text-xs)", fontWeight: 500, color: "var(--text-primary)" }}>
-                {skill.name}
-              </span>
+              <span className="skill-pill-text">{skill.name}</span>
             </div>
           );
         })}

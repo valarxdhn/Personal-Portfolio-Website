@@ -1,126 +1,151 @@
+"use client";
+
+import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Github, ExternalLink, Code2 } from "lucide-react";
+import { ArrowRight, Github, ExternalLink } from "lucide-react";
 import Button from "./Button";
 
+/**
+ * ProjectCard Component
+ * Premium Interactive 3D Project Card.
+ *
+ * Features:
+ * - Subtle 3D perspective tilt reacting smoothly to mouse movement.
+ * - Dynamic light-source shadow and specular glare spotlight.
+ * - Stereoscopic elevation of internal elements (title, badges, actions).
+ * - Preserves all original project links, slugs, descriptions, and highlights.
+ * - Coarse-pointer & reduced-motion detection for graceful mobile fallbacks.
+ * - Zero layout shifts, consistent grid dimensions.
+ */
 export default function ProjectCard({ project }) {
+  const cardRef = useRef(null);
+  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+  const [shadow, setShadow] = useState({ x: 0, y: 4, blur: 14, opacity: 0.35 });
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const coarseQuery = window.matchMedia("(pointer: coarse), (hover: none)");
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const update = () => {
+      setIsCoarsePointer(coarseQuery.matches || motionQuery.matches);
+    };
+
+    update();
+    coarseQuery.addEventListener("change", update);
+    motionQuery.addEventListener("change", update);
+    return () => {
+      coarseQuery.removeEventListener("change", update);
+      motionQuery.removeEventListener("change", update);
+    };
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (isCoarsePointer || !cardRef.current) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Restrained subtle tilt (max ~4.5 degrees)
+    const rotateX = ((y - centerY) / centerY) * -4.5;
+    const rotateY = ((x - centerX) / centerX) * 4.5;
+
+    const shadowX = ((x - centerX) / centerX) * -8;
+    const shadowY = 12 + ((y - centerY) / centerY) * -6;
+
+    setTransform(
+      `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px) scale3d(1.012, 1.012, 1.012)`
+    );
+
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.18,
+    });
+
+    setShadow({
+      x: shadowX,
+      y: shadowY,
+      blur: 28,
+      opacity: 0.55,
+    });
+  }, [isCoarsePointer]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (isCoarsePointer) return;
+    setIsHovered(true);
+  }, [isCoarsePointer]);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)");
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
+    setShadow({ x: 0, y: 4, blur: 14, opacity: 0.35 });
+  }, []);
+
   if (!project) return null;
 
   return (
     <article
-      className="card"
+      ref={cardRef}
+      className="card interactive-project-card"
       style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        padding: "var(--space-6)",
-        background: "var(--bg-secondary)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius-lg)",
-        transition: "border-color var(--transition-fast), transform var(--transition-fast)",
+        transform,
+        boxShadow: `${shadow.x.toFixed(1)}px ${shadow.y.toFixed(1)}px ${shadow.blur}px rgba(0, 0, 0, ${shadow.opacity}), 0 0 20px rgba(56, 189, 248, ${isHovered ? 0.08 : 0})`,
       }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* Header: Status and Tech Category */}
+      {/* Specular Glare Overlay */}
       <div
+        className="project-card-glare"
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "var(--space-2)",
-          marginBottom: "var(--space-3)",
-          fontSize: "var(--text-xs)",
+          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.2) 0%, rgba(56, 189, 248, 0.08) 40%, transparent 70%)`,
+          opacity: glare.opacity,
         }}
-      >
-        <span
-          style={{
-            fontWeight: 600,
-            color: "var(--text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
+        aria-hidden="true"
+      />
+
+      {/* Header: Status and Tech Category */}
+      <div className="project-card-layer-header">
+        <span className="project-card-status">
           {project.status || "In Development"}
         </span>
 
         {project.technologies && project.technologies[0] && (
-          <span
-            style={{
-              padding: "0.15rem 0.5rem",
-              borderRadius: "var(--radius-sm)",
-              backgroundColor: "var(--bg-tertiary)",
-              color: "var(--text-secondary)",
-              fontSize: "var(--text-xs)",
-              border: "1px solid var(--border)",
-            }}
-          >
+          <span className="project-card-primary-badge">
             {project.technologies[0]}
           </span>
         )}
       </div>
 
       {/* Project Title */}
-      <h3
-        style={{
-          fontSize: "var(--text-xl)",
-          fontWeight: 700,
-          lineHeight: 1.3,
-          marginBottom: "var(--space-2)",
-        }}
-      >
+      <h3 className="project-card-title">
         <Link
           href={`/projects/${project.slug}`}
-          style={{
-            color: "var(--text-primary)",
-            textDecoration: "none",
-          }}
-          className="hover:text-accent"
+          className="project-card-title-link"
         >
           {project.title}
         </Link>
       </h3>
 
       {/* Description */}
-      <p
-        style={{
-          fontSize: "var(--text-sm)",
-          color: "var(--text-secondary)",
-          lineHeight: 1.6,
-          marginBottom: "var(--space-4)",
-        }}
-      >
+      <p className="project-card-description">
         {project.description}
       </p>
 
       {/* Key Focus Highlights */}
       {project.mainFocus && project.mainFocus.length > 0 && (
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: "0 0 var(--space-4) 0",
-            display: "grid",
-            gap: "0.35rem",
-          }}
-        >
+        <ul className="project-card-focus-list">
           {project.mainFocus.slice(0, 3).map((item, idx) => (
-            <li
-              key={idx}
-              style={{
-                fontSize: "var(--text-xs)",
-                color: "var(--text-muted)",
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-              }}
-            >
-              <span
-                style={{
-                  width: "4px",
-                  height: "4px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--accent)",
-                  flexShrink: 0,
-                }}
-              />
+            <li key={idx} className="project-card-focus-item">
+              <span className="project-card-focus-dot" aria-hidden="true" />
               <span>{item}</span>
             </li>
           ))}
@@ -129,57 +154,20 @@ export default function ProjectCard({ project }) {
 
       {/* Technology Tags */}
       {project.technologies && (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "var(--space-1)",
-            marginTop: "auto",
-            paddingTop: "var(--space-3)",
-            marginBottom: "var(--space-4)",
-          }}
-        >
+        <div className="project-card-tech-group">
           {project.technologies.map((tech) => (
-            <span
-              key={tech}
-              style={{
-                fontSize: "0.72rem",
-                padding: "0.2rem 0.5rem",
-                borderRadius: "var(--radius-sm)",
-                backgroundColor: "var(--bg-tertiary)",
-                border: "1px solid var(--border)",
-                color: "var(--text-secondary)",
-              }}
-            >
+            <span key={tech} className="project-card-tech-tag">
               {tech}
             </span>
           ))}
         </div>
       )}
 
-      {/* Actions: Single Clear Project Details Link + Real External Links Only */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "var(--space-2)",
-          paddingTop: "var(--space-3)",
-          borderTop: "1px solid var(--border)",
-        }}
-      >
+      {/* Actions: Clear Details Link + Real External Links Only */}
+      <div className="project-card-actions-row">
         <Link
           href={`/projects/${project.slug}`}
-          style={{
-            fontSize: "var(--text-xs)",
-            fontWeight: 600,
-            color: "var(--accent)",
-            textDecoration: "none",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "4px",
-          }}
+          className="project-card-details-link"
         >
           <span>Read Technical Overview</span>
           <ArrowRight size={13} aria-hidden="true" />

@@ -15,6 +15,7 @@ import MaterialField from "@/components/MaterialField";
 import HeroCard from "@/components/HeroCard";
 import TelemetryRibbon from "@/components/TelemetryRibbon";
 import ProjectCard from "@/components/ProjectCard";
+import SkillCard from "@/components/SkillCard";
 import ResearchCard from "@/components/ResearchCard";
 import CertificatesSection from "@/components/CertificatesSection";
 import ContactForm from "@/components/ContactForm";
@@ -255,57 +256,7 @@ export default function HomePage() {
             }}
           >
             {skillCategories.map((category, idx) => (
-              <div
-                key={category.name}
-                style={{
-                  padding: "var(--space-6)",
-                  backgroundColor: "var(--bg-secondary)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius-lg)",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "var(--space-2)" }}>
-                  <h3
-                    style={{
-                      fontSize: "var(--text-base)",
-                      fontWeight: 700,
-                      margin: 0,
-                    }}
-                  >
-                    {category.name}
-                  </h3>
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)" }}>
-                    0{idx + 1} //
-                  </span>
-                </div>
-                <p
-                  style={{
-                    fontSize: "var(--text-xs)",
-                    color: "var(--text-muted)",
-                    marginBottom: "var(--space-4)",
-                  }}
-                >
-                  {category.description}
-                </p>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
-                  {category.skills.map((skill) => (
-                    <span
-                      key={skill.name}
-                      style={{
-                        fontSize: "var(--text-xs)",
-                        padding: "0.25rem 0.6rem",
-                        backgroundColor: "var(--bg-tertiary)",
-                        border: "1px solid var(--border)",
-                        borderRadius: "var(--radius-sm)",
-                        color: "var(--text-primary)",
-                      }}
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <SkillCard key={category.name} category={category} index={idx} />
             ))}
           </div>
         </div>
