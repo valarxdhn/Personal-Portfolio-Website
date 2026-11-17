@@ -1,8 +1,10 @@
 import { BookOpen, Award, CheckCircle, GraduationCap } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import ResearchCard from "@/components/ResearchCard";
+import CertificateCard from "@/components/CertificateCard";
 import { publishedPaper, conferencePresentation } from "@/data/research";
 import { achievementsData } from "@/data/achievements";
+import { certificatesData } from "@/data/certificates";
 
 export const metadata = {
   title: "Achievements & Research | Dhanush",
@@ -72,6 +74,22 @@ export default function AchievementsPage() {
             <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>
               Maintained strong academic performance across core subjects including Discrete Mathematics, Data Structures, Problem Solving with C, Object-Oriented Programming, and Engineering Fundamentals.
             </p>
+          </div>
+        </div>
+
+        {/* 4. Documented Certifications */}
+        <div style={{ marginTop: "var(--space-10)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-4)" }}>
+            <Award size={20} color="var(--accent)" aria-hidden="true" />
+            <h2 style={{ fontSize: "var(--text-xl)", fontWeight: 700, margin: 0 }}>
+              4. Documented Certifications & Training
+            </h2>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-5)" }}>
+            {certificatesData.map((cert) => (
+              <CertificateCard key={cert.id} certificate={cert} />
+            ))}
           </div>
         </div>
       </div>

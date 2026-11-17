@@ -12,12 +12,12 @@ export const achievementsData = [
   {
     id: "intl-conf",
     category: "Conference Presentation",
-    title: "International Conference Research Defense",
+    title: "International Conference Research Defense (ICRICS 2026)",
     description:
-      "Delivered oral research presentation defending computational methodology and software engineering design at an international academic conference.",
+      "Presented and defended peer-reviewed paper on rural dropout prediction before peer reviewers and faculty at the International Conference on Recent Innovation in Computer Science (ICRICS 2026), Srinivas Institute of Technology.",
     status: "Presented",
-    link: null,
-    year: "Recent",
+    link: "/certificates/academic/icrics-2026-research-paper-presentation.pdf",
+    year: "May 2026",
   },
   {
     id: "academic-cgpa",

@@ -25,8 +25,12 @@ export const conferencePresentation = {
   id: "intl-conference-presentation",
   status: "Presented",
   type: "International Academic Conference",
-  title: "Academic Research Presentation",
+  title: "Academic Research Presentation (ICRICS 2026)",
+  conference: "International Conference on Recent Innovation in Computer Science (ICRICS 2026)",
+  institution: "Srinivas Institute of Technology, Mangaluru",
+  dates: "May 11–12, 2026",
+  certificateUrl: "/certificates/academic/icrics-2026-research-paper-presentation.pdf",
   description:
-    "Presented academic research covering applied computational analysis and software engineering methodologies before peer reviewers and faculty delegates at an international conference.",
+    "Presented and defended research paper titled 'AI-Powered Rural Student Dropout Early Warning System with Explainable Predictions, SMS Alerts, and Government Scheme Recommendations' before peer reviewers and faculty at ICRICS 2026.",
   note: "Official conference proceedings citation and digital record link will be updated upon publisher indexation.",
 };

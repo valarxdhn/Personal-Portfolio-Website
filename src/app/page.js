@@ -15,6 +15,7 @@ import {
 import Button from "@/components/Button";
 import ProjectCard from "@/components/ProjectCard";
 import ResearchCard from "@/components/ResearchCard";
+import CertificatesSection from "@/components/CertificatesSection";
 import ContactForm from "@/components/ContactForm";
 import { personalData } from "@/data/personal";
 import { projectsData } from "@/data/projects";
@@ -256,7 +257,12 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          4. RESEARCH & PUBLICATIONS SECTION
+          4. CERTIFICATIONS & ACHIEVEMENTS SECTION
+          =================================================================== */}
+      <CertificatesSection />
+
+      {/* ===================================================================
+          5. RESEARCH & PUBLICATIONS SECTION
           =================================================================== */}
       <section className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">

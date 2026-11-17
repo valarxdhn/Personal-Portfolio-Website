@@ -46,9 +46,24 @@ export default function ResearchCard({ paper, isConference = false }) {
             "Presented academic research analyzing computational and software engineering methodologies before peer reviewers at an international conference."}
         </p>
 
-        <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0, fontStyle: "italic" }}>
+        <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: "0 0 var(--space-4) 0", fontStyle: "italic" }}>
           {paper.note}
         </p>
+
+        {paper.certificateUrl && (
+          <div>
+            <Button
+              href={paper.certificateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outline"
+              size="sm"
+            >
+              <FileText size={14} aria-hidden="true" />
+              <span>View Defense Certificate (PDF)</span>
+            </Button>
+          </div>
+        )}
       </article>
     );
   }
