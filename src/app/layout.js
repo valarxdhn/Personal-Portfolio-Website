@@ -1,6 +1,8 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingDock from "@/components/FloatingDock";
+import BackgroundMesh from "@/components/BackgroundMesh";
 
 export const metadata = {
   title: "DHANUSH | Computer Science Engineering Student | Portfolio",
@@ -39,11 +41,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+        <BackgroundMesh />
         <Navbar />
-        <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <main style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
           {children}
         </main>
         <Footer />
+        <FloatingDock />
       </body>
     </html>
   );

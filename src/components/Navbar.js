@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X, Code2, Sparkles } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
@@ -23,14 +23,13 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 25);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
@@ -41,12 +40,12 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: scrolled
-          ? "var(--bg-primary)"
-          : "rgba(10, 15, 29, 0.85)",
-        backdropFilter: "blur(12px)",
-        borderBottom: `1px solid ${scrolled ? "var(--border)" : "transparent"}`,
         transition: "all var(--transition-normal)",
+        paddingTop: scrolled ? "0.6rem" : "1rem",
+        paddingBottom: scrolled ? "0.6rem" : "1rem",
+        backgroundColor: scrolled ? "var(--bg-card)" : "transparent",
+        backdropFilter: scrolled ? "blur(18px)" : "none",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
       }}
     >
       <div
@@ -55,10 +54,9 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: "4.25rem",
         }}
       >
-        {/* Brand / Logo */}
+        {/* Brand Logo with Glow */}
         <Link
           href="/"
           style={{
@@ -69,7 +67,7 @@ export default function Navbar() {
             color: "var(--text-primary)",
             fontWeight: 800,
             fontSize: "var(--text-lg)",
-            letterSpacing: "-0.01em",
+            letterSpacing: "-0.02em",
           }}
         >
           <span
@@ -77,16 +75,19 @@ export default function Navbar() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "32px",
-              height: "32px",
+              width: "34px",
+              height: "34px",
               borderRadius: "var(--radius-md)",
-              backgroundColor: "var(--accent)",
+              background: "var(--gradient-accent)",
               color: "#ffffff",
+              boxShadow: "0 4px 12px rgba(59, 130, 246, 0.4)",
             }}
           >
             <Code2 size={18} aria-hidden="true" />
           </span>
-          <span>DHANUSH</span>
+          <span className="text-gradient" style={{ fontWeight: 800, letterSpacing: "0.05em" }}>
+            DHANUSH
+          </span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -96,6 +97,12 @@ export default function Navbar() {
             display: "none",
             alignItems: "center",
             gap: "var(--space-1)",
+            padding: "0.3rem 0.6rem",
+            backgroundColor: "var(--bg-glass)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-full)",
+            backdropFilter: "blur(16px)",
+            boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.4)",
           }}
           aria-label="Main Navigation"
         >
@@ -109,15 +116,16 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="btn btn-ghost"
+                className="btn btn-ghost btn-sm"
                 style={{
-                  fontSize: "var(--text-sm)",
+                  fontSize: "var(--text-xs)",
                   fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "var(--accent)" : "var(--text-secondary)",
-                  backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
-                  borderBottom: isActive ? "2px solid var(--accent)" : "2px solid transparent",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "0.5rem 0.85rem",
+                  color: isActive ? "#ffffff" : "var(--text-secondary)",
+                  background: isActive ? "var(--gradient-accent)" : "transparent",
+                  borderRadius: "var(--radius-full)",
+                  padding: "0.45rem 0.95rem",
+                  transition: "all var(--transition-fast)",
+                  boxShadow: isActive ? "0 2px 10px rgba(59, 130, 246, 0.4)" : "none",
                 }}
               >
                 {link.name}
@@ -125,7 +133,7 @@ export default function Navbar() {
             );
           })}
 
-          <div style={{ marginLeft: "var(--space-2)" }}>
+          <div style={{ marginLeft: "var(--space-1)", paddingLeft: "var(--space-2)", borderLeft: "1px solid var(--border)" }}>
             <ThemeToggle />
           </div>
         </nav>
@@ -142,11 +150,16 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-md)",
+            }}
           >
             {mobileMenuOpen ? (
-              <X size={22} aria-hidden="true" />
+              <X size={20} aria-hidden="true" />
             ) : (
-              <Menu size={22} aria-hidden="true" />
+              <Menu size={20} aria-hidden="true" />
             )}
           </button>
         </div>
@@ -157,11 +170,13 @@ export default function Navbar() {
         <div
           style={{
             borderTop: "1px solid var(--border)",
-            backgroundColor: "var(--bg-primary)",
+            borderBottom: "1px solid var(--border)",
+            backgroundColor: "var(--bg-secondary)",
             padding: "var(--space-4) var(--space-6)",
             display: "flex",
             flexDirection: "column",
             gap: "var(--space-2)",
+            backdropFilter: "blur(20px)",
           }}
         >
           {navLinks.map((link) => {
@@ -178,11 +193,13 @@ export default function Navbar() {
                 className="btn btn-ghost"
                 style={{
                   justifyContent: "flex-start",
-                  fontSize: "var(--text-base)",
+                  fontSize: "var(--text-sm)",
                   fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "var(--accent)" : "var(--text-primary)",
+                  color: isActive ? "var(--accent-light)" : "var(--text-primary)",
                   backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
-                  padding: "0.75rem 1rem",
+                  borderLeft: isActive ? "3px solid var(--accent)" : "3px solid transparent",
+                  padding: "0.65rem 1rem",
+                  borderRadius: "var(--radius-sm)",
                   width: "100%",
                 }}
               >
@@ -194,7 +211,7 @@ export default function Navbar() {
       )}
 
       <style jsx>{`
-        @media (min-width: 769px) {
+        @media (min-width: 820px) {
           .desktop-nav {
             display: flex !important;
           }

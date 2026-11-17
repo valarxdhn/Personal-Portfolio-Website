@@ -818,12 +818,12 @@ img {
     --text-3xl: 1.3rem;
   }
 
-  .btn {
+  .btn-full-mobile {
     width: 100%;
   }
 
   .card {
-    padding: var(--space-4);
+    padding: var(--space-5);
   }
 }
 

@@ -10,6 +10,8 @@ import {
   FolderGit2,
   FileDown,
   Sparkles,
+  ChevronDown,
+  ExternalLink,
 } from "lucide-react";
 import Button from "@/components/Button";
 import ProjectCard from "@/components/ProjectCard";
@@ -17,18 +19,37 @@ import SkillCard from "@/components/SkillCard";
 import ResearchCard from "@/components/ResearchCard";
 import SocialLinks from "@/components/SocialLinks";
 import SectionHeading from "@/components/SectionHeading";
+import WordRotate from "@/components/WordRotate";
 import { personalData } from "@/data/personal";
 import { projectsData } from "@/data/projects";
 import { skillCategories } from "@/data/skills";
 import { publishedPaper } from "@/data/research";
 
+const heroRoles = [
+  "Computer Science Engineering Student",
+  "Aspiring Software Developer",
+  "Problem Solver & Algorithmic Thinker",
+  "AI & Full-Stack Builder",
+];
+
 export default function HomePage() {
   return (
     <>
       {/* ===================================================================
-          HERO SECTION
+          HERO SECTION (Reference-inspired creative design)
           =================================================================== */}
-      <section className="section" style={{ paddingTop: "var(--space-12)", paddingBottom: "var(--space-16)" }}>
+      <section
+        className="section"
+        style={{
+          minHeight: "calc(100vh - 4.5rem)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: "var(--space-12)",
+          paddingBottom: "var(--space-16)",
+          position: "relative",
+        }}
+      >
         <div className="container">
           <div
             style={{
@@ -38,43 +59,52 @@ export default function HomePage() {
               gap: "var(--space-12)",
             }}
           >
-            {/* Left Column: Introductions & Actions */}
+            {/* Left Content Column */}
             <div>
-              {/* Status Pill */}
+              {/* Dynamic Status Eyebrow */}
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "var(--space-2)",
-                  padding: "0.35rem 0.85rem",
+                  padding: "0.4rem 1rem",
                   borderRadius: "var(--radius-full)",
-                  backgroundColor: "var(--accent-subtle)",
+                  background: "var(--accent-subtle)",
                   border: "1px solid var(--accent-border)",
-                  marginBottom: "var(--space-4)",
-                  fontSize: "var(--text-xs)",
-                  fontWeight: 600,
-                  color: "var(--accent-light)",
+                  marginBottom: "var(--space-5)",
+                  boxShadow: "0 0 20px -4px var(--accent-glow)",
+                  backdropFilter: "blur(12px)",
                 }}
               >
-                <Sparkles size={14} aria-hidden="true" />
-                <span>Computer Science Engineering Student</span>
+                <Sparkles size={15} color="var(--accent-light)" aria-hidden="true" />
+                <span
+                  style={{
+                    fontSize: "var(--text-xs)",
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--accent-light)",
+                  }}
+                >
+                  <WordRotate words={heroRoles} duration={2600} />
+                </span>
               </div>
 
-              {/* Name & Headline */}
+              {/* Headline */}
               <h1
                 style={{
-                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                  fontSize: "clamp(2.75rem, 5.5vw, 4.5rem)",
                   fontWeight: 900,
                   lineHeight: 1.1,
-                  letterSpacing: "-0.03em",
-                  marginBottom: "var(--space-3)",
+                  letterSpacing: "-0.035em",
+                  marginBottom: "var(--space-4)",
                 }}
               >
-                Hi, I&apos;m{" "}
-                <span style={{ color: "var(--accent)" }}>{personalData.name}</span>
+                Building with logic, code, and vision. <br />
+                I&apos;m <span className="text-gradient">{personalData.name}</span>
               </h1>
 
-              {/* Location & College Quick Meta */}
+              {/* Location & Academic Meta */}
               <div
                 style={{
                   display: "flex",
@@ -86,49 +116,64 @@ export default function HomePage() {
                   marginBottom: "var(--space-6)",
                 }}
               >
-                <span className="flex items-center gap-1">
-                  <MapPin size={16} color="var(--accent)" aria-hidden="true" />
+                <span className="flex items-center gap-1.5 badge" style={{ padding: "0.35rem 0.75rem" }}>
+                  <MapPin size={14} color="var(--accent)" aria-hidden="true" />
                   {personalData.location}
                 </span>
-                <span className="flex items-center gap-1">
-                  <GraduationCap size={16} color="var(--accent)" aria-hidden="true" />
+                <span className="flex items-center gap-1.5 badge" style={{ padding: "0.35rem 0.75rem" }}>
+                  <GraduationCap size={14} color="var(--accent)" aria-hidden="true" />
                   {personalData.college}
                 </span>
               </div>
 
-              {/* Professional Introduction */}
+              {/* Professional Narrative */}
               <p
                 style={{
                   fontSize: "var(--text-base)",
                   color: "var(--text-secondary)",
-                  lineHeight: 1.75,
-                  marginBottom: "var(--space-6)",
+                  lineHeight: 1.8,
+                  marginBottom: "var(--space-8)",
                   maxWidth: "600px",
                 }}
               >
                 {personalData.introduction}
               </p>
 
-              {/* Academic Highlight Callout */}
+              {/* Academic Distinction Highlight Card */}
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "var(--space-3)",
-                  padding: "var(--space-3) var(--space-4)",
-                  backgroundColor: "var(--bg-secondary)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius-md)",
+                  padding: "var(--space-3) var(--space-5)",
+                  backgroundColor: "var(--bg-glass)",
+                  border: "1px solid var(--border-glow)",
+                  borderRadius: "var(--radius-lg)",
                   marginBottom: "var(--space-8)",
+                  boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.4)",
+                  backdropFilter: "blur(16px)",
                 }}
               >
-                <Award size={20} color="var(--accent)" aria-hidden="true" />
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    background: "var(--accent-subtle)",
+                    color: "var(--accent)",
+                  }}
+                >
+                  <Award size={20} aria-hidden="true" />
+                </div>
                 <div>
                   <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", display: "block" }}>
-                    Academic Performance
+                    Verified Academic Distinction
                   </span>
-                  <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--text-primary)" }}>
-                    {personalData.cgpaLabel}: {personalData.cgpa} CGPA
+                  <span style={{ fontSize: "var(--text-sm)", fontWeight: 800, color: "var(--text-primary)" }}>
+                    {personalData.cgpaLabel}: <span style={{ color: "var(--accent-light)" }}>{personalData.cgpa} CGPA</span>
                   </span>
                 </div>
               </div>
@@ -143,59 +188,73 @@ export default function HomePage() {
                   marginBottom: "var(--space-8)",
                 }}
               >
-                <Button href="/projects" variant="primary" size="md">
-                  <FolderGit2 size={16} aria-hidden="true" />
-                  <span>Explore Projects</span>
+                <Button href="/projects" variant="primary" size="lg" className="btn-pill btn-gradient">
+                  <FolderGit2 size={18} aria-hidden="true" />
+                  <span>Explore Featured Projects</span>
                 </Button>
 
-                <Button href="/about" variant="secondary" size="md">
+                <Button href="/about" variant="secondary" size="lg" className="btn-pill">
                   <span>About Me</span>
-                  <ArrowRight size={16} aria-hidden="true" />
+                  <ArrowRight size={18} aria-hidden="true" />
                 </Button>
 
-                <Button href="/contact" variant="outline" size="md">
+                <Button href="/contact" variant="outline" size="lg" className="btn-pill">
                   <span>Contact Me</span>
                 </Button>
 
                 {personalData.resumeUrl && (
-                  <Button href={personalData.resumeUrl} variant="outline" size="md" isExternal>
-                    <FileDown size={16} aria-hidden="true" />
+                  <Button href={personalData.resumeUrl} variant="outline" size="lg" className="btn-pill" isExternal>
+                    <FileDown size={18} aria-hidden="true" />
                     <span>Download Resume</span>
                   </Button>
                 )}
               </div>
 
-              {/* Social Links Bar */}
+              {/* Direct Social Links Row */}
               <div>
                 <span
                   style={{
                     fontSize: "var(--text-xs)",
-                    fontWeight: 600,
+                    fontWeight: 700,
                     textTransform: "uppercase",
-                    letterSpacing: "0.08em",
+                    letterSpacing: "0.1em",
                     color: "var(--text-muted)",
                     display: "block",
                     marginBottom: "var(--space-2)",
                   }}
                 >
-                  Connect with me
+                  Professional Networks
                 </span>
                 <SocialLinks />
               </div>
             </div>
 
-            {/* Right Column: Profile Image / Visual Showcase */}
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            {/* Right Column: Visual Avatar & Dimensional Frame */}
+            <div style={{ display: "flex", justifyContent: "center", position: "relative" }}>
               <div
+                className="animate-glow"
+                style={{
+                  position: "absolute",
+                  inset: "-20px",
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%)",
+                  filter: "blur(40px)",
+                  zIndex: 0,
+                }}
+              />
+
+              <div
+                className="animate-float"
                 style={{
                   position: "relative",
+                  zIndex: 1,
                   width: "100%",
                   maxWidth: "380px",
                   aspectRatio: "1 / 1",
                   borderRadius: "50%",
-                  padding: "8px",
-                  background: "linear-gradient(135deg, var(--accent) 0%, rgba(59, 130, 246, 0.1) 100%)",
-                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
+                  padding: "10px",
+                  background: "linear-gradient(135deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(6, 182, 212, 0.6) 100%)",
+                  boxShadow: "0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 32px -4px var(--accent-glow)",
                 }}
               >
                 <div
@@ -206,6 +265,7 @@ export default function HomePage() {
                     overflow: "hidden",
                     backgroundColor: "var(--bg-secondary)",
                     position: "relative",
+                    border: "3px solid rgba(255, 255, 255, 0.1)",
                   }}
                 >
                   <Image
@@ -224,14 +284,15 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          FEATURED PROJECTS PREVIEW SECTION
+          FEATURED PROJECTS SHOWCASE SECTION
           =================================================================== */}
       <section
+        id="projects"
         className="section"
         style={{
-          backgroundColor: "var(--bg-secondary)",
           borderTop: "1px solid var(--border)",
           borderBottom: "1px solid var(--border)",
+          backgroundColor: "rgba(11, 15, 25, 0.6)",
         }}
       >
         <div className="container">
@@ -242,19 +303,21 @@ export default function HomePage() {
               justifyContent: "space-between",
               flexWrap: "wrap",
               gap: "var(--space-4)",
-              marginBottom: "var(--space-8)",
+              marginBottom: "var(--space-10)",
             }}
           >
             <div>
-              <span className="section-eyebrow">Featured Work</span>
-              <h2 className="section-title">Software Projects</h2>
+              <span className="section-eyebrow">Featured Work 🚀</span>
+              <h2 className="section-title">
+                Engineered <span className="text-gradient">Software Projects</span>
+              </h2>
               <p className="section-subtitle" style={{ margin: 0 }}>
-                Real-world engineering applications focused on transportation intelligence, AI explainability, and campus systems.
+                Practical engineering applications addressing real-world challenges in railway delay estimation, explainable supplier intelligence, and centralized campus engagement.
               </p>
             </div>
-            <Button href="/projects" variant="outline" size="sm">
+            <Button href="/projects" variant="outline" size="md" className="btn-pill">
               <span>View All 3 Projects</span>
-              <ArrowRight size={14} aria-hidden="true" />
+              <ArrowRight size={16} aria-hidden="true" />
             </Button>
           </div>
 
@@ -267,26 +330,26 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          TECHNICAL SKILLS PREVIEW SECTION
+          TECHNICAL SKILLS SECTION
           =================================================================== */}
       <section className="section">
         <div className="container">
           <SectionHeading
-            eyebrow="Competencies"
-            title="Technical Skills"
-            subtitle="Confirmed technologies in programming languages, databases, and development tooling."
+            eyebrow="Tech Stack ⚡"
+            title="Confirmed Technical Skills"
+            subtitle="Verified programming languages, database systems, and version control tools without fabricated proficiency ratings."
           />
 
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-3" style={{ marginBottom: "var(--space-8)" }}>
             {skillCategories.map((category) => (
               <SkillCard key={category.name} category={category} />
             ))}
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
-            <Button href="/skills" variant="secondary" size="md">
+          <div style={{ textAlign: "center" }}>
+            <Button href="/skills" variant="secondary" size="md" className="btn-pill">
               <Code2 size={16} aria-hidden="true" />
-              <span>Explore Detailed Skill Breakdown</span>
+              <span>Explore Detailed Technical Breakdown</span>
             </Button>
           </div>
         </div>
@@ -298,25 +361,25 @@ export default function HomePage() {
       <section
         className="section"
         style={{
-          backgroundColor: "var(--bg-secondary)",
+          backgroundColor: "rgba(11, 15, 25, 0.6)",
           borderTop: "1px solid var(--border)",
         }}
       >
         <div className="container">
           <SectionHeading
-            eyebrow="Academic Research"
-            title="Research Publication Highlight"
-            subtitle="Published academic research addressing rural student dropout prediction using explainable AI and automated notification workflows."
+            eyebrow="Academic Research 📄"
+            title="Peer-Reviewed Research Publication"
+            subtitle="Published academic research on rural student dropout early warning systems utilizing explainable predictions and automated welfare recommendations."
           />
 
-          <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+          <div style={{ maxWidth: "960px", margin: "0 auto var(--space-8)" }}>
             <ResearchCard paper={publishedPaper} />
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
-            <Button href="/achievements" variant="outline" size="md">
+          <div style={{ textAlign: "center" }}>
+            <Button href="/achievements" variant="outline" size="md" className="btn-pill">
               <BookOpen size={16} aria-hidden="true" />
-              <span>View Publications & Conference Presentation</span>
+              <span>View Publications & International Conference Details</span>
             </Button>
           </div>
         </div>

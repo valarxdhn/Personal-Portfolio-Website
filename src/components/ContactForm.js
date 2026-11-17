@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles, MessageSquare } from "lucide-react";
 import Button from "./Button";
 
 export default function ContactForm() {
@@ -92,7 +92,44 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="card" style={{ padding: "var(--space-8)" }}>
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="card"
+      style={{
+        padding: "var(--space-8)",
+        background: "linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 15, 25, 0.9) 100%)",
+        border: "1px solid rgba(255, 255, 255, 0.1)",
+        borderRadius: "var(--radius-xl)",
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: "0 16px 36px -10px rgba(0, 0, 0, 0.6)",
+      }}
+    >
+      {/* Decorative top accent glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: "15%",
+          right: "15%",
+          height: "2px",
+          background: "var(--gradient-accent)",
+        }}
+      />
+
+      <div style={{ marginBottom: "var(--space-6)" }}>
+        <div className="flex items-center gap-2" style={{ marginBottom: "var(--space-2)" }}>
+          <MessageSquare size={18} color="var(--accent-light)" aria-hidden="true" />
+          <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, margin: 0 }}>
+            Send a Direct Message
+          </h3>
+        </div>
+        <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0 }}>
+          Fill out the form below to initiate discussion. All fields marked with * are required.
+        </p>
+      </div>
+
       {status === "success" && (
         <div
           role="status"
@@ -102,7 +139,7 @@ export default function ContactForm() {
             gap: "var(--space-3)",
             padding: "var(--space-4)",
             borderRadius: "var(--radius-md)",
-            backgroundColor: "var(--status-success-bg)",
+            backgroundColor: "rgba(16, 185, 129, 0.12)",
             border: "1px solid rgba(16, 185, 129, 0.3)",
             marginBottom: "var(--space-6)",
           }}
@@ -126,7 +163,7 @@ export default function ContactForm() {
             gap: "var(--space-3)",
             padding: "var(--space-4)",
             borderRadius: "var(--radius-md)",
-            backgroundColor: "var(--status-danger-bg)",
+            backgroundColor: "rgba(239, 68, 68, 0.12)",
             border: "1px solid rgba(239, 68, 68, 0.3)",
             marginBottom: "var(--space-6)",
           }}
@@ -142,8 +179,8 @@ export default function ContactForm() {
       )}
 
       {/* Name Input */}
-      <div className="form-group">
-        <label htmlFor="contact-name" className="form-label">
+      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
+        <label htmlFor="contact-name" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
           Full Name <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
@@ -152,18 +189,29 @@ export default function ContactForm() {
           type="text"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Your full name"
+          placeholder="e.g. Alex Morgan"
           aria-invalid={errors.name ? "true" : "false"}
           className="form-input"
+          style={{
+            width: "100%",
+            padding: "0.75rem 1rem",
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            border: errors.name ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "var(--radius-md)",
+            color: "var(--text-primary)",
+            fontSize: "var(--text-sm)",
+            transition: "all var(--transition-fast)",
+            outline: "none",
+          }}
           disabled={status === "loading"}
           required
         />
-        {errors.name && <span className="form-error">{errors.name}</span>}
+        {errors.name && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.name}</span>}
       </div>
 
       {/* Email Input */}
-      <div className="form-group">
-        <label htmlFor="contact-email" className="form-label">
+      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
+        <label htmlFor="contact-email" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
           Email Address <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
@@ -175,15 +223,26 @@ export default function ContactForm() {
           placeholder="your.email@example.com"
           aria-invalid={errors.email ? "true" : "false"}
           className="form-input"
+          style={{
+            width: "100%",
+            padding: "0.75rem 1rem",
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            border: errors.email ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "var(--radius-md)",
+            color: "var(--text-primary)",
+            fontSize: "var(--text-sm)",
+            transition: "all var(--transition-fast)",
+            outline: "none",
+          }}
           disabled={status === "loading"}
           required
         />
-        {errors.email && <span className="form-error">{errors.email}</span>}
+        {errors.email && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.email}</span>}
       </div>
 
       {/* Subject Input */}
-      <div className="form-group">
-        <label htmlFor="contact-subject" className="form-label">
+      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
+        <label htmlFor="contact-subject" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
           Subject <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
@@ -192,18 +251,29 @@ export default function ContactForm() {
           type="text"
           value={formData.subject}
           onChange={handleChange}
-          placeholder="Inquiry regarding internship, project, or collaboration"
+          placeholder="Software Engineering Internship / Research Collaboration"
           aria-invalid={errors.subject ? "true" : "false"}
           className="form-input"
+          style={{
+            width: "100%",
+            padding: "0.75rem 1rem",
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            border: errors.subject ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "var(--radius-md)",
+            color: "var(--text-primary)",
+            fontSize: "var(--text-sm)",
+            transition: "all var(--transition-fast)",
+            outline: "none",
+          }}
           disabled={status === "loading"}
           required
         />
-        {errors.subject && <span className="form-error">{errors.subject}</span>}
+        {errors.subject && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.subject}</span>}
       </div>
 
       {/* Message Input */}
-      <div className="form-group">
-        <label htmlFor="contact-message" className="form-label">
+      <div className="form-group" style={{ marginBottom: "var(--space-6)" }}>
+        <label htmlFor="contact-message" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
           Message <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <textarea
@@ -212,27 +282,40 @@ export default function ContactForm() {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          placeholder="Write your message here..."
+          placeholder="Share details regarding your team, the project, or the collaborative opportunity..."
           aria-invalid={errors.message ? "true" : "false"}
           className="form-textarea"
+          style={{
+            width: "100%",
+            padding: "0.75rem 1rem",
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            border: errors.message ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "var(--radius-md)",
+            color: "var(--text-primary)",
+            fontSize: "var(--text-sm)",
+            fontFamily: "inherit",
+            resize: "vertical",
+            transition: "all var(--transition-fast)",
+            outline: "none",
+          }}
           disabled={status === "loading"}
           required
         />
-        {errors.message && <span className="form-error">{errors.message}</span>}
+        {errors.message && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.message}</span>}
       </div>
 
-      <div style={{ marginTop: "var(--space-2)" }}>
+      <div>
         <Button
           type="submit"
           variant="primary"
           size="lg"
           disabled={status === "loading"}
-          style={{ width: "100%", gap: "var(--space-2)" }}
+          style={{ width: "100%", gap: "var(--space-2)", borderRadius: "var(--radius-md)" }}
         >
           {status === "loading" ? (
             <>
               <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-              <span>Sending Message...</span>
+              <span>Transmitting Message...</span>
             </>
           ) : (
             <>
@@ -249,10 +332,11 @@ export default function ContactForm() {
           fontSize: "var(--text-xs)",
           color: "var(--text-muted)",
           textAlign: "center",
+          lineHeight: 1.5,
         }}
       >
-        Verified API handler. You can also contact directly at{" "}
-        <a href="mailto:contact@dhanush.dev" style={{ color: "var(--accent)" }}>
+        Submissions handled securely via verified server endpoint. You can also contact directly at{" "}
+        <a href="mailto:contact@dhanush.dev" style={{ color: "var(--accent-light)", fontWeight: 600 }}>
           contact@dhanush.dev
         </a>
       </p>

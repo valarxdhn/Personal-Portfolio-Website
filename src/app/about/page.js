@@ -7,9 +7,10 @@ import {
   BookOpen,
   FolderGit2,
   Code2,
-  CheckCircle,
+  CheckCircle2,
   Sparkles,
   ArrowRight,
+  Compass,
 } from "lucide-react";
 import Button from "@/components/Button";
 import SectionHeading from "@/components/SectionHeading";
@@ -25,63 +26,84 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="section" style={{ paddingTop: "var(--space-10)" }}>
+    <div className="section" style={{ paddingTop: "var(--space-12)" }}>
       <div className="container">
         {/* Page Header */}
         <SectionHeading
-          eyebrow="Biography"
+          eyebrow="Biography & Goals"
           title="About Me & Education"
-          subtitle="Computer Science Engineering student focused on software engineering, problem-solving, and practical technical solutions."
+          subtitle="Computer Science Engineering student focused on software engineering, problem-solving, and practical technological solutions."
         />
 
-        {/* Bio & Profile Snapshot */}
+        {/* Narrative & Profile Snapshot */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "var(--space-10)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "var(--space-12)",
             alignItems: "center",
-            marginBottom: "var(--space-16)",
+            marginBottom: "var(--space-20)",
           }}
         >
-          {/* Profile Image Card */}
+          {/* Left Column: Glass Profile Card */}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div
               className="card"
               style={{
-                maxWidth: "360px",
+                maxWidth: "380px",
                 width: "100%",
-                padding: "var(--space-6)",
+                padding: "var(--space-8)",
                 textAlign: "center",
                 alignItems: "center",
+                border: "1px solid var(--border-glow)",
+                boxShadow: "0 16px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px -4px var(--accent-glow)",
               }}
             >
               <div
                 style={{
                   position: "relative",
-                  width: "180px",
-                  height: "180px",
+                  width: "190px",
+                  height: "190px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "3px solid var(--accent)",
+                  padding: "4px",
+                  background: "var(--gradient-accent)",
                   marginBottom: "var(--space-4)",
-                  backgroundColor: "var(--bg-secondary)",
+                  boxShadow: "0 8px 24px rgba(59, 130, 246, 0.4)",
                 }}
               >
-                <Image
-                  src={personalData.profileImage}
-                  alt={personalData.profileImageAlt}
-                  fill
-                  sizes="180px"
-                  priority
-                  style={{ objectFit: "cover" }}
-                />
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    backgroundColor: "var(--bg-secondary)",
+                  }}
+                >
+                  <Image
+                    src={personalData.profileImage}
+                    alt={personalData.profileImageAlt}
+                    fill
+                    sizes="190px"
+                    priority
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
               </div>
 
-              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "var(--space-1)" }}>
+              <h3 style={{ fontSize: "var(--text-2xl)", marginBottom: "var(--space-1)", fontWeight: 800 }}>
                 {personalData.name}
               </h3>
-              <p style={{ fontSize: "var(--text-sm)", color: "var(--accent-light)", marginBottom: "var(--space-3)" }}>
+              <p
+                style={{
+                  fontSize: "var(--text-sm)",
+                  color: "var(--accent-light)",
+                  fontWeight: 600,
+                  marginBottom: "var(--space-4)",
+                }}
+              >
                 {personalData.role}
               </p>
 
@@ -93,25 +115,27 @@ export default function AboutPage() {
                   fontSize: "var(--text-xs)",
                   color: "var(--text-secondary)",
                   width: "100%",
-                  padding: "var(--space-3)",
-                  backgroundColor: "var(--bg-secondary)",
+                  padding: "var(--space-4)",
+                  backgroundColor: "rgba(15, 23, 42, 0.6)",
                   borderRadius: "var(--radius-md)",
                   border: "1px solid var(--border)",
-                  marginBottom: "var(--space-4)",
+                  marginBottom: "var(--space-5)",
                   textAlign: "left",
                 }}
               >
                 <div className="flex items-center gap-2">
-                  <MapPin size={14} color="var(--accent)" aria-hidden="true" />
+                  <MapPin size={15} color="var(--accent)" aria-hidden="true" />
                   <span>{personalData.location}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <GraduationCap size={14} color="var(--accent)" aria-hidden="true" />
+                  <GraduationCap size={15} color="var(--accent)" aria-hidden="true" />
                   <span>{personalData.college}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Award size={14} color="var(--accent)" aria-hidden="true" />
-                  <span>First-Year CGPA: {personalData.cgpa}</span>
+                  <Award size={15} color="var(--accent)" aria-hidden="true" />
+                  <span>
+                    First-Year CGPA: <strong style={{ color: "var(--text-primary)" }}>{personalData.cgpa} / 10.0</strong>
+                  </span>
                 </div>
               </div>
 
@@ -119,30 +143,33 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Detailed Narrative */}
+          {/* Right Column: Editorial Journey */}
           <div>
             <span className="section-eyebrow" style={{ marginBottom: "var(--space-3)" }}>
-              Career Background
+              Career Philosophy & Goals
             </span>
-            <h3 style={{ fontSize: "var(--text-2xl)", marginBottom: "var(--space-4)" }}>
-              Aspiring Software Developer Building Practical Solutions
+            <h3 style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)", marginBottom: "var(--space-4)", lineHeight: 1.25 }}>
+              Passionate about software craftsmanship, clean logic, and real-world impact.
             </h3>
-            <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", marginBottom: "var(--space-4)", lineHeight: 1.75 }}>
+
+            <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", marginBottom: "var(--space-4)", lineHeight: 1.8 }}>
               {personalData.introduction}
             </p>
-            <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", marginBottom: "var(--space-6)", lineHeight: 1.75 }}>
-              My engineering approach centers around software craftsmanship, clean code architecture, and leveraging emerging artificial intelligence techniques to tackle tangible issues—from public transportation delay forecasting to transparent supplier sustainability evaluation.
+
+            <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", marginBottom: "var(--space-6)", lineHeight: 1.8 }}>
+              As an undergraduate engineer, I believe in grounding every project in practical utility—whether forecasting delays across Indian Railways transit networks, auditing supply-chain sustainability with explainable AI models, or unifying collegiate event workflows.
             </p>
 
-            <h4 style={{ fontSize: "var(--text-lg)", marginBottom: "var(--space-3)" }}>
-              Core Technical Interests
+            <h4 style={{ fontSize: "var(--text-lg)", marginBottom: "var(--space-3)", fontWeight: 700 }}>
+              Key Technical Focus Areas
             </h4>
+
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
                 gap: "var(--space-3)",
-                marginBottom: "var(--space-6)",
+                marginBottom: "var(--space-8)",
               }}
             >
               {personalData.interests.map((interest) => (
@@ -152,28 +179,29 @@ export default function AboutPage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "var(--space-2)",
-                    padding: "0.5rem 0.75rem",
+                    padding: "0.6rem 0.85rem",
                     borderRadius: "var(--radius-md)",
-                    backgroundColor: "var(--bg-secondary)",
+                    backgroundColor: "rgba(15, 23, 42, 0.6)",
                     border: "1px solid var(--border)",
                     fontSize: "var(--text-xs)",
                     fontWeight: 600,
+                    backdropFilter: "blur(8px)",
                   }}
                 >
-                  <CheckCircle size={14} color="var(--accent)" aria-hidden="true" />
+                  <CheckCircle2 size={16} color="var(--accent)" aria-hidden="true" />
                   <span>{interest}</span>
                 </div>
               ))}
             </div>
 
             <div className="flex gap-3 flex-wrap">
-              <Button href="/projects" variant="primary">
-                <FolderGit2 size={16} aria-hidden="true" />
-                <span>Explore Projects</span>
+              <Button href="/projects" variant="primary" className="btn-pill btn-gradient">
+                <FolderGit2 size={18} aria-hidden="true" />
+                <span>Explore Featured Projects</span>
               </Button>
-              <Button href="/skills" variant="secondary">
-                <Code2 size={16} aria-hidden="true" />
-                <span>View Skills</span>
+              <Button href="/skills" variant="secondary" className="btn-pill">
+                <Code2 size={18} aria-hidden="true" />
+                <span>View Technical Skills</span>
               </Button>
             </div>
           </div>
@@ -182,9 +210,9 @@ export default function AboutPage() {
         {/* Education Section */}
         <div>
           <SectionHeading
-            eyebrow="Academic Background"
-            title="Education"
-            subtitle="Undergraduate engineering coursework and verified academic performance."
+            eyebrow="Academic History"
+            title="Formal Undergraduate Education"
+            subtitle="Undergraduate engineering curriculum and verified first-year academic results."
             align="left"
           />
 
@@ -192,10 +220,11 @@ export default function AboutPage() {
             {educationData.map((edu, idx) => (
               <div
                 key={idx}
-                className="card"
+                className="card card-hover"
                 style={{
-                  borderLeft: "4px solid var(--accent)",
+                  borderLeft: "5px solid var(--accent)",
                   padding: "var(--space-8)",
+                  boxShadow: "0 12px 32px -4px rgba(0, 0, 0, 0.5)",
                 }}
               >
                 <div
@@ -205,60 +234,87 @@ export default function AboutPage() {
                     justifyContent: "space-between",
                     flexWrap: "wrap",
                     gap: "var(--space-4)",
-                    marginBottom: "var(--space-4)",
+                    marginBottom: "var(--space-6)",
                   }}
                 >
                   <div>
                     <span className="badge badge-accent" style={{ marginBottom: "var(--space-2)" }}>
-                      Undergraduate Degree
+                      Bachelor of Engineering
                     </span>
-                    <h3 style={{ fontSize: "var(--text-2xl)", marginBottom: "var(--space-1)" }}>
-                      {edu.degree}
+                    <h3 style={{ fontSize: "var(--text-2xl)", marginBottom: "var(--space-1)", fontWeight: 800 }}>
+                      {edu.institution}
                     </h3>
                     <h4 style={{ fontSize: "var(--text-lg)", color: "var(--accent-light)", fontWeight: 600 }}>
-                      {edu.field}
+                      {edu.degree} – {edu.field}
                     </h4>
                     <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginTop: "4px" }}>
-                      {edu.institution} • {edu.location}
+                      📍 {edu.location}
                     </p>
                   </div>
 
+                  {/* CGPA Stat Box */}
                   <div
                     style={{
-                      textAlign: "right",
-                      backgroundColor: "var(--bg-secondary)",
-                      padding: "var(--space-4) var(--space-6)",
+                      textAlign: "center",
+                      backgroundColor: "rgba(15, 23, 42, 0.8)",
+                      padding: "var(--space-4) var(--space-8)",
                       borderRadius: "var(--radius-lg)",
-                      border: "1px solid var(--border)",
+                      border: "1px solid var(--border-glow)",
+                      boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.4), 0 0 16px -4px var(--accent-glow)",
                     }}
                   >
-                    <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", display: "block" }}>
+                    <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", display: "block", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                       {edu.cgpaLabel}
                     </span>
                     <span
                       style={{
-                        fontSize: "var(--text-3xl)",
+                        fontSize: "var(--text-4xl)",
                         fontWeight: 900,
-                        color: "var(--accent)",
-                        lineHeight: 1,
+                        color: "var(--accent-light)",
+                        lineHeight: 1.1,
+                        display: "block",
                       }}
                     >
                       {edu.cgpa}
                     </span>
-                    <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", display: "block" }}>
+                    <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
                       Scale of 10.0
                     </span>
                   </div>
                 </div>
 
-                <div style={{ borderTop: "1px solid var(--border)", paddingTop: "var(--space-4)", marginTop: "var(--space-2)" }}>
-                  <h5 style={{ fontSize: "var(--text-sm)", marginBottom: "var(--space-2)", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)" }}>
-                    Academic Highlights
+                <div
+                  style={{
+                    borderTop: "1px solid var(--border)",
+                    paddingTop: "var(--space-5)",
+                    marginTop: "var(--space-2)",
+                  }}
+                >
+                  <h5
+                    style={{
+                      fontSize: "var(--text-xs)",
+                      marginBottom: "var(--space-3)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      color: "var(--text-muted)",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Academic Highlights & Curriculum Focus
                   </h5>
                   <ul style={{ listStyle: "none", paddingLeft: 0, display: "grid", gap: "var(--space-2)" }}>
                     {edu.highlights.map((h, i) => (
-                      <li key={i} style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--accent)" }} />
+                      <li
+                        key={i}
+                        style={{
+                          fontSize: "var(--text-sm)",
+                          color: "var(--text-secondary)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "var(--space-3)",
+                        }}
+                      >
+                        <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent)" }} />
                         {h}
                       </li>
                     ))}

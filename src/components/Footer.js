@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUp, Heart, Code2 } from "lucide-react";
+import { ArrowUp, Code2, MapPin, GraduationCap } from "lucide-react";
 import SocialLinks from "./SocialLinks";
 
 const footerLinks = [
@@ -25,17 +25,19 @@ export default function Footer() {
         borderTop: "1px solid var(--border)",
         backgroundColor: "var(--bg-secondary)",
         marginTop: "auto",
-        paddingTop: "var(--space-12)",
-        paddingBottom: "var(--space-8)",
+        paddingTop: "var(--space-16)",
+        paddingBottom: "var(--space-24)", // Extra padding for the floating dock
+        position: "relative",
+        zIndex: 1,
       }}
     >
       <div className="container">
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "var(--space-8)",
-            paddingBottom: "var(--space-8)",
+            paddingBottom: "var(--space-10)",
             borderBottom: "1px solid var(--border)",
           }}
         >
@@ -57,39 +59,46 @@ export default function Footer() {
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  width: "28px",
-                  height: "28px",
+                  width: "30px",
+                  height: "30px",
                   borderRadius: "var(--radius-md)",
-                  backgroundColor: "var(--accent)",
+                  background: "var(--gradient-accent)",
                   color: "#ffffff",
                 }}
               >
                 <Code2 size={16} aria-hidden="true" />
               </span>
-              DHANUSH
+              <span className="text-gradient">DHANUSH</span>
             </div>
-            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "var(--space-3)" }}>
-              Computer Science Engineering Student at Sahyadri College of Engineering and Management.
-              Focused on software development, full-stack systems, and practical artificial intelligence.
+            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "var(--space-4)", lineHeight: 1.65 }}>
+              Computer Science Engineering student at Sahyadri College of Engineering and Management.
+              Crafting reliable software solutions across algorithms, transportation intelligence, and explainable AI.
             </p>
-            <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-              📍 Mangalore, Karnataka, India
-            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)", fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
+              <span className="flex items-center gap-1">
+                <MapPin size={13} color="var(--accent)" aria-hidden="true" />
+                Mangalore, Karnataka, India
+              </span>
+              <span className="flex items-center gap-1">
+                <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
+                Sahyadri College of Engineering and Management
+              </span>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Navigation */}
           <div>
             <h4
               style={{
                 fontSize: "var(--text-sm)",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.08em",
                 color: "var(--text-primary)",
                 marginBottom: "var(--space-4)",
               }}
             >
-              Quick Navigation
+              Navigation
             </h4>
             <ul
               style={{
@@ -110,7 +119,7 @@ export default function Footer() {
                       textDecoration: "none",
                       transition: "color var(--transition-fast)",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-light)")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
                   >
                     {link.name}
@@ -127,21 +136,21 @@ export default function Footer() {
                 fontSize: "var(--text-sm)",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.08em",
                 color: "var(--text-primary)",
                 marginBottom: "var(--space-4)",
               }}
             >
-              Professional Profiles
+              Connect & Inquiries
             </h4>
             <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "var(--space-4)" }}>
-              Open for software development internships, research discussions, and hackathon collaborations.
+              Open for software development internships, academic research discussions, and hackathons.
             </p>
             <SocialLinks />
           </div>
         </div>
 
-        {/* Bottom Bar & Back to top */}
+        {/* Bottom Bar */}
         <div
           style={{
             display: "flex",
@@ -153,13 +162,13 @@ export default function Footer() {
           }}
         >
           <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-            © {new Date().getFullYear()} DHANUSH. Built with Next.js and React. All rights reserved.
+            © {new Date().getFullYear()} DHANUSH. Built with Next.js & React. All rights reserved.
           </p>
 
           <button
             type="button"
             onClick={scrollToTop}
-            className="btn btn-secondary btn-sm"
+            className="btn btn-secondary btn-sm btn-pill"
             style={{ gap: "var(--space-2)" }}
             aria-label="Scroll back to top"
           >
