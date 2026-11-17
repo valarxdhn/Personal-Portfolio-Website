@@ -11,7 +11,7 @@ export default function Footer() {
 
   const githubLink = socialLinks.find((l) => l.name === "GitHub")?.url || "https://github.com/valarxdhn";
   const linkedinLink = socialLinks.find((l) => l.name === "LinkedIn")?.url || "https://linkedin.com";
-  const emailLink = socialLinks.find((l) => l.name === "Email")?.url || "mailto:contact@dhanush.dev";
+  const emailLink = socialLinks.find((l) => l.name === "Email")?.url || "mailto:dhanushmk95@gmail.com";
 
   return (
     <footer

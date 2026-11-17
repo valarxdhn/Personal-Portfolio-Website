@@ -78,7 +78,7 @@ export async function POST(request) {
     }
 
     const apiKey = process.env.CONTACT_EMAIL_API_KEY;
-    const recipient = process.env.CONTACT_RECIPIENT_EMAIL || "dhanush.cse.dev@gmail.com";
+    const recipient = process.env.CONTACT_RECIPIENT_EMAIL || "dhanushmk95@gmail.com";
 
     // Scenario A: Email API Key configured (Resend provider integration)
     if (apiKey) {
@@ -168,7 +168,7 @@ export async function POST(request) {
         {
           success: false,
           message:
-            "Unable to record message at this time. Please reach out directly to contact@dhanush.dev.",
+            "Unable to record message at this time. Please reach out directly to dhanushmk95@gmail.com.",
           fallbackEmail: recipient,
         },
         { status: 503 }

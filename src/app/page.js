@@ -75,7 +75,7 @@ export default function HomePage() {
                   </Button>
                 ) : (
                   <Button
-                    href="mailto:contact@dhanush.dev?subject=Resume%20Request%20-%20Dhanush"
+                    href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
                     variant="secondary"
                     title="Direct email transmission (Resume PDF pending upload)"
                   >
@@ -310,8 +310,8 @@ export default function HomePage() {
               <div style={{ display: "grid", gap: "var(--space-3)", fontSize: "var(--text-sm)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
                   <Mail size={16} color="var(--accent)" aria-hidden="true" />
-                  <a href="mailto:contact@dhanush.dev" style={{ color: "var(--text-primary)", fontWeight: 500 }}>
-                    contact@dhanush.dev
+                  <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--text-primary)", fontWeight: 500 }}>
+                    dhanushmk95@gmail.com
                   </a>
                 </div>
 

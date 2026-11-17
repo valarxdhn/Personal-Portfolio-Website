@@ -1,5 +1,6 @@
 export const personalData = {
   name: "Dhanush",
+  email: "dhanushmk95@gmail.com",
   headline: "Computer Science Engineering Student & Software Developer",
   role: "Computer Science Engineering Student",
   location: "Mangalore, Karnataka, India",

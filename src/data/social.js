@@ -15,8 +15,8 @@ export const socialLinks = [
   },
   {
     name: "Email",
-    url: "mailto:contact@dhanush.dev", // Configurable contact email
-    username: "contact@dhanush.dev",
+    url: "mailto:dhanushmk95@gmail.com",
+    username: "dhanushmk95@gmail.com",
     icon: "Mail",
     isAvailable: true,
   },

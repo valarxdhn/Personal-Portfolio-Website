@@ -81,13 +81,13 @@ export default function ContactForm() {
         setStatus("error");
         setStatusMessage(
           data.message ||
-            "Unable to deliver message through the form. Please reach out directly at contact@dhanush.dev."
+            "Unable to deliver message through the form. Please reach out directly at dhanushmk95@gmail.com."
         );
       }
     } catch {
       setStatus("error");
       setStatusMessage(
-        "Network connection error. Please verify your connection or email directly at contact@dhanush.dev."
+        "Network connection error. Please verify your connection or email directly at dhanushmk95@gmail.com."
       );
     }
   };
@@ -175,7 +175,7 @@ export default function ContactForm() {
             </p>
             <div style={{ marginTop: "var(--space-2)" }}>
               <a
-                href="mailto:contact@dhanush.dev"
+                href="mailto:dhanushmk95@gmail.com"
                 style={{
                   fontSize: "var(--text-xs)",
                   color: "var(--accent)",
@@ -399,8 +399,8 @@ export default function ContactForm() {
         }}
       >
         Direct email alternative:{" "}
-        <a href="mailto:contact@dhanush.dev" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-          contact@dhanush.dev
+        <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--accent)", textDecoration: "underline" }}>
+          dhanushmk95@gmail.com
         </a>
       </p>
     </form>

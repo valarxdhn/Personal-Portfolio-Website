@@ -54,10 +54,10 @@ export default function ContactPage() {
                       Email
                     </span>
                     <a
-                      href="mailto:contact@dhanush.dev"
+                      href="mailto:dhanushmk95@gmail.com"
                       style={{ fontSize: "var(--text-sm)", fontWeight: 500, color: "var(--text-primary)" }}
                     >
-                      contact@dhanush.dev
+                      dhanushmk95@gmail.com
                     </a>
                   </div>
                 </div>
