@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles, MessageSquare } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Loader2, Mail } from "lucide-react";
 import Button from "./Button";
 
 export default function ContactForm() {
@@ -10,6 +10,7 @@ export default function ContactForm() {
     email: "",
     subject: "",
     message: "",
+    botcheck: "", // Honeypot field
   });
 
   const [errors, setErrors] = useState({});
@@ -19,8 +20,8 @@ export default function ContactForm() {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Full name is required.";
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      newErrors.name = "Full name (at least 2 characters) is required.";
     }
 
     if (!formData.email.trim()) {
@@ -29,14 +30,14 @@ export default function ContactForm() {
       newErrors.email = "Please provide a valid email address.";
     }
 
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required.";
+    if (!formData.subject.trim() || formData.subject.trim().length < 3) {
+      newErrors.subject = "Subject (at least 3 characters) is required.";
     }
 
     if (!formData.message.trim()) {
       newErrors.message = "Message content is required.";
     } else if (formData.message.trim().length < 15) {
-      newErrors.message = "Message must be at least 15 characters long.";
+      newErrors.message = "Message must be at least 15 characters.";
     }
 
     setErrors(newErrors);
@@ -73,20 +74,20 @@ export default function ContactForm() {
       if (response.ok && data.success) {
         setStatus("success");
         setStatusMessage(
-          data.message ||
-            "Your message has been received! Thank you for getting in touch."
+          data.message || "Your message has been received! Dhanush will review it shortly."
         );
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", subject: "", message: "", botcheck: "" });
       } else {
         setStatus("error");
         setStatusMessage(
-          data.message || "Failed to deliver message. Please try again or email directly."
+          data.message ||
+            "Unable to deliver message through the form. Please reach out directly at contact@dhanush.dev."
         );
       }
-    } catch (err) {
+    } catch {
       setStatus("error");
       setStatusMessage(
-        "Network connection issue. Please verify your connection or reach out directly via email."
+        "Network connection error. Please verify your connection or email directly at contact@dhanush.dev."
       );
     }
   };
@@ -98,37 +99,31 @@ export default function ContactForm() {
       className="card"
       style={{
         padding: "var(--space-8)",
-        background: "linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 15, 25, 0.9) 100%)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        borderRadius: "var(--radius-xl)",
-        position: "relative",
-        overflow: "hidden",
-        boxShadow: "0 16px 36px -10px rgba(0, 0, 0, 0.6)",
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border)",
+        borderRadius: "var(--radius-lg)",
       }}
     >
-      {/* Decorative top accent glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: "15%",
-          right: "15%",
-          height: "2px",
-          background: "var(--gradient-accent)",
-        }}
-      />
-
       <div style={{ marginBottom: "var(--space-6)" }}>
-        <div className="flex items-center gap-2" style={{ marginBottom: "var(--space-2)" }}>
-          <MessageSquare size={18} color="var(--accent-light)" aria-hidden="true" />
-          <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, margin: 0 }}>
-            Send a Direct Message
-          </h3>
-        </div>
-        <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0 }}>
-          Fill out the form below to initiate discussion. All fields marked with * are required.
+        <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, marginBottom: "var(--space-2)" }}>
+          Send a Message
+        </h3>
+        <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", margin: 0 }}>
+          Reach out regarding software internships, project inquiries, or technical collaborations.
         </p>
       </div>
+
+      {/* Honeypot field (hidden from real users) */}
+      <input
+        type="text"
+        name="botcheck"
+        value={formData.botcheck}
+        onChange={handleChange}
+        tabIndex={-1}
+        autoComplete="off"
+        style={{ display: "none" }}
+        aria-hidden="true"
+      />
 
       {status === "success" && (
         <div
@@ -139,17 +134,19 @@ export default function ContactForm() {
             gap: "var(--space-3)",
             padding: "var(--space-4)",
             borderRadius: "var(--radius-md)",
-            backgroundColor: "rgba(16, 185, 129, 0.12)",
+            backgroundColor: "var(--status-success-bg)",
             border: "1px solid rgba(16, 185, 129, 0.3)",
             marginBottom: "var(--space-6)",
           }}
         >
           <CheckCircle2 size={20} color="var(--status-success)" style={{ flexShrink: 0, marginTop: "2px" }} />
           <div>
-            <h4 style={{ fontSize: "var(--text-sm)", color: "var(--status-success)", marginBottom: "4px" }}>
+            <h4 style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--status-success)", marginBottom: "2px" }}>
               Message Received
             </h4>
-            <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)" }}>{statusMessage}</p>
+            <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)", margin: 0 }}>
+              {statusMessage}
+            </p>
           </div>
         </div>
       )}
@@ -163,25 +160,52 @@ export default function ContactForm() {
             gap: "var(--space-3)",
             padding: "var(--space-4)",
             borderRadius: "var(--radius-md)",
-            backgroundColor: "rgba(239, 68, 68, 0.12)",
+            backgroundColor: "var(--status-danger-bg)",
             border: "1px solid rgba(239, 68, 68, 0.3)",
             marginBottom: "var(--space-6)",
           }}
         >
           <AlertCircle size={20} color="var(--status-danger)" style={{ flexShrink: 0, marginTop: "2px" }} />
           <div>
-            <h4 style={{ fontSize: "var(--text-sm)", color: "var(--status-danger)", marginBottom: "4px" }}>
-              Submission Alert
+            <h4 style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--status-danger)", marginBottom: "2px" }}>
+              Notice
             </h4>
-            <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)" }}>{statusMessage}</p>
+            <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)", margin: 0 }}>
+              {statusMessage}
+            </p>
+            <div style={{ marginTop: "var(--space-2)" }}>
+              <a
+                href="mailto:contact@dhanush.dev"
+                style={{
+                  fontSize: "var(--text-xs)",
+                  color: "var(--accent)",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <Mail size={12} />
+                Open Email Client
+              </a>
+            </div>
           </div>
         </div>
       )}
 
       {/* Name Input */}
-      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
-        <label htmlFor="contact-name" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
-          Full Name <span style={{ color: "var(--accent)" }}>*</span>
+      <div style={{ marginBottom: "var(--space-4)" }}>
+        <label
+          htmlFor="contact-name"
+          style={{
+            display: "block",
+            fontSize: "var(--text-xs)",
+            fontWeight: 600,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-2)",
+          }}
+        >
+          Your Name <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
           id="contact-name"
@@ -189,30 +213,42 @@ export default function ContactForm() {
           type="text"
           value={formData.name}
           onChange={handleChange}
-          placeholder="e.g. Alex Morgan"
+          placeholder="e.g. Alex Chen"
           aria-invalid={errors.name ? "true" : "false"}
-          className="form-input"
+          disabled={status === "loading"}
+          required
           style={{
             width: "100%",
             padding: "0.75rem 1rem",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
-            border: errors.name ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            backgroundColor: "var(--bg-tertiary)",
+            border: errors.name ? "1px solid var(--status-danger)" : "1px solid var(--border)",
             borderRadius: "var(--radius-md)",
             color: "var(--text-primary)",
             fontSize: "var(--text-sm)",
-            transition: "all var(--transition-fast)",
             outline: "none",
+            transition: "border-color var(--transition-fast)",
           }}
-          disabled={status === "loading"}
-          required
         />
-        {errors.name && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.name}</span>}
+        {errors.name && (
+          <span style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>
+            {errors.name}
+          </span>
+        )}
       </div>
 
       {/* Email Input */}
-      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
-        <label htmlFor="contact-email" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
-          Email Address <span style={{ color: "var(--accent)" }}>*</span>
+      <div style={{ marginBottom: "var(--space-4)" }}>
+        <label
+          htmlFor="contact-email"
+          style={{
+            display: "block",
+            fontSize: "var(--text-xs)",
+            fontWeight: 600,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-2)",
+          }}
+        >
+          Your Email Address <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
           id="contact-email"
@@ -222,27 +258,39 @@ export default function ContactForm() {
           onChange={handleChange}
           placeholder="your.email@example.com"
           aria-invalid={errors.email ? "true" : "false"}
-          className="form-input"
+          disabled={status === "loading"}
+          required
           style={{
             width: "100%",
             padding: "0.75rem 1rem",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
-            border: errors.email ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            backgroundColor: "var(--bg-tertiary)",
+            border: errors.email ? "1px solid var(--status-danger)" : "1px solid var(--border)",
             borderRadius: "var(--radius-md)",
             color: "var(--text-primary)",
             fontSize: "var(--text-sm)",
-            transition: "all var(--transition-fast)",
             outline: "none",
+            transition: "border-color var(--transition-fast)",
           }}
-          disabled={status === "loading"}
-          required
         />
-        {errors.email && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.email}</span>}
+        {errors.email && (
+          <span style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>
+            {errors.email}
+          </span>
+        )}
       </div>
 
       {/* Subject Input */}
-      <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
-        <label htmlFor="contact-subject" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
+      <div style={{ marginBottom: "var(--space-4)" }}>
+        <label
+          htmlFor="contact-subject"
+          style={{
+            display: "block",
+            fontSize: "var(--text-xs)",
+            fontWeight: 600,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-2)",
+          }}
+        >
           Subject <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <input
@@ -251,29 +299,41 @@ export default function ContactForm() {
           type="text"
           value={formData.subject}
           onChange={handleChange}
-          placeholder="Software Engineering Internship / Research Collaboration"
+          placeholder="Internship inquiry / Project discussion"
           aria-invalid={errors.subject ? "true" : "false"}
-          className="form-input"
+          disabled={status === "loading"}
+          required
           style={{
             width: "100%",
             padding: "0.75rem 1rem",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
-            border: errors.subject ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            backgroundColor: "var(--bg-tertiary)",
+            border: errors.subject ? "1px solid var(--status-danger)" : "1px solid var(--border)",
             borderRadius: "var(--radius-md)",
             color: "var(--text-primary)",
             fontSize: "var(--text-sm)",
-            transition: "all var(--transition-fast)",
             outline: "none",
+            transition: "border-color var(--transition-fast)",
           }}
-          disabled={status === "loading"}
-          required
         />
-        {errors.subject && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.subject}</span>}
+        {errors.subject && (
+          <span style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>
+            {errors.subject}
+          </span>
+        )}
       </div>
 
       {/* Message Input */}
-      <div className="form-group" style={{ marginBottom: "var(--space-6)" }}>
-        <label htmlFor="contact-message" className="form-label" style={{ display: "block", fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
+      <div style={{ marginBottom: "var(--space-6)" }}>
+        <label
+          htmlFor="contact-message"
+          style={{
+            display: "block",
+            fontSize: "var(--text-xs)",
+            fontWeight: 600,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-2)",
+          }}
+        >
           Message <span style={{ color: "var(--accent)" }}>*</span>
         </label>
         <textarea
@@ -282,26 +342,29 @@ export default function ContactForm() {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          placeholder="Share details regarding your team, the project, or the collaborative opportunity..."
+          placeholder="Describe your inquiry, role, or project..."
           aria-invalid={errors.message ? "true" : "false"}
-          className="form-textarea"
+          disabled={status === "loading"}
+          required
           style={{
             width: "100%",
             padding: "0.75rem 1rem",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
-            border: errors.message ? "1px solid var(--status-danger)" : "1px solid rgba(255, 255, 255, 0.1)",
+            backgroundColor: "var(--bg-tertiary)",
+            border: errors.message ? "1px solid var(--status-danger)" : "1px solid var(--border)",
             borderRadius: "var(--radius-md)",
             color: "var(--text-primary)",
             fontSize: "var(--text-sm)",
             fontFamily: "inherit",
             resize: "vertical",
-            transition: "all var(--transition-fast)",
             outline: "none",
+            transition: "border-color var(--transition-fast)",
           }}
-          disabled={status === "loading"}
-          required
         />
-        {errors.message && <span className="form-error" style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>{errors.message}</span>}
+        {errors.message && (
+          <span style={{ color: "var(--status-danger)", fontSize: "var(--text-xs)", marginTop: "4px", display: "block" }}>
+            {errors.message}
+          </span>
+        )}
       </div>
 
       <div>
@@ -310,12 +373,12 @@ export default function ContactForm() {
           variant="primary"
           size="lg"
           disabled={status === "loading"}
-          style={{ width: "100%", gap: "var(--space-2)", borderRadius: "var(--radius-md)" }}
+          style={{ width: "100%", gap: "var(--space-2)" }}
         >
           {status === "loading" ? (
             <>
               <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-              <span>Transmitting Message...</span>
+              <span>Sending Message...</span>
             </>
           ) : (
             <>
@@ -332,11 +395,11 @@ export default function ContactForm() {
           fontSize: "var(--text-xs)",
           color: "var(--text-muted)",
           textAlign: "center",
-          lineHeight: 1.5,
+          margin: "var(--space-4) 0 0 0",
         }}
       >
-        Submissions handled securely via verified server endpoint. You can also contact directly at{" "}
-        <a href="mailto:contact@dhanush.dev" style={{ color: "var(--accent-light)", fontWeight: 600 }}>
+        Direct email alternative:{" "}
+        <a href="mailto:contact@dhanush.dev" style={{ color: "var(--accent)", textDecoration: "underline" }}>
           contact@dhanush.dev
         </a>
       </p>

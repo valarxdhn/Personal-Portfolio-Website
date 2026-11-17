@@ -1,23 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUp, Code2, MapPin, GraduationCap } from "lucide-react";
-import SocialLinks from "./SocialLinks";
-
-const footerLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Experience", href: "/experience" },
-  { name: "Skills", href: "/skills" },
-  { name: "Achievements", href: "/achievements" },
-  { name: "Contact", href: "/contact" },
-];
+import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { personalData } from "@/data/personal";
+import { socialLinks } from "@/data/social";
 
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const githubLink = socialLinks.find((l) => l.name === "GitHub")?.url || "https://github.com/valarxdhn";
+  const linkedinLink = socialLinks.find((l) => l.name === "LinkedIn")?.url || "https://linkedin.com";
+  const emailLink = socialLinks.find((l) => l.name === "Email")?.url || "mailto:contact@dhanush.dev";
 
   return (
     <footer
@@ -25,156 +19,119 @@ export default function Footer() {
         borderTop: "1px solid var(--border)",
         backgroundColor: "var(--bg-secondary)",
         marginTop: "auto",
-        paddingTop: "var(--space-16)",
-        paddingBottom: "var(--space-24)", // Extra padding for the floating dock
-        position: "relative",
-        zIndex: 1,
+        paddingTop: "var(--space-10)",
+        paddingBottom: "var(--space-10)",
       }}
     >
       <div className="container">
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "var(--space-8)",
-            paddingBottom: "var(--space-10)",
-            borderBottom: "1px solid var(--border)",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "var(--space-6)",
           }}
         >
-          {/* Brand & Summary */}
+          {/* Identity & Short Description */}
           <div>
-            <div
+            <h3
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                fontWeight: 800,
-                fontSize: "var(--text-xl)",
+                fontSize: "var(--text-base)",
+                fontWeight: 700,
                 color: "var(--text-primary)",
-                marginBottom: "var(--space-3)",
+                margin: "0 0 var(--space-1) 0",
               }}
             >
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "var(--radius-md)",
-                  background: "var(--gradient-accent)",
-                  color: "#ffffff",
-                }}
-              >
-                <Code2 size={16} aria-hidden="true" />
-              </span>
-              <span className="text-gradient">DHANUSH</span>
-            </div>
-            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "var(--space-4)", lineHeight: 1.65 }}>
-              Computer Science Engineering student at Sahyadri College of Engineering and Management.
-              Crafting reliable software solutions across algorithms, transportation intelligence, and explainable AI.
+              {personalData.name}
+            </h3>
+            <p
+              style={{
+                fontSize: "var(--text-xs)",
+                color: "var(--text-muted)",
+                margin: 0,
+                maxWidth: "480px",
+                lineHeight: 1.5,
+              }}
+            >
+              Computer Science Engineering Student at Sahyadri College of Engineering and Management.
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)", fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-              <span className="flex items-center gap-1">
-                <MapPin size={13} color="var(--accent)" aria-hidden="true" />
-                Mangalore, Karnataka, India
-              </span>
-              <span className="flex items-center gap-1">
-                <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
-                Sahyadri College of Engineering and Management
-              </span>
-            </div>
           </div>
 
-          {/* Quick Navigation */}
-          <div>
-            <h4
-              style={{
-                fontSize: "var(--text-sm)",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                color: "var(--text-primary)",
-                marginBottom: "var(--space-4)",
-              }}
+          {/* Social Links & Back to Top */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-3)",
+            }}
+          >
+            <a
+              href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              className="btn btn-ghost btn-sm"
+              style={{ padding: "0.4rem 0.6rem", color: "var(--text-secondary)" }}
             >
-              Navigation
-            </h4>
-            <ul
-              style={{
-                listStyle: "none",
-                display: "grid",
-                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                gap: "var(--space-2)",
-                paddingLeft: 0,
-              }}
-            >
-              {footerLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: "var(--text-sm)",
-                      color: "var(--text-secondary)",
-                      textDecoration: "none",
-                      transition: "color var(--transition-fast)",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent-light)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <Github size={16} aria-hidden="true" />
+            </a>
 
-          {/* Connect & Social */}
-          <div>
-            <h4
+            <a
+              href={linkedinLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              className="btn btn-ghost btn-sm"
+              style={{ padding: "0.4rem 0.6rem", color: "var(--text-secondary)" }}
+            >
+              <Linkedin size={16} aria-hidden="true" />
+            </a>
+
+            <a
+              href={emailLink}
+              aria-label="Send Email"
+              className="btn btn-ghost btn-sm"
+              style={{ padding: "0.4rem 0.6rem", color: "var(--text-secondary)" }}
+            >
+              <Mail size={16} aria-hidden="true" />
+            </a>
+
+            <button
+              type="button"
+              onClick={scrollToTop}
+              aria-label="Scroll to top of page"
+              className="btn btn-ghost btn-sm"
               style={{
-                fontSize: "var(--text-sm)",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                color: "var(--text-primary)",
-                marginBottom: "var(--space-4)",
+                padding: "0.4rem 0.6rem",
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-sm)",
               }}
             >
-              Connect & Inquiries
-            </h4>
-            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "var(--space-4)" }}>
-              Open for software development internships, academic research discussions, and hackathons.
-            </p>
-            <SocialLinks />
+              <ArrowUp size={16} aria-hidden="true" />
+            </button>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Copyright */}
         <div
           style={{
+            marginTop: "var(--space-6)",
+            paddingTop: "var(--space-4)",
+            borderTop: "1px solid var(--border-subtle)",
+            fontSize: "var(--text-xs)",
+            color: "var(--text-muted)",
             display: "flex",
-            alignItems: "center",
             justifyContent: "space-between",
+            alignItems: "center",
             flexWrap: "wrap",
-            gap: "var(--space-4)",
-            paddingTop: "var(--space-6)",
+            gap: "var(--space-2)",
           }}
         >
-          <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-            © {new Date().getFullYear()} DHANUSH. Built with Next.js & React. All rights reserved.
-          </p>
-
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="btn btn-secondary btn-sm btn-pill"
-            style={{ gap: "var(--space-2)" }}
-            aria-label="Scroll back to top"
-          >
-            <span>Back to top</span>
-            <ArrowUp size={14} aria-hidden="true" />
-          </button>
+          <span>© {new Date().getFullYear()} Dhanush. All rights reserved.</span>
+          <span>Built with Next.js & React</span>
         </div>
       </div>
     </footer>

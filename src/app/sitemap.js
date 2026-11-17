@@ -6,7 +6,7 @@ export default function sitemap() {
     "/about",
     "/projects",
     "/projects/dynamic-train-eta",
-    "/projects/sustainable-bharat",
+    "/projects/voltcharge",
     "/projects/campusloop",
     "/experience",
     "/skills",

@@ -1,21 +1,18 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingDock from "@/components/FloatingDock";
-import BackgroundMesh from "@/components/BackgroundMesh";
 
 export const metadata = {
-  title: "DHANUSH | Computer Science Engineering Student | Portfolio",
+  title: "Dhanush | Computer Science Engineering Student & Developer",
   description:
-    "Personal portfolio of Dhanush, Computer Science Engineering Student at Sahyadri College of Engineering and Management. Showcasing software development projects, IJIRT research publication, international conference presentation, and technical skills.",
+    "Personal portfolio of Dhanush, Computer Science Engineering Student at Sahyadri College of Engineering and Management (CGPA: 8.85). Showcasing real-world software engineering projects, IJIRT research publication, and technical skills.",
   keywords: [
     "Dhanush",
     "Computer Science Engineering",
-    "Portfolio",
     "Sahyadri College",
     "Software Developer",
     "Dynamic Train ETA",
-    "Sustainable Bharat",
+    "VoltCharge",
     "CampusLoop",
     "IJIRT Research",
     "Mangalore",
@@ -23,9 +20,9 @@ export const metadata = {
   authors: [{ name: "Dhanush" }],
   creator: "Dhanush",
   openGraph: {
-    title: "DHANUSH | Portfolio",
+    title: "Dhanush | Computer Science Engineering Student & Developer",
     description:
-      "Computer Science Engineering student passionate about software development, problem-solving, and emerging technologies.",
+      "Computer Science Engineering student at Sahyadri College of Engineering and Management. Building practical software in transit analytics, full-stack development, and applied AI.",
     url: "https://dhanush-portfolio.vercel.app",
     siteName: "Dhanush Portfolio",
     locale: "en_US",
@@ -41,13 +38,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-        <BackgroundMesh />
         <Navbar />
-        <main style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
+        <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           {children}
         </main>
         <Footer />
-        <FloatingDock />
       </body>
     </html>
   );

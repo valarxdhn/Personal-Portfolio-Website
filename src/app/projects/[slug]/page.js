@@ -4,14 +4,7 @@ import {
   ArrowLeft,
   Github,
   ExternalLink,
-  CheckCircle2,
-  Layers,
   Code2,
-  AlertTriangle,
-  Lightbulb,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
 } from "lucide-react";
 import Button from "@/components/Button";
 import { projectsData } from "@/data/projects";
@@ -27,7 +20,7 @@ export function generateMetadata({ params }) {
   if (!project) return { title: "Project Not Found" };
 
   return {
-    title: `${project.shortTitle} | Projects | DHANUSH`,
+    title: `${project.shortTitle} | Projects | Dhanush`,
     description: project.description,
   };
 }
@@ -40,24 +33,19 @@ export default function ProjectDetailPage({ params }) {
   }
 
   return (
-    <div className="section" style={{ paddingTop: "var(--space-10)", minHeight: "85vh" }}>
-      <div className="container" style={{ maxWidth: "1000px" }}>
-        {/* Navigation Breadcrumb Pill */}
+    <div className="section">
+      <div className="container" style={{ maxWidth: "860px" }}>
+        {/* Breadcrumb */}
         <div style={{ marginBottom: "var(--space-6)" }}>
           <Link
             href="/projects"
-            className="btn btn-ghost btn-sm"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "var(--space-2)",
-              padding: "0.35rem 0.85rem",
-              borderRadius: "var(--radius-full)",
-              backgroundColor: "rgba(255, 255, 255, 0.04)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              gap: "6px",
               fontSize: "var(--text-xs)",
-              color: "var(--text-secondary)",
-              transition: "all var(--transition-fast)",
+              color: "var(--text-muted)",
+              fontWeight: 500,
             }}
           >
             <ArrowLeft size={14} aria-hidden="true" />
@@ -65,309 +53,121 @@ export default function ProjectDetailPage({ params }) {
           </Link>
         </div>
 
-        {/* Project Header Banner */}
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-8)",
-            marginBottom: "var(--space-8)",
-            background: "linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 15, 25, 0.9) 100%)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "var(--radius-xl)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          {/* Luminous top border accent */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "10%",
-              right: "10%",
-              height: "2px",
-              background: "var(--gradient-accent)",
-            }}
-          />
-
-          <div
-            className="flex items-center gap-2 flex-wrap"
-            style={{ marginBottom: "var(--space-4)" }}
-          >
-            <span
-              className="badge badge-accent"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.35rem",
-                padding: "0.35rem 0.75rem",
-                fontSize: "var(--text-xs)",
-                fontWeight: 600,
-              }}
-            >
-              <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--accent-light)",
-                  boxShadow: "0 0 8px var(--accent)",
-                }}
-              />
-              {project.status}
-            </span>
-            <span
-              className="badge"
-              style={{
-                fontSize: "var(--text-xs)",
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                color: "var(--text-muted)",
-              }}
-            >
-              Architectural Breakdown
-            </span>
+        {/* Project Header */}
+        <div style={{ marginBottom: "var(--space-8)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-2)" }}>
+            <span className="badge badge-accent">{project.status || "In Development"}</span>
           </div>
 
           <h1
             style={{
-              fontSize: "clamp(2rem, 4vw, 3.25rem)",
+              fontSize: "clamp(1.85rem, 3.5vw, 2.5rem)",
               fontWeight: 800,
               lineHeight: 1.2,
-              marginBottom: "var(--space-4)",
-              letterSpacing: "-0.03em",
+              marginBottom: "var(--space-3)",
             }}
           >
             {project.title}
           </h1>
 
-          <p
-            style={{
-              fontSize: "var(--text-lg)",
-              color: "var(--text-secondary)",
-              lineHeight: 1.7,
-              maxWidth: "800px",
-            }}
-          >
+          <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", lineHeight: 1.65 }}>
             {project.description}
           </p>
+        </div>
 
-          {/* Action Links Bar */}
+        {/* Real Links Bar (if available) */}
+        {(project.githubUrl || project.demoUrl) && (
           <div
             style={{
               display: "flex",
               alignItems: "center",
               flexWrap: "wrap",
               gap: "var(--space-3)",
-              marginTop: "var(--space-6)",
-              paddingTop: "var(--space-6)",
-              borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+              padding: "var(--space-4)",
+              backgroundColor: "var(--bg-secondary)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-md)",
+              marginBottom: "var(--space-8)",
             }}
           >
-            {project.githubUrl ? (
-              <Button href={project.githubUrl} isExternal variant="primary" size="md">
-                <Github size={16} aria-hidden="true" />
-                <span>View Source Code</span>
-              </Button>
-            ) : (
-              <span
-                className="badge"
-                style={{
-                  padding: "0.55rem 0.95rem",
-                  fontSize: "var(--text-xs)",
-                  backgroundColor: "rgba(255, 255, 255, 0.04)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  color: "var(--text-muted)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
+            {project.githubUrl && (
+              <Button href={project.githubUrl} isExternal variant="primary" size="sm">
                 <Github size={14} aria-hidden="true" />
-                Repository will be linked upon public release
-              </span>
+                <span>Source Code Repository</span>
+              </Button>
             )}
 
-            {project.demoUrl ? (
-              <Button href={project.demoUrl} isExternal variant="outline" size="md">
-                <ExternalLink size={16} aria-hidden="true" />
+            {project.demoUrl && (
+              <Button href={project.demoUrl} isExternal variant="secondary" size="sm">
+                <ExternalLink size={14} aria-hidden="true" />
                 <span>Live Demonstration</span>
               </Button>
-            ) : (
-              <span
-                className="badge"
-                style={{
-                  padding: "0.55rem 0.95rem",
-                  fontSize: "var(--text-xs)",
-                  backgroundColor: "rgba(255, 255, 255, 0.04)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  color: "var(--text-muted)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                }}
-              >
-                <ExternalLink size={14} aria-hidden="true" />
-                Live interactive deployment upcoming
-              </span>
             )}
           </div>
-        </div>
+        )}
 
-        {/* Two-Column Deep Dive: Problem & Solution */}
+        {/* Problem Statement and System Overview */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "var(--space-6)",
             marginBottom: "var(--space-8)",
           }}
         >
-          {/* Problem Statement Card */}
-          <div
-            className="card card-hover"
+          {/* The Problem */}
+          <section
+            className="card"
             style={{
               padding: "var(--space-6)",
-              backgroundColor: "rgba(15, 23, 42, 0.6)",
-              border: "1px solid rgba(245, 158, 11, 0.2)",
-              borderRadius: "var(--radius-lg)",
+              backgroundColor: "var(--bg-secondary)",
+              border: "1px solid var(--border)",
             }}
           >
-            <div
-              className="flex items-center gap-2"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              <div
-                style={{
-                  padding: "0.35rem",
-                  borderRadius: "var(--radius-sm)",
-                  backgroundColor: "rgba(245, 158, 11, 0.15)",
-                  color: "var(--status-warning)",
-                  display: "inline-flex",
-                }}
-              >
-                <AlertTriangle size={18} aria-hidden="true" />
-              </div>
-              <h3 style={{ fontSize: "var(--text-lg)", fontWeight: 700, margin: 0 }}>
-                The Engineering Challenge
-              </h3>
-            </div>
-            <p
-              style={{
-                fontSize: "var(--text-sm)",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-              }}
-            >
+            <h2 style={{ fontSize: "var(--text-base)", fontWeight: 700, marginBottom: "var(--space-2)" }}>
+              The Problem Being Solved
+            </h2>
+            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, margin: 0 }}>
               {project.problemStatement}
             </p>
-          </div>
+          </section>
 
-          {/* Solution & Architecture Overview Card */}
-          <div
-            className="card card-hover"
+          {/* System Overview */}
+          <section
+            className="card"
             style={{
               padding: "var(--space-6)",
-              backgroundColor: "rgba(15, 23, 42, 0.6)",
-              border: "1px solid rgba(59, 130, 246, 0.25)",
-              borderRadius: "var(--radius-lg)",
+              backgroundColor: "var(--bg-secondary)",
+              border: "1px solid var(--border)",
             }}
           >
-            <div
-              className="flex items-center gap-2"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              <div
-                style={{
-                  padding: "0.35rem",
-                  borderRadius: "var(--radius-sm)",
-                  backgroundColor: "var(--accent-subtle)",
-                  color: "var(--accent-light)",
-                  display: "inline-flex",
-                }}
-              >
-                <Lightbulb size={18} aria-hidden="true" />
-              </div>
-              <h3 style={{ fontSize: "var(--text-lg)", fontWeight: 700, margin: 0 }}>
-                Solution & Architectural Strategy
-              </h3>
-            </div>
-            <p
-              style={{
-                fontSize: "var(--text-sm)",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-              }}
-            >
+            <h2 style={{ fontSize: "var(--text-base)", fontWeight: 700, marginBottom: "var(--space-2)" }}>
+              Technical Approach & Overview
+            </h2>
+            <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, margin: 0 }}>
               {project.overview}
             </p>
-          </div>
+          </section>
         </div>
 
-        {/* Main Focus & Key Features */}
-        <div
+        {/* Key Features & Architecture Focus */}
+        <section
           className="card"
           style={{
-            padding: "var(--space-8)",
+            padding: "var(--space-6)",
+            backgroundColor: "var(--bg-secondary)",
+            border: "1px solid var(--border)",
             marginBottom: "var(--space-8)",
-            backgroundColor: "rgba(15, 23, 42, 0.6)",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
-            borderRadius: "var(--radius-xl)",
           }}
         >
-          <div
-            className="flex items-center gap-2"
-            style={{ marginBottom: "var(--space-4)" }}
-          >
-            <Sparkles size={18} color="var(--accent-light)" aria-hidden="true" />
-            <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, margin: 0 }}>
-              Main Architectural Focus
-            </h3>
-          </div>
+          <h2 style={{ fontSize: "var(--text-base)", fontWeight: 700, marginBottom: "var(--space-3)" }}>
+            Implementation Focus & Key Features
+          </h2>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: "var(--space-3)",
-              marginBottom: "var(--space-8)",
-            }}
-          >
-            {project.mainFocus.map((focus, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "var(--radius-md)",
-                  backgroundColor: "rgba(255, 255, 255, 0.03)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
-                  fontSize: "var(--text-sm)",
-                  color: "var(--text-primary)",
-                  fontWeight: 500,
-                }}
-              >
-                <CheckCircle2 size={16} color="var(--accent-cyan)" aria-hidden="true" />
-                <span>{focus}</span>
-              </div>
-            ))}
-          </div>
-
-          <h3
-            style={{
-              fontSize: "var(--text-xl)",
-              fontWeight: 700,
-              marginBottom: "var(--space-4)",
-            }}
-          >
-            Key Capabilities & Features
-          </h3>
           <ul
             style={{
               listStyle: "none",
-              paddingLeft: 0,
+              padding: 0,
+              margin: 0,
               display: "grid",
               gap: "var(--space-3)",
             }}
@@ -376,85 +176,51 @@ export default function ProjectDetailPage({ params }) {
               <li
                 key={i}
                 style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "var(--space-3)",
                   fontSize: "var(--text-sm)",
                   color: "var(--text-secondary)",
                   lineHeight: 1.6,
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "var(--space-2)",
                 }}
               >
-                <span
-                  style={{
-                    color: "var(--accent-light)",
-                    fontWeight: 700,
-                    marginTop: "-1px",
-                  }}
-                >
-                  ▸
-                </span>
+                <span style={{ color: "var(--accent)", fontWeight: 700 }}>•</span>
                 <span>{feat}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
-        {/* Confirmed Technologies Used */}
-        <div
-          className="card"
+        {/* Confirmed Technologies */}
+        <section
           style={{
-            padding: "var(--space-6)",
-            backgroundColor: "rgba(15, 23, 42, 0.5)",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
-            borderRadius: "var(--radius-lg)",
+            padding: "var(--space-5)",
+            backgroundColor: "var(--bg-secondary)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-md)",
             marginBottom: "var(--space-10)",
           }}
         >
-          <div
-            className="flex items-center gap-2"
-            style={{ marginBottom: "var(--space-3)" }}
-          >
-            <Code2 size={18} color="var(--accent-light)" aria-hidden="true" />
-            <h4 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0 }}>
-              Confirmed Technologies & Frameworks
-            </h4>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-3)" }}>
+            <Code2 size={16} color="var(--accent)" aria-hidden="true" />
+            <h3 style={{ fontSize: "var(--text-sm)", fontWeight: 700, margin: 0 }}>
+              Technologies Applied
+            </h3>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
             {project.technologies.map((t) => (
-              <span
-                key={t}
-                className="badge badge-accent"
-                style={{
-                  padding: "0.35rem 0.85rem",
-                  fontSize: "var(--text-xs)",
-                  borderRadius: "var(--radius-full)",
-                }}
-              >
+              <span key={t} className="badge">
                 {t}
               </span>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Footer Navigation Bar */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "var(--space-4)",
-            flexWrap: "wrap",
-            paddingTop: "var(--space-6)",
-          }}
-        >
-          <Button href="/projects" variant="secondary" size="md">
-            <ArrowLeft size={16} aria-hidden="true" />
+        {/* Back Link */}
+        <div>
+          <Button href="/projects" variant="secondary" size="sm">
+            <ArrowLeft size={14} aria-hidden="true" />
             <span>Return to All Projects</span>
-          </Button>
-
-          <Button href="/contact" variant="primary" size="md">
-            <span>Discuss This Project</span>
-            <ArrowRight size={16} aria-hidden="true" />
           </Button>
         </div>
       </div>

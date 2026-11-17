@@ -1,271 +1,160 @@
-import { Terminal, Users, Code, Award, Calendar, Sparkles, BookOpen, Layers, ShieldCheck } from "lucide-react";
+import { Calendar, MapPin, GraduationCap, FileText, Code2, Users } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
-import Button from "@/components/Button";
 
 export const metadata = {
-  title: "Experience & Technical Activities | DHANUSH",
+  title: "Experience & Activities | Dhanush",
   description:
-    "Technical activities, research contributions, project development, and engineering initiatives of Dhanush. Transparent record without fabricated employment.",
+    "Academic research, software engineering coursework, and technical activities of Dhanush, Computer Science Engineering Student at Sahyadri College.",
 };
 
 export default function ExperiencePage() {
   const experiences = [
     {
-      category: "Academic & Collaborative Research",
-      title: "Co-Author & System Architecture Contributor",
-      organization: "IJIRT Research Publication (Paper ID: 206803)",
+      role: "Student Researcher & Co-Author",
+      organization: "IJIRT Peer-Reviewed Journal Publication",
       period: "2026",
-      icon: BookOpen,
-      iconColor: "var(--accent)",
-      description:
-        "Contributed to research, architecture, and conceptual development of an AI-Powered Rural Student Dropout Early Warning System with Explainable Predictions, SMS alerts, and government scheme recommendations.",
-      skills: ["Research Methodology", "Explainable AI", "System Architecture", "Academic Writing"],
-      isCurrent: false,
+      type: "Academic Research",
+      details: [
+        "Collaborated on an applied research paper titled 'AI-Powered Rural Student Dropout Early Warning System with Explainable Predictions, SMS Alerts, and Government Scheme Recommendations'.",
+        "Assisted in analyzing risk indicators, formulating the early-warning logic, and structuring the notification workflow.",
+        "Published in the International Journal of Innovative Research in Technology (IJIRT), Volume 13, Paper ID: 206803.",
+      ],
+      technologies: ["Machine Learning", "Explainable AI", "Data Analysis", "Research Writing"],
     },
     {
-      category: "International Conference",
-      title: "Research Paper Presenter",
+      role: "Research Paper Presenter",
       organization: "International Academic Conference",
       period: "Recent Presentation",
-      icon: Award,
-      iconColor: "var(--accent-purple)",
-      description:
-        "Prepared and presented independent academic research at an international conference, defending analytical methodologies and computational approaches in front of peer reviewers and delegates.",
-      skills: ["Oral Defense", "Technical Communication", "Research Analysis"],
-      isCurrent: false,
+      type: "Conference Defense",
+      details: [
+        "Delivered oral research presentation defending computational problem-solving and software methodologies.",
+        "Addressed technical methodology questions from academic reviewers and conference delegates.",
+      ],
+      technologies: ["Technical Communication", "Methodology Defense", "Data Presentation"],
     },
     {
-      category: "Technical Activities & Project Development",
-      title: "Student Developer & Technical Collaborator",
+      role: "Undergraduate Computer Science Student",
       organization: "Sahyadri College of Engineering and Management",
-      period: "Undergraduate Studies",
-      icon: Code,
-      iconColor: "var(--accent-cyan)",
-      description:
-        "Designing and developing core software systems including Dynamic Train ETA (transportation intelligence), Sustainable Bharat (explainable AI for supplier evaluation), and CampusLoop (campus event aggregation platform).",
-      skills: ["C/C++", "Python", "Supabase", "Git & GitHub", "Problem-Solving"],
-      isCurrent: true,
+      period: "2024 – Present",
+      type: "Degree Coursework",
+      details: [
+        "Pursuing Bachelor of Engineering in Computer Science and Engineering with a First-Year CGPA of 8.85.",
+        "Completed foundational coursework in data structures, algorithms, object-oriented programming (C++, Java), and discrete mathematics.",
+        "Developing practical software applications including Dynamic Train ETA, VoltCharge, and CampusLoop.",
+      ],
+      technologies: ["C", "C++", "Python", "Java", "Data Structures", "Git"],
     },
     {
-      category: "Hackathons & Coding Initiatives",
-      title: "Hackathon Participant & Problem Solver",
+      role: "Hackathon Participant & Student Developer",
       organization: "Collegiate & Regional Hackathons",
       period: "Ongoing",
-      icon: Terminal,
-      iconColor: "var(--status-warning)",
-      description:
-        "Participating in rapid prototyping, coding sprints, and team-based hackathons to build practical solutions for pressing community and campus challenges.",
-      skills: ["Rapid Prototyping", "Teamwork", "Full-Stack Development"],
-      isCurrent: true,
+      type: "Team Projects",
+      details: [
+        "Participated in collegiate hackathons focusing on practical web development and problem-solving under time constraints.",
+        "Collaborated in student teams using Git and GitHub for version control, task distribution, and rapid prototyping.",
+      ],
+      technologies: ["Team Collaboration", "Rapid Prototyping", "Full-Stack Web", "Git"],
     },
   ];
 
   return (
-    <div className="section" style={{ paddingTop: "var(--space-12)", minHeight: "85vh" }}>
-      <div className="container">
+    <div className="section">
+      <div className="container" style={{ maxWidth: "860px" }}>
         <SectionHeading
-          eyebrow="Timeline & History"
+          eyebrow="Timeline"
           title="Experience & Technical Activities"
-          subtitle="A transparent record of peer-reviewed research contributions, conference presentations, technical projects, and academic software engineering activities."
+          subtitle="An honest record of academic research, undergraduate coursework, and collaborative engineering projects."
         />
 
-        {/* Experience Timeline */}
-        <div style={{ maxWidth: "900px", margin: "0 auto var(--space-16)", position: "relative" }}>
-          {/* Vertical Glowing Timeline Line for Desktop */}
-          <div
-            style={{
-              position: "absolute",
-              top: "20px",
-              bottom: "40px",
-              left: "28px",
-              width: "2px",
-              background: "linear-gradient(180deg, var(--accent) 0%, var(--accent-purple) 60%, rgba(59, 130, 246, 0.1) 100%)",
-              zIndex: 0,
-            }}
-          />
-
-          <div style={{ display: "grid", gap: "var(--space-8)" }}>
-            {experiences.map((exp, index) => {
-              const IconComp = exp.icon || Sparkles;
-              return (
-                <div
-                  key={index}
+        <div style={{ display: "grid", gap: "var(--space-6)" }}>
+          {experiences.map((exp, idx) => (
+            <article
+              key={idx}
+              className="card"
+              style={{
+                padding: "var(--space-6)",
+                backgroundColor: "var(--bg-secondary)",
+                border: "1px solid var(--border)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "var(--space-2)",
+                  marginBottom: "var(--space-2)",
+                }}
+              >
+                <span className="badge badge-accent">{exp.type}</span>
+                <span
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "56px 1fr",
-                    gap: "var(--space-4)",
-                    alignItems: "flex-start",
-                    position: "relative",
-                    zIndex: 1,
+                    fontSize: "var(--text-xs)",
+                    color: "var(--text-muted)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
                   }}
                 >
-                  {/* Left Timeline Node */}
-                  <div
+                  <Calendar size={13} aria-hidden="true" />
+                  {exp.period}
+                </span>
+              </div>
+
+              <h3 style={{ fontSize: "var(--text-lg)", fontWeight: 700, marginBottom: "2px" }}>
+                {exp.role}
+              </h3>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 600, marginBottom: "var(--space-4)" }}>
+                {exp.organization}
+              </p>
+
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: "0 0 var(--space-4) 0",
+                  display: "grid",
+                  gap: "var(--space-2)",
+                }}
+              >
+                {exp.details.map((item, i) => (
+                  <li
+                    key={i}
                     style={{
-                      width: "56px",
-                      height: "56px",
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(11, 15, 25, 0.95)",
-                      border: `2px solid ${exp.iconColor}`,
-                      boxShadow: `0 0 16px ${exp.iconColor}40`,
+                      fontSize: "var(--text-sm)",
+                      color: "var(--text-secondary)",
+                      lineHeight: 1.6,
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: exp.iconColor,
-                      flexShrink: 0,
+                      alignItems: "flex-start",
+                      gap: "var(--space-2)",
                     }}
                   >
-                    <IconComp size={22} aria-hidden="true" />
-                  </div>
+                    <span style={{ color: "var(--text-muted)", marginTop: "-1px" }}>–</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
 
-                  {/* Right Experience Card */}
-                  <div
-                    className="card card-hover"
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-1)" }}>
+                {exp.technologies.map((tech) => (
+                  <span
+                    key={tech}
                     style={{
-                      background: "linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(11, 15, 25, 0.85) 100%)",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
-                      borderRadius: "var(--radius-xl)",
-                      padding: "var(--space-6)",
+                      fontSize: "0.72rem",
+                      padding: "0.15rem 0.5rem",
+                      backgroundColor: "var(--bg-tertiary)",
+                      border: "1px solid var(--border)",
+                      borderRadius: "var(--radius-sm)",
+                      color: "var(--text-secondary)",
                     }}
                   >
-                    <div className="card-header" style={{ marginBottom: "var(--space-3)" }}>
-                      <div
-                        className="flex items-center justify-between gap-2 flex-wrap"
-                        style={{ marginBottom: "var(--space-2)" }}
-                      >
-                        <span
-                          className="badge badge-accent"
-                          style={{
-                            fontSize: "0.72rem",
-                            padding: "0.25rem 0.65rem",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {exp.category}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: "var(--text-xs)",
-                            color: "var(--text-muted)",
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "0.35rem",
-                            backgroundColor: "rgba(255, 255, 255, 0.04)",
-                            padding: "0.2rem 0.6rem",
-                            borderRadius: "var(--radius-full)",
-                            border: "1px solid rgba(255, 255, 255, 0.06)",
-                          }}
-                        >
-                          <Calendar size={12} aria-hidden="true" />
-                          {exp.period}
-                        </span>
-                      </div>
-
-                      <h3
-                        className="card-title"
-                        style={{
-                          fontSize: "var(--text-xl)",
-                          fontWeight: 700,
-                          lineHeight: 1.3,
-                          marginBottom: "var(--space-1)",
-                        }}
-                      >
-                        {exp.title}
-                      </h3>
-                      <p
-                        className="card-subtitle"
-                        style={{
-                          color: "var(--accent-light)",
-                          fontWeight: 600,
-                          fontSize: "var(--text-sm)",
-                        }}
-                      >
-                        {exp.organization}
-                      </p>
-                    </div>
-
-                    <div className="card-body">
-                      <p
-                        style={{
-                          fontSize: "var(--text-sm)",
-                          color: "var(--text-secondary)",
-                          lineHeight: 1.7,
-                          marginBottom: "var(--space-4)",
-                        }}
-                      >
-                        {exp.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {exp.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="badge"
-                            style={{
-                              fontSize: "0.72rem",
-                              backgroundColor: "rgba(255, 255, 255, 0.04)",
-                              border: "1px solid rgba(255, 255, 255, 0.08)",
-                              color: "var(--text-secondary)",
-                              padding: "0.22rem 0.55rem",
-                            }}
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Note on Employment Transparency */}
-        <div
-          className="card"
-          style={{
-            maxWidth: "800px",
-            margin: "0 auto",
-            backgroundColor: "rgba(15, 23, 42, 0.5)",
-            border: "1px solid rgba(255, 255, 255, 0.08)",
-            textAlign: "center",
-            padding: "var(--space-8)",
-            borderRadius: "var(--radius-xl)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "25%",
-              right: "25%",
-              height: "1px",
-              background: "linear-gradient(90deg, transparent, var(--accent), transparent)",
-            }}
-          />
-          <div
-            className="flex items-center justify-center gap-2"
-            style={{ marginBottom: "var(--space-2)" }}
-          >
-            <ShieldCheck size={18} color="var(--accent-light)" aria-hidden="true" />
-            <h4 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0 }}>
-              Professional Transparency Standard
-            </h4>
-          </div>
-          <p
-            style={{
-              fontSize: "var(--text-xs)",
-              color: "var(--text-muted)",
-              lineHeight: 1.7,
-              maxWidth: "650px",
-              margin: "0 auto",
-            }}
-          >
-            As a dedicated undergraduate student, no fictitious employment history or simulated job titles are listed. This portfolio is engineered to present genuine academic performance, verified research publications, and real software projects.
-          </p>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </div>

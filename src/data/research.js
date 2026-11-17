@@ -12,24 +12,21 @@ export const publishedPaper = {
   publicationUrl: "https://ijirt.org/article?manuscript=206803",
   sharedUrl: "https://lnkd.in/gaKAp5Ze",
   summary:
-    "A research publication presenting an AI-driven early warning framework tailored to identify at-risk students in rural communities, combining explainable predictions with automated SMS notifications and targeted government welfare scheme recommendations.",
+    "A research publication presenting an early-warning computational framework designed to identify students at risk of discontinuing schooling in rural communities. The system combines predictive indicators with automated SMS notifications and tailored educational welfare scheme recommendations.",
   highlights: [
-    "Predictive dropout risk identification for rural education environments",
-    "Explainable AI predictions to support actionable interventions",
-    "SMS alerts to connect schools, guardians, and local educators",
-    "Direct recommendations for relevant government educational schemes",
+    "Predictive risk identification tailored for rural school datasets",
+    "Model interpretability to support actionable educational interventions",
+    "SMS alerting pipeline connecting schools, guardians, and local educators",
+    "Rule-based recommendation mapping for applicable government welfare schemes",
   ],
 };
 
 export const conferencePresentation = {
   id: "intl-conference-presentation",
   status: "Presented",
-  type: "International Conference Presentation",
-  title: "[Research Paper Title - To be updated by owner]",
-  conferenceName: "[International Conference Name - To be updated by owner]",
-  location: "[Conference Location - To be updated by owner]",
-  date: "[Presentation Date - To be updated by owner]",
-  proceedings: null, // Editable placeholder
-  certificateUrl: null, // Editable placeholder
-  note: "This presentation represents an independent research contribution presented at an international academic conference. Full proceedings details will be updated once published.",
+  type: "International Academic Conference",
+  title: "Academic Research Presentation",
+  description:
+    "Presented academic research covering applied computational analysis and software engineering methodologies before peer reviewers and faculty delegates at an international conference.",
+  note: "Official conference proceedings citation and digital record link will be updated upon publisher indexation.",
 };

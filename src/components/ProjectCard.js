@@ -1,289 +1,207 @@
 import Link from "next/link";
-import { Github, ExternalLink, ArrowRight, Layers, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Github, ExternalLink, Code2 } from "lucide-react";
 import Button from "./Button";
 
-export default function ProjectCard({ project, showFullDetails = false }) {
+export default function ProjectCard({ project }) {
   if (!project) return null;
 
   return (
-    <div
-      className="card card-hover"
+    <article
+      className="card"
       style={{
-        height: "100%",
         display: "flex",
         flexDirection: "column",
-        background: "linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(11, 15, 25, 0.85) 100%)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
-        borderRadius: "var(--radius-xl)",
-        position: "relative",
-        overflow: "hidden",
-        transition: "all var(--transition-normal)",
+        height: "100%",
+        padding: "var(--space-6)",
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border)",
+        borderRadius: "var(--radius-lg)",
+        transition: "border-color var(--transition-fast), transform var(--transition-fast)",
       }}
     >
-      {/* Decorative top ambient glow line */}
+      {/* Header: Status and Tech Category */}
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: "15%",
-          right: "15%",
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.6), rgba(139, 92, 246, 0.6), transparent)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "var(--space-2)",
+          marginBottom: "var(--space-3)",
+          fontSize: "var(--text-xs)",
         }}
-      />
-
-      {/* Card Header */}
-      <div className="card-header" style={{ marginBottom: "var(--space-4)" }}>
-        <div
-          className="flex items-center justify-between gap-2"
-          style={{ marginBottom: "var(--space-3)" }}
+      >
+        <span
+          style={{
+            fontWeight: 600,
+            color: "var(--text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+          }}
         >
+          {project.status || "In Development"}
+        </span>
+
+        {project.technologies && project.technologies[0] && (
           <span
-            className="badge badge-accent"
             style={{
-              gap: "0.35rem",
-              padding: "0.3rem 0.65rem",
+              padding: "0.15rem 0.5rem",
+              borderRadius: "var(--radius-sm)",
+              backgroundColor: "var(--bg-tertiary)",
+              color: "var(--text-secondary)",
               fontSize: "var(--text-xs)",
-              fontWeight: 600,
+              border: "1px solid var(--border)",
             }}
           >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: "var(--accent-light)",
-                boxShadow: "0 0 8px var(--accent)",
-                display: "inline-block",
-              }}
-            />
-            {project.status || "Featured Project"}
+            {project.technologies[0]}
           </span>
-
-          <Link
-            href={`/projects/${project.slug}`}
-            className="btn btn-ghost btn-sm"
-            style={{
-              padding: "0.25rem 0.65rem",
-              fontSize: "var(--text-xs)",
-              borderRadius: "var(--radius-full)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              backgroundColor: "rgba(255, 255, 255, 0.03)",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.35rem",
-              transition: "all var(--transition-fast)",
-            }}
-          >
-            <span>Overview</span>
-            <ArrowRight size={13} aria-hidden="true" />
-          </Link>
-        </div>
-
-        <h3
-          className="card-title"
-          style={{
-            fontSize: "var(--text-xl)",
-            lineHeight: 1.3,
-            fontWeight: 700,
-            marginBottom: "var(--space-2)",
-          }}
-        >
-          <Link
-            href={`/projects/${project.slug}`}
-            style={{
-              color: "var(--text-primary)",
-              textDecoration: "none",
-              transition: "color var(--transition-fast)",
-            }}
-            className="project-card-title-link"
-          >
-            {project.title}
-          </Link>
-        </h3>
-
-        <p
-          className="card-subtitle"
-          style={{
-            fontSize: "var(--text-sm)",
-            color: "var(--text-secondary)",
-            lineHeight: 1.6,
-          }}
-        >
-          {project.description}
-        </p>
+        )}
       </div>
 
-      {/* Card Body */}
-      <div className="card-body" style={{ display: "flex", flexDirection: "column" }}>
-        {project.mainFocus && project.mainFocus.length > 0 && (
-          <div style={{ marginBottom: "var(--space-5)" }}>
-            <span
+      {/* Project Title */}
+      <h3
+        style={{
+          fontSize: "var(--text-xl)",
+          fontWeight: 700,
+          lineHeight: 1.3,
+          marginBottom: "var(--space-2)",
+        }}
+      >
+        <Link
+          href={`/projects/${project.slug}`}
+          style={{
+            color: "var(--text-primary)",
+            textDecoration: "none",
+          }}
+          className="hover:text-accent"
+        >
+          {project.title}
+        </Link>
+      </h3>
+
+      {/* Description */}
+      <p
+        style={{
+          fontSize: "var(--text-sm)",
+          color: "var(--text-secondary)",
+          lineHeight: 1.6,
+          marginBottom: "var(--space-4)",
+        }}
+      >
+        {project.description}
+      </p>
+
+      {/* Key Focus Highlights */}
+      {project.mainFocus && project.mainFocus.length > 0 && (
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: "0 0 var(--space-4) 0",
+            display: "grid",
+            gap: "0.35rem",
+          }}
+        >
+          {project.mainFocus.slice(0, 3).map((item, idx) => (
+            <li
+              key={idx}
               style={{
                 fontSize: "var(--text-xs)",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                color: "var(--accent-light)",
+                color: "var(--text-muted)",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.4rem",
-                marginBottom: "var(--space-2)",
+                gap: "var(--space-2)",
               }}
             >
-              <Sparkles size={11} aria-hidden="true" />
-              Core Architectural Focus
-            </span>
-            <ul
+              <span
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  borderRadius: "50%",
+                  backgroundColor: "var(--accent)",
+                  flexShrink: 0,
+                }}
+              />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Technology Tags */}
+      {project.technologies && (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "var(--space-1)",
+            marginTop: "auto",
+            paddingTop: "var(--space-3)",
+            marginBottom: "var(--space-4)",
+          }}
+        >
+          {project.technologies.map((tech) => (
+            <span
+              key={tech}
               style={{
-                listStyle: "none",
-                display: "grid",
-                gap: "0.35rem",
-                paddingLeft: 0,
+                fontSize: "0.72rem",
+                padding: "0.2rem 0.5rem",
+                borderRadius: "var(--radius-sm)",
+                backgroundColor: "var(--bg-tertiary)",
+                border: "1px solid var(--border)",
+                color: "var(--text-secondary)",
               }}
             >
-              {project.mainFocus.slice(0, 3).map((focus, index) => (
-                <li
-                  key={index}
-                  style={{
-                    fontSize: "var(--text-xs)",
-                    color: "var(--text-secondary)",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  <span
-                    style={{
-                      width: "5px",
-                      height: "5px",
-                      borderRadius: "50%",
-                      backgroundColor: "var(--accent-cyan)",
-                      boxShadow: "0 0 6px rgba(6, 182, 212, 0.6)",
-                      flexShrink: 0,
-                    }}
-                  />
-                  <span>{focus}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+              {tech}
+            </span>
+          ))}
+        </div>
+      )}
 
-        {/* Technologies Badges */}
-        {project.technologies && (
-          <div style={{ marginTop: "auto", paddingTop: "var(--space-3)" }}>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="badge"
-                  style={{
-                    fontSize: "0.72rem",
-                    padding: "0.22rem 0.55rem",
-                    backgroundColor: "rgba(255, 255, 255, 0.04)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Card Footer with Verified Actions */}
+      {/* Actions: Single Clear Project Details Link + Real External Links Only */}
       <div
-        className="card-footer"
         style={{
-          marginTop: "var(--space-5)",
-          paddingTop: "var(--space-4)",
-          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: "var(--space-2)",
+          paddingTop: "var(--space-3)",
+          borderTop: "1px solid var(--border)",
         }}
       >
-        <div className="flex items-center gap-2 flex-wrap">
-          {project.githubUrl ? (
-            <Button
-              href={project.githubUrl}
-              isExternal
-              variant="secondary"
-              size="sm"
-              style={{ gap: "0.35rem" }}
-            >
-              <Github size={13} aria-hidden="true" />
-              <span>GitHub</span>
-            </Button>
-          ) : (
-            <span
-              className="badge"
-              title="Repository will be linked upon public release"
-              style={{
-                fontSize: "0.72rem",
-                opacity: 0.8,
-                cursor: "default",
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
-                border: "1px solid rgba(255, 255, 255, 0.06)",
-              }}
-            >
-              <Github size={12} aria-hidden="true" />
-              Repo in Progress
-            </span>
-          )}
-
-          {project.demoUrl ? (
-            <Button
-              href={project.demoUrl}
-              isExternal
-              variant="outline"
-              size="sm"
-              style={{ gap: "0.35rem" }}
-            >
-              <ExternalLink size={13} aria-hidden="true" />
-              <span>Live Demo</span>
-            </Button>
-          ) : (
-            <span
-              className="badge"
-              title="Live deployment will be made available"
-              style={{
-                fontSize: "0.72rem",
-                opacity: 0.8,
-                cursor: "default",
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
-                border: "1px solid rgba(255, 255, 255, 0.06)",
-              }}
-            >
-              <ExternalLink size={12} aria-hidden="true" />
-              Demo Upcoming
-            </span>
-          )}
-        </div>
-
         <Link
           href={`/projects/${project.slug}`}
-          className="btn btn-ghost btn-sm"
           style={{
             fontSize: "var(--text-xs)",
             fontWeight: 600,
-            color: "var(--accent-light)",
-            padding: "0.3rem 0.5rem",
+            color: "var(--accent)",
+            textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.25rem",
+            gap: "4px",
           }}
         >
-          <span>Deep Dive</span>
+          <span>Read Technical Overview</span>
           <ArrowRight size={13} aria-hidden="true" />
         </Link>
+
+        {/* Real links only (no fake buttons) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+          {project.githubUrl && (
+            <Button href={project.githubUrl} isExternal variant="outline" size="sm">
+              <Github size={13} aria-hidden="true" />
+              <span>Source</span>
+            </Button>
+          )}
+
+          {project.demoUrl && (
+            <Button href={project.demoUrl} isExternal variant="secondary" size="sm">
+              <ExternalLink size={13} aria-hidden="true" />
+              <span>Demo</span>
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
+    </article>
   );
 }

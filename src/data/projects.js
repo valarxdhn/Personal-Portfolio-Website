@@ -2,89 +2,88 @@ export const projectsData = [
   {
     id: "dynamic-train-eta",
     slug: "dynamic-train-eta",
-    title: "Dynamic Train ETA – Train Delay Prediction and Tracking",
+    title: "Dynamic Train ETA – Delay Prediction & Tracking",
     shortTitle: "Dynamic Train ETA",
-    tagline: "Train Delay Prediction and Tracking",
+    tagline: "Data-driven transit delay estimation and arrival prediction",
     description:
-      "A railway tracking and prediction project focused on estimating train arrival times and understanding train delays using data-driven transportation intelligence.",
+      "A transit analytics project focused on estimating real-time train arrival times and understanding delay patterns using historical schedule data.",
     overview:
-      "Dynamic Train ETA addresses the real-world challenge of railway delay uncertainty. By tracking train progress and analyzing delay factors, the system aims to provide estimated arrival times and offer clearer visibility into transport scheduling.",
+      "Dynamic Train ETA addresses transit schedule uncertainty caused by signal bottlenecks, track congestion, and route variations. By analyzing segment transit times and historical delays across checkpoints, the system computes updated estimated arrival times to give passengers more reliable scheduling visibility.",
     problemStatement:
-      "Railway transit schedules often face unforeseen delays caused by congestion, signal delays, weather, and operational factors. Passengers and logistics managers frequently experience uncertainty due to inaccurate or static timetables.",
+      "Passenger rail timetables are static, but operations are dynamic. Weather, track maintenance, and station congestion cause cascading delays that static timetables cannot anticipate, leaving passengers without actionable arrival estimates.",
     mainFocus: [
-      "Train tracking",
-      "Delay prediction",
-      "Estimated arrival time",
-      "Data-driven transportation intelligence",
+      "Checkpoint-based transit time tracking",
+      "Historical delay pattern analysis",
+      "Dynamic arrival time calculation",
+      "Route segment analytics",
     ],
     keyFeatures: [
-      "Real-time or transit status tracking",
-      "Data-driven delay estimation logic",
-      "ETA calculation for planned stops",
-      "Intelligent transit data handling",
+      "Segment-by-segment progress tracking",
+      "Delay estimation logic based on historical transit data",
+      "Estimated arrival recalculation at key intermediate stops",
+      "Structured schedule and delay logging",
     ],
-    technologies: ["Python", "Data Analysis", "Transportation Intelligence"],
-    githubUrl: null, // Editable placeholder - set when repository is public
-    demoUrl: null,   // Editable placeholder - set when live deployment is active
-    status: "In Development",
+    technologies: ["Python", "Data Analysis", "Transit Analytics", "Algorithms"],
+    githubUrl: null, // Will be linked when repository is made public
+    demoUrl: null,   // Will be linked when deployment is active
+    status: "Research Prototype",
   },
   {
-    id: "sustainable-bharat",
-    slug: "sustainable-bharat",
-    title: "Sustainable Bharat Supplier Intelligence",
-    shortTitle: "Sustainable Bharat",
-    tagline: "Supplier Sustainability Analysis and Explainable AI",
+    id: "voltcharge",
+    slug: "voltcharge",
+    title: "VoltCharge – EV Charging Station Finder & Booking",
+    shortTitle: "VoltCharge",
+    tagline: "EV station discovery and charging slot reservation platform",
     description:
-      "A sustainability intelligence project focused on supplier sustainability analysis and explainable AI to evaluate and understand environmental performance.",
+      "A platform to help electric vehicle drivers locate compatible charging stations, check port availability in real time, and reserve charging slots in advance.",
     overview:
-      "Sustainable Bharat Supplier Intelligence enables transparent assessment of supplier compliance and environmental factors. By integrating explainable AI principles, the platform clarifies why specific ratings or evaluations are assigned to suppliers.",
+      "VoltCharge tackles EV range anxiety and station queue times. Drivers can filter charging locations by connector standard (CCS2, Type 2, CHAdeMO) and power output (AC slow, DC fast), view live port availability, and book timed charging slots to ensure a charger is ready upon arrival.",
     problemStatement:
-      "Evaluating sustainability across complex supply chains is traditionally opaque and hard to audit. Organizations need clear, explainable insights rather than black-box evaluations when selecting environmentally compliant suppliers.",
+      "EV adoption is slowed by charging uncertainty: public stations are often fully occupied, broken, or equipped with incompatible plugs. Drivers frequently travel to stations only to find long queues or non-functional ports.",
     mainFocus: [
-      "Sustainability analysis",
-      "Environmental performance",
-      "Supplier intelligence",
-      "Explainable AI",
+      "Geolocation and radius search for chargers",
+      "Connector compatibility filtering",
+      "Slot reservation and schedule management",
+      "Port availability tracking",
     ],
     keyFeatures: [
-      "Supplier environmental performance assessment",
-      "Explainable AI reasoning indicators",
-      "Structured sustainability profiling",
-      "Transparent metric breakdown",
+      "Map and list views of nearby charging hubs",
+      "Plug-type and charging-speed filtering",
+      "Time-slot booking engine with conflict prevention",
+      "User reservation dashboard",
     ],
-    technologies: ["Python", "Explainable AI", "Sustainability Intelligence"],
-    githubUrl: null, // Editable placeholder
-    demoUrl: null,   // Editable placeholder
+    technologies: ["JavaScript", "Full-Stack Web", "REST APIs", "Database Architecture"],
+    githubUrl: null,
+    demoUrl: null,
     status: "In Development",
   },
   {
     id: "campusloop",
     slug: "campusloop",
-    title: "CampusLoop – Campus Life in One Place",
+    title: "CampusLoop – Campus Event & Activity Hub",
     shortTitle: "CampusLoop",
-    tagline: "Campus Life in One Place",
+    tagline: "Centralized discovery and registration for collegiate events",
     description:
-      "A campus event management platform designed to bring college events, workshops, hackathons, and club activities into one centralized platform.",
+      "A student-centric web platform uniting fragmented college notices, technical workshops, hackathons, and club activities into one searchable feed.",
     overview:
-      "CampusLoop unifies fragmented college communication into an accessible student-centric portal. Students and organizers can discover upcoming campus opportunities, workshops, hackathons, and club announcements without missing key notices.",
+      "CampusLoop consolidates campus notifications into an organized directory. Student organizers can publish upcoming technical competitions, workshops, and cultural events with registration guidelines, while students can track deadlines, filter by category, and discover campus initiatives.",
     problemStatement:
-      "College events and technical activities are frequently scattered across noticeboards, multiple messaging groups, and isolated departmental announcements, leading to low student awareness and missed participation deadlines.",
+      "College announcements are traditionally scattered across departmental notice boards, disparate messaging channels, and posters. Students often miss registration deadlines, and organizers struggle to reach interested participants.",
     mainFocus: [
-      "Campus event discovery",
-      "Event information",
-      "Student participation",
-      "Event registration",
-      "Centralized campus activities",
+      "Centralized event directory",
+      "Category and department filtering",
+      "Participant registration tracking",
+      "Club and organizer announcements",
     ],
     keyFeatures: [
-      "Centralized event discovery feed",
-      "Detailed workshop and hackathon listings",
-      "Student participation workflow",
-      "Club and activity announcements",
+      "Event discovery feed with date and category filters",
+      "Structured event detail pages with schedule breakdown",
+      "Student registration and bookmarking workflow",
+      "Organizer dashboard for posting notices",
     ],
-    technologies: ["Supabase", "Full-Stack Development", "Web Application"],
-    githubUrl: null, // Editable placeholder
-    demoUrl: null,   // Editable placeholder
+    technologies: ["Supabase", "Full-Stack Web", "PostgreSQL", "Database Design"],
+    githubUrl: null,
+    demoUrl: null,
     status: "In Development",
   },
 ];

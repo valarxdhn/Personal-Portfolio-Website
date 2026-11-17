@@ -1,24 +1,25 @@
 export const personalData = {
-  name: "DHANUSH",
+  name: "Dhanush",
+  headline: "Computer Science Engineering Student & Software Developer",
   role: "Computer Science Engineering Student",
   location: "Mangalore, Karnataka, India",
   college: "Sahyadri College of Engineering and Management",
-  degree: "Bachelor of Engineering – Computer Science and Engineering",
+  degree: "Bachelor of Engineering in Computer Science and Engineering",
   cgpa: "8.85",
   cgpaLabel: "First-Year CGPA",
-  profileImage: "/images/avatar-placeholder.svg",
+  profileImage: "/images/dhanush.jpg",
   profileImageAlt: "Dhanush - Computer Science Engineering Student",
   introduction:
-    "Computer Science Engineering student passionate about software development, problem-solving, and emerging technologies. Interested in building practical solutions through programming, full-stack development, and artificial intelligence. Continuously exploring new technologies, working on real-world projects, and improving technical skills to grow as a software developer.",
+    "Computer Science Engineering student at Sahyadri College of Engineering and Management with a First-Year CGPA of 8.85. Focused on backend engineering, data structures, and practical software applications in transportation intelligence and applied AI. Proficient in C, C++, Python, Java, and Git.",
   shortBio:
-    "Passionate about software development, problem-solving, and emerging technologies. Building practical solutions in full-stack engineering and AI.",
+    "Computer Science Engineering student building reliable software across transportation intelligence, systems programming, and full-stack development.",
   interests: [
-    "Software Development",
-    "Problem-Solving & Data Structures",
-    "Programming",
-    "Artificial Intelligence",
-    "Full-Stack Development",
-    "Emerging Technologies",
+    "Backend Software Development",
+    "Data Structures & Algorithms",
+    "Transportation Intelligence",
+    "Systems Programming (C / C++)",
+    "Applied Machine Learning",
+    "Full-Stack Web Development",
   ],
-  resumeUrl: null, // Set to "/documents/resume.pdf" once supplied by user
+  resumeUrl: "/documents/resume.pdf",
 };

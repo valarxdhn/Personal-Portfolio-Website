@@ -3,16 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Code2, Sparkles } from "lucide-react";
+import { Menu, X, Code2 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Projects", href: "/projects" },
-  { name: "Experience", href: "/experience" },
-  { name: "Skills", href: "/skills" },
-  { name: "Achievements", href: "/achievements" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -23,7 +20,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 25);
+      setScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -40,12 +37,9 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        transition: "all var(--transition-normal)",
-        paddingTop: scrolled ? "0.6rem" : "1rem",
-        paddingBottom: scrolled ? "0.6rem" : "1rem",
-        backgroundColor: scrolled ? "var(--bg-card)" : "transparent",
-        backdropFilter: scrolled ? "blur(18px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+        backgroundColor: scrolled ? "var(--bg-card)" : "var(--bg-primary)",
+        borderBottom: "1px solid var(--border)",
+        transition: "background-color var(--transition-fast)",
       }}
     >
       <div
@@ -54,9 +48,10 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          height: "64px",
         }}
       >
-        {/* Brand Logo with Glow */}
+        {/* Brand Logo */}
         <Link
           href="/"
           style={{
@@ -65,9 +60,9 @@ export default function Navbar() {
             gap: "var(--space-2)",
             textDecoration: "none",
             color: "var(--text-primary)",
-            fontWeight: 800,
+            fontWeight: 700,
             fontSize: "var(--text-lg)",
-            letterSpacing: "-0.02em",
+            letterSpacing: "-0.01em",
           }}
         >
           <span
@@ -75,19 +70,16 @@ export default function Navbar() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "34px",
-              height: "34px",
-              borderRadius: "var(--radius-md)",
-              background: "var(--gradient-accent)",
+              width: "30px",
+              height: "30px",
+              borderRadius: "var(--radius-sm)",
+              backgroundColor: "var(--accent)",
               color: "#ffffff",
-              boxShadow: "0 4px 12px rgba(59, 130, 246, 0.4)",
             }}
           >
-            <Code2 size={18} aria-hidden="true" />
+            <Code2 size={16} aria-hidden="true" />
           </span>
-          <span className="text-gradient" style={{ fontWeight: 800, letterSpacing: "0.05em" }}>
-            DHANUSH
-          </span>
+          <span>Dhanush</span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -97,12 +89,6 @@ export default function Navbar() {
             display: "none",
             alignItems: "center",
             gap: "var(--space-1)",
-            padding: "0.3rem 0.6rem",
-            backgroundColor: "var(--bg-glass)",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-full)",
-            backdropFilter: "blur(16px)",
-            boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.4)",
           }}
           aria-label="Main Navigation"
         >
@@ -118,14 +104,12 @@ export default function Navbar() {
                 href={link.href}
                 className="btn btn-ghost btn-sm"
                 style={{
-                  fontSize: "var(--text-xs)",
-                  fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "#ffffff" : "var(--text-secondary)",
-                  background: isActive ? "var(--gradient-accent)" : "transparent",
-                  borderRadius: "var(--radius-full)",
-                  padding: "0.45rem 0.95rem",
-                  transition: "all var(--transition-fast)",
-                  boxShadow: isActive ? "0 2px 10px rgba(59, 130, 246, 0.4)" : "none",
+                  fontSize: "var(--text-sm)",
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? "var(--accent)" : "var(--text-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  padding: "0.4rem 0.75rem",
+                  backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
                 }}
               >
                 {link.name}
@@ -133,17 +117,19 @@ export default function Navbar() {
             );
           })}
 
-          <div style={{ marginLeft: "var(--space-1)", paddingLeft: "var(--space-2)", borderLeft: "1px solid var(--border)" }}>
+          <div style={{ marginLeft: "var(--space-2)", paddingLeft: "var(--space-2)", borderLeft: "1px solid var(--border)" }}>
             <ThemeToggle />
           </div>
         </nav>
 
-        {/* Mobile Nav Controls */}
+        {/* Mobile Nav Toggle */}
         <div
           className="mobile-nav-toggle-group"
           style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
         >
-          <ThemeToggle />
+          <div className="mobile-theme-toggle">
+            <ThemeToggle />
+          </div>
           <button
             type="button"
             className="btn btn-ghost btn-icon mobile-menu-btn"
@@ -151,15 +137,14 @@ export default function Navbar() {
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
             style={{
-              backgroundColor: "var(--bg-card)",
               border: "1px solid var(--border)",
               borderRadius: "var(--radius-md)",
             }}
           >
             {mobileMenuOpen ? (
-              <X size={20} aria-hidden="true" />
+              <X size={18} aria-hidden="true" />
             ) : (
-              <Menu size={20} aria-hidden="true" />
+              <Menu size={18} aria-hidden="true" />
             )}
           </button>
         </div>
@@ -170,13 +155,11 @@ export default function Navbar() {
         <div
           style={{
             borderTop: "1px solid var(--border)",
-            borderBottom: "1px solid var(--border)",
             backgroundColor: "var(--bg-secondary)",
             padding: "var(--space-4) var(--space-6)",
             display: "flex",
             flexDirection: "column",
-            gap: "var(--space-2)",
-            backdropFilter: "blur(20px)",
+            gap: "var(--space-1)",
           }}
         >
           {navLinks.map((link) => {
@@ -194,11 +177,10 @@ export default function Navbar() {
                 style={{
                   justifyContent: "flex-start",
                   fontSize: "var(--text-sm)",
-                  fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "var(--accent-light)" : "var(--text-primary)",
+                  fontWeight: isActive ? 600 : 500,
+                  color: isActive ? "var(--accent)" : "var(--text-primary)",
                   backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
-                  borderLeft: isActive ? "3px solid var(--accent)" : "3px solid transparent",
-                  padding: "0.65rem 1rem",
+                  padding: "0.6rem 0.85rem",
                   borderRadius: "var(--radius-sm)",
                   width: "100%",
                 }}
@@ -211,11 +193,14 @@ export default function Navbar() {
       )}
 
       <style jsx>{`
-        @media (min-width: 820px) {
+        @media (min-width: 768px) {
           .desktop-nav {
             display: flex !important;
           }
           .mobile-menu-btn {
+            display: none !important;
+          }
+          .mobile-theme-toggle {
             display: none !important;
           }
         }

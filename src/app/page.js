@@ -1,282 +1,199 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  MapPin,
-  GraduationCap,
-  Award,
   ArrowRight,
-  BookOpen,
-  Code2,
-  FolderGit2,
   FileDown,
-  Sparkles,
-  ChevronDown,
-  ExternalLink,
+  Github,
+  Linkedin,
+  Mail,
+  GraduationCap,
+  MapPin,
+  BookOpen,
+  Award,
+  Code2,
 } from "lucide-react";
 import Button from "@/components/Button";
 import ProjectCard from "@/components/ProjectCard";
-import SkillCard from "@/components/SkillCard";
 import ResearchCard from "@/components/ResearchCard";
-import SocialLinks from "@/components/SocialLinks";
-import SectionHeading from "@/components/SectionHeading";
-import WordRotate from "@/components/WordRotate";
+import ContactForm from "@/components/ContactForm";
 import { personalData } from "@/data/personal";
 import { projectsData } from "@/data/projects";
 import { skillCategories } from "@/data/skills";
-import { publishedPaper } from "@/data/research";
-
-const heroRoles = [
-  "Computer Science Engineering Student",
-  "Aspiring Software Developer",
-  "Problem Solver & Algorithmic Thinker",
-  "AI & Full-Stack Builder",
-];
+import { publishedPaper, conferencePresentation } from "@/data/research";
+import { socialLinks } from "@/data/social";
 
 export default function HomePage() {
+  const githubUrl = socialLinks.find((s) => s.name === "GitHub")?.url || "https://github.com/valarxdhn";
+  const linkedinUrl = socialLinks.find((s) => s.name === "LinkedIn")?.url || "https://linkedin.com";
+
   return (
     <>
       {/* ===================================================================
-          HERO SECTION (Reference-inspired creative design)
+          1. HERO SECTION
+          Answers: Who am I? What do I build? What technologies do I use?
+          Where can someone explore my work? How can someone contact me?
           =================================================================== */}
       <section
         className="section"
         style={{
-          minHeight: "calc(100vh - 4.5rem)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           paddingTop: "var(--space-12)",
           paddingBottom: "var(--space-16)",
-          position: "relative",
+          borderBottom: "1px solid var(--border)",
         }}
       >
         <div className="container">
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               alignItems: "center",
-              gap: "var(--space-12)",
+              gap: "var(--space-10)",
             }}
           >
-            {/* Left Content Column */}
+            {/* Left: Text Introduction & CTAs */}
             <div>
-              {/* Dynamic Status Eyebrow */}
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "var(--space-2)",
-                  padding: "0.4rem 1rem",
-                  borderRadius: "var(--radius-full)",
-                  background: "var(--accent-subtle)",
-                  border: "1px solid var(--accent-border)",
-                  marginBottom: "var(--space-5)",
-                  boxShadow: "0 0 20px -4px var(--accent-glow)",
-                  backdropFilter: "blur(12px)",
+                  fontSize: "var(--text-xs)",
+                  color: "var(--text-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  fontWeight: 600,
+                  marginBottom: "var(--space-3)",
                 }}
               >
-                <Sparkles size={15} color="var(--accent-light)" aria-hidden="true" />
-                <span
-                  style={{
-                    fontSize: "var(--text-xs)",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "var(--accent-light)",
-                  }}
-                >
-                  <WordRotate words={heroRoles} duration={2600} />
-                </span>
+                <span>Computer Science Engineering Student</span>
               </div>
 
-              {/* Headline */}
               <h1
                 style={{
-                  fontSize: "clamp(2.75rem, 5.5vw, 4.5rem)",
-                  fontWeight: 900,
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.035em",
+                  fontSize: "clamp(2.25rem, 4vw, 3rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.15,
                   marginBottom: "var(--space-4)",
+                  letterSpacing: "-0.025em",
                 }}
               >
-                Building with logic, code, and vision. <br />
-                I&apos;m <span className="text-gradient">{personalData.name}</span>
+                {personalData.name}
               </h1>
 
-              {/* Location & Academic Meta */}
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                  gap: "var(--space-4)",
-                  color: "var(--text-secondary)",
-                  fontSize: "var(--text-sm)",
-                  marginBottom: "var(--space-6)",
-                }}
-              >
-                <span className="flex items-center gap-1.5 badge" style={{ padding: "0.35rem 0.75rem" }}>
-                  <MapPin size={14} color="var(--accent)" aria-hidden="true" />
-                  {personalData.location}
-                </span>
-                <span className="flex items-center gap-1.5 badge" style={{ padding: "0.35rem 0.75rem" }}>
-                  <GraduationCap size={14} color="var(--accent)" aria-hidden="true" />
-                  {personalData.college}
-                </span>
-              </div>
-
-              {/* Professional Narrative */}
               <p
                 style={{
                   fontSize: "var(--text-base)",
                   color: "var(--text-secondary)",
-                  lineHeight: 1.8,
-                  marginBottom: "var(--space-8)",
-                  maxWidth: "600px",
+                  lineHeight: 1.7,
+                  marginBottom: "var(--space-6)",
+                  maxWidth: "560px",
                 }}
               >
-                {personalData.introduction}
+                Undergraduate student at{" "}
+                <strong style={{ color: "var(--text-primary)" }}>
+                  Sahyadri College of Engineering and Management
+                </strong>{" "}
+                (First-Year CGPA: 8.85). I build practical software applications focused on
+                transportation intelligence, systems problem-solving, and applied AI using C, C++, Python, Java, and modern web technologies.
               </p>
 
-              {/* Academic Distinction Highlight Card */}
+              {/* CTAs: Primary "View Projects", Secondary "Download Resume", and Socials */}
               <div
                 style={{
-                  display: "inline-flex",
+                  display: "flex",
                   alignItems: "center",
+                  flexWrap: "wrap",
                   gap: "var(--space-3)",
-                  padding: "var(--space-3) var(--space-5)",
-                  backgroundColor: "var(--bg-glass)",
-                  border: "1px solid var(--border-glow)",
-                  borderRadius: "var(--radius-lg)",
-                  marginBottom: "var(--space-8)",
-                  boxShadow: "0 8px 24px -4px rgba(0, 0, 0, 0.4)",
-                  backdropFilter: "blur(16px)",
+                  marginBottom: "var(--space-6)",
                 }}
               >
+                <Button href="/projects" variant="primary">
+                  <span>View Projects</span>
+                  <ArrowRight size={15} aria-hidden="true" />
+                </Button>
+
+                <Button
+                  href={personalData.resumeUrl || "#contact"}
+                  variant="secondary"
+                  download={personalData.resumeUrl ? "Dhanush_Resume.pdf" : undefined}
+                >
+                  <FileDown size={15} aria-hidden="true" />
+                  <span>Download Resume</span>
+                </Button>
+
                 <div
                   style={{
-                    display: "inline-flex",
+                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                    background: "var(--accent-subtle)",
-                    color: "var(--accent)",
+                    gap: "var(--space-1)",
+                    marginLeft: "var(--space-2)",
                   }}
                 >
-                  <Award size={20} aria-hidden="true" />
-                </div>
-                <div>
-                  <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", display: "block" }}>
-                    Verified Academic Distinction
-                  </span>
-                  <span style={{ fontSize: "var(--text-sm)", fontWeight: 800, color: "var(--text-primary)" }}>
-                    {personalData.cgpaLabel}: <span style={{ color: "var(--accent-light)" }}>{personalData.cgpa} CGPA</span>
-                  </span>
+                  <a
+                    href={githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub Profile"
+                    className="btn btn-ghost btn-sm"
+                    style={{ color: "var(--text-muted)", padding: "0.4rem" }}
+                  >
+                    <Github size={18} aria-hidden="true" />
+                  </a>
+                  <a
+                    href={linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Profile"
+                    className="btn btn-ghost btn-sm"
+                    style={{ color: "var(--text-muted)", padding: "0.4rem" }}
+                  >
+                    <Linkedin size={18} aria-hidden="true" />
+                  </a>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Quick Metadata */}
               <div
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-8)",
+                  gap: "var(--space-4)",
+                  fontSize: "var(--text-xs)",
+                  color: "var(--text-muted)",
                 }}
               >
-                <Button href="/projects" variant="primary" size="lg" className="btn-pill btn-gradient">
-                  <FolderGit2 size={18} aria-hidden="true" />
-                  <span>Explore Featured Projects</span>
-                </Button>
-
-                <Button href="/about" variant="secondary" size="lg" className="btn-pill">
-                  <span>About Me</span>
-                  <ArrowRight size={18} aria-hidden="true" />
-                </Button>
-
-                <Button href="/contact" variant="outline" size="lg" className="btn-pill">
-                  <span>Contact Me</span>
-                </Button>
-
-                {personalData.resumeUrl && (
-                  <Button href={personalData.resumeUrl} variant="outline" size="lg" className="btn-pill" isExternal>
-                    <FileDown size={18} aria-hidden="true" />
-                    <span>Download Resume</span>
-                  </Button>
-                )}
-              </div>
-
-              {/* Direct Social Links Row */}
-              <div>
-                <span
-                  style={{
-                    fontSize: "var(--text-xs)",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "var(--text-muted)",
-                    display: "block",
-                    marginBottom: "var(--space-2)",
-                  }}
-                >
-                  Professional Networks
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  <MapPin size={13} color="var(--accent)" aria-hidden="true" />
+                  {personalData.location}
                 </span>
-                <SocialLinks />
+                <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
+                  First-Year CGPA: {personalData.cgpa}
+                </span>
               </div>
             </div>
 
-            {/* Right Column: Visual Avatar & Dimensional Frame */}
-            <div style={{ display: "flex", justifyContent: "center", position: "relative" }}>
+            {/* Right: Actual Photograph */}
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <div
-                className="animate-glow"
-                style={{
-                  position: "absolute",
-                  inset: "-20px",
-                  borderRadius: "50%",
-                  background: "radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%)",
-                  filter: "blur(40px)",
-                  zIndex: 0,
-                }}
-              />
-
-              <div
-                className="animate-float"
                 style={{
                   position: "relative",
-                  zIndex: 1,
-                  width: "100%",
-                  maxWidth: "380px",
-                  aspectRatio: "1 / 1",
-                  borderRadius: "50%",
-                  padding: "10px",
-                  background: "linear-gradient(135deg, rgba(59, 130, 246, 0.6) 0%, rgba(139, 92, 246, 0.4) 50%, rgba(6, 182, 212, 0.6) 100%)",
-                  boxShadow: "0 24px 60px -12px rgba(0, 0, 0, 0.8), 0 0 32px -4px var(--accent-glow)",
+                  width: "260px",
+                  height: "260px",
+                  borderRadius: "var(--radius-lg)",
+                  overflow: "hidden",
+                  border: "1px solid var(--border)",
+                  backgroundColor: "var(--bg-secondary)",
                 }}
               >
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    backgroundColor: "var(--bg-secondary)",
-                    position: "relative",
-                    border: "3px solid rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <Image
-                    src={personalData.profileImage}
-                    alt={personalData.profileImageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 380px"
-                    priority
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
+                <Image
+                  src={personalData.profileImage}
+                  alt={personalData.profileImageAlt}
+                  fill
+                  sizes="260px"
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
           </div>
@@ -284,41 +201,41 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          FEATURED PROJECTS SHOWCASE SECTION
+          2. SELECTED PROJECTS
           =================================================================== */}
-      <section
-        id="projects"
-        className="section"
-        style={{
-          borderTop: "1px solid var(--border)",
-          borderBottom: "1px solid var(--border)",
-          backgroundColor: "rgba(11, 15, 25, 0.6)",
-        }}
-      >
+      <section id="projects" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <div
             style={{
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "space-between",
+              marginBottom: "var(--space-8)",
               flexWrap: "wrap",
               gap: "var(--space-4)",
-              marginBottom: "var(--space-10)",
             }}
           >
             <div>
-              <span className="section-eyebrow">Featured Work 🚀</span>
-              <h2 className="section-title">
-                Engineered <span className="text-gradient">Software Projects</span>
-              </h2>
-              <p className="section-subtitle" style={{ margin: 0 }}>
-                Practical engineering applications addressing real-world challenges in railway delay estimation, explainable supplier intelligence, and centralized campus engagement.
+              <span className="section-eyebrow">Portfolio</span>
+              <h2 className="section-title">Selected Projects</h2>
+              <p className="section-subtitle">
+                Software engineering projects addressing transportation intelligence, EV charging discovery, and campus activity management.
               </p>
             </div>
-            <Button href="/projects" variant="outline" size="md" className="btn-pill">
-              <span>View All 3 Projects</span>
-              <ArrowRight size={16} aria-hidden="true" />
-            </Button>
+            <Link
+              href="/projects"
+              style={{
+                fontSize: "var(--text-sm)",
+                fontWeight: 600,
+                color: "var(--accent)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span>View All Projects</span>
+              <ArrowRight size={14} aria-hidden="true" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-3">
@@ -330,57 +247,140 @@ export default function HomePage() {
       </section>
 
       {/* ===================================================================
-          TECHNICAL SKILLS SECTION
+          3. TECHNICAL SKILLS
           =================================================================== */}
-      <section className="section">
+      <section className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <SectionHeading
-            eyebrow="Tech Stack ⚡"
-            title="Confirmed Technical Skills"
-            subtitle="Verified programming languages, database systems, and version control tools without fabricated proficiency ratings."
-          />
-
-          <div className="grid grid-cols-3" style={{ marginBottom: "var(--space-8)" }}>
-            {skillCategories.map((category) => (
-              <SkillCard key={category.name} category={category} />
-            ))}
+          <div className="section-heading">
+            <span className="section-eyebrow">Competencies</span>
+            <h2 className="section-title">Technical Skills</h2>
+            <p className="section-subtitle">
+              Programming languages, core foundations, and engineering tools applied across academic coursework and software projects.
+            </p>
           </div>
 
-          <div style={{ textAlign: "center" }}>
-            <Button href="/skills" variant="secondary" size="md" className="btn-pill">
-              <Code2 size={16} aria-hidden="true" />
-              <span>Explore Detailed Technical Breakdown</span>
-            </Button>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "var(--space-6)",
+            }}
+          >
+            {skillCategories.map((category) => (
+              <div
+                key={category.name}
+                style={{
+                  padding: "var(--space-5)",
+                  backgroundColor: "var(--bg-secondary)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius-lg)",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "var(--text-base)",
+                    fontWeight: 700,
+                    marginBottom: "var(--space-1)",
+                  }}
+                >
+                  {category.name}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "var(--text-xs)",
+                    color: "var(--text-muted)",
+                    marginBottom: "var(--space-4)",
+                  }}
+                >
+                  {category.description}
+                </p>
+
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill.name}
+                      style={{
+                        fontSize: "var(--text-xs)",
+                        padding: "0.25rem 0.6rem",
+                        backgroundColor: "var(--bg-tertiary)",
+                        border: "1px solid var(--border)",
+                        borderRadius: "var(--radius-sm)",
+                        color: "var(--text-primary)",
+                      }}
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ===================================================================
-          RESEARCH & PUBLICATION HIGHLIGHT
+          4. RESEARCH & PUBLICATIONS
           =================================================================== */}
-      <section
-        className="section"
-        style={{
-          backgroundColor: "rgba(11, 15, 25, 0.6)",
-          borderTop: "1px solid var(--border)",
-        }}
-      >
+      <section className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <SectionHeading
-            eyebrow="Academic Research 📄"
-            title="Peer-Reviewed Research Publication"
-            subtitle="Published academic research on rural student dropout early warning systems utilizing explainable predictions and automated welfare recommendations."
-          />
-
-          <div style={{ maxWidth: "960px", margin: "0 auto var(--space-8)" }}>
-            <ResearchCard paper={publishedPaper} />
+          <div className="section-heading">
+            <span className="section-eyebrow">Academic Research</span>
+            <h2 className="section-title">Research & Publications</h2>
+            <p className="section-subtitle">
+              Peer-reviewed journal publication and academic conference presentations covering applied machine learning and early-warning systems.
+            </p>
           </div>
 
-          <div style={{ textAlign: "center" }}>
-            <Button href="/achievements" variant="outline" size="md" className="btn-pill">
-              <BookOpen size={16} aria-hidden="true" />
-              <span>View Publications & International Conference Details</span>
-            </Button>
+          <div style={{ display: "grid", gap: "var(--space-6)", maxWidth: "860px" }}>
+            <ResearchCard paper={publishedPaper} />
+            <ResearchCard paper={conferencePresentation} isConference />
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================================
+          5. CONTACT SECTION
+          =================================================================== */}
+      <section id="contact" className="section">
+        <div className="container">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "var(--space-10)",
+              alignItems: "flex-start",
+            }}
+          >
+            <div>
+              <span className="section-eyebrow">Get In Touch</span>
+              <h2 className="section-title">Contact</h2>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-6)" }}>
+                I am actively seeking software engineering internship opportunities and academic project collaborations. Feel free to send a message or contact directly via email.
+              </p>
+
+              <div style={{ display: "grid", gap: "var(--space-3)", fontSize: "var(--text-sm)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                  <Mail size={16} color="var(--accent)" aria-hidden="true" />
+                  <a href="mailto:contact@dhanush.dev" style={{ color: "var(--text-primary)", fontWeight: 500 }}>
+                    contact@dhanush.dev
+                  </a>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                  <MapPin size={16} color="var(--accent)" aria-hidden="true" />
+                  <span style={{ color: "var(--text-secondary)" }}>{personalData.location}</span>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                  <GraduationCap size={16} color="var(--accent)" aria-hidden="true" />
+                  <span style={{ color: "var(--text-secondary)" }}>{personalData.college}</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
