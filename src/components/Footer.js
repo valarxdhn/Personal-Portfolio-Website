@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
 import { personalData } from "@/data/personal";
 import { socialLinks } from "@/data/social";
@@ -36,16 +37,41 @@ export default function Footer() {
         >
           {/* Identity & Short Description */}
           <div>
-            <h3
-              style={{
-                fontSize: "var(--text-base)",
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                margin: "0 0 var(--space-1) 0",
-              }}
-            >
-              {personalData.name}
-            </h3>
+            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-1)" }}>
+              <span
+                style={{
+                  position: "relative",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "var(--radius-sm)",
+                  backgroundColor: "rgba(12, 16, 26, 0.75)",
+                  border: "1px solid var(--border)",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                }}
+              >
+                <Image
+                  src={personalData.logoImage || "/images/logo-mark.png"}
+                  alt="Dhanush Logo"
+                  width={24}
+                  height={24}
+                  style={{ objectFit: "contain" }}
+                />
+              </span>
+              <h3
+                style={{
+                  fontSize: "var(--text-base)",
+                  fontWeight: 700,
+                  color: "var(--text-primary)",
+                  margin: 0,
+                }}
+              >
+                {personalData.name}
+              </h3>
+            </div>
             <p
               style={{
                 fontSize: "var(--text-xs)",

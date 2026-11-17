@@ -10,6 +10,8 @@ export const personalData = {
   cgpaLabel: "First-Year CGPA",
   profileImage: "/images/dhanush.jpg",
   profileImageAlt: "Dhanush - Computer Science Engineering Student",
+  logoImage: "/images/logo-mark.png",
+  fullLogoImage: "/images/logo.png",
   introduction:
     "Computer Science Engineering student at Sahyadri College of Engineering and Management with a First-Year CGPA of 8.85. Focused on backend engineering, data structures, and practical software applications in transportation intelligence and applied AI. Proficient in C, C++, Python, Java, and Git.",
   shortBio:

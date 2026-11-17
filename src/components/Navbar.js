@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { personalData } from "@/data/personal";
 
 const navLinks = [
@@ -60,7 +61,7 @@ export default function Navbar() {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "var(--space-2)",
+            gap: "var(--space-3)",
             textDecoration: "none",
             color: "var(--text-primary)",
             fontWeight: 700,
@@ -70,17 +71,28 @@ export default function Navbar() {
         >
           <span
             style={{
+              position: "relative",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "30px",
-              height: "30px",
-              borderRadius: "var(--radius-sm)",
-              backgroundColor: "var(--accent)",
-              color: "#ffffff",
+              width: "36px",
+              height: "36px",
+              borderRadius: "var(--radius-md)",
+              backgroundColor: "rgba(12, 16, 26, 0.75)",
+              border: "1px solid var(--border)",
+              overflow: "hidden",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.4)",
+              flexShrink: 0,
             }}
           >
-            <Code2 size={16} aria-hidden="true" />
+            <Image
+              src={personalData.logoImage || "/images/logo-mark.png"}
+              alt="Dhanush Logo"
+              width={32}
+              height={32}
+              priority
+              style={{ objectFit: "contain" }}
+            />
           </span>
           <span>{personalData.name}</span>
         </Link>
