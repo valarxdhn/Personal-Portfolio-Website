@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -47,10 +45,6 @@ export default function SinglePagePortfolio() {
   const githubUrl = socialLinks.find((s) => s.name === "GitHub")?.url || "https://github.com/valarxdhn";
   const linkedinUrl = socialLinks.find((s) => s.name === "LinkedIn")?.url || "https://linkedin.com/in/dhanushmk14";
 
-  // Check if a verified resume PDF is present on disk
-  const resumeFilePath = path.join(process.cwd(), "public", "documents", "resume.pdf");
-  const hasResumePdf = fs.existsSync(resumeFilePath);
-
   return (
     <>
       {/* ===================================================================
@@ -81,26 +75,14 @@ export default function SinglePagePortfolio() {
                   <ArrowRight size={15} aria-hidden="true" />
                 </Button>
 
-                {hasResumePdf ? (
-                  <Button
-                    href="/documents/resume.pdf"
-                    variant="secondary"
-                    download="Dhanush_Resume.pdf"
-                    title="Direct PDF download (77.7 KB)"
-                  >
-                    <FileDown size={15} aria-hidden="true" />
-                    <span>Download Resume</span>
-                  </Button>
-                ) : (
-                  <Button
-                    href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
-                    variant="secondary"
-                    title="Direct email transmission (Resume PDF pending upload)"
-                  >
-                    <FileDown size={15} aria-hidden="true" />
-                    <span>Request Resume</span>
-                  </Button>
-                )}
+                <Button
+                  href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
+                  variant="secondary"
+                  title="Request resume via email"
+                >
+                  <FileDown size={15} aria-hidden="true" />
+                  <span>Request Resume</span>
+                </Button>
 
                 {/* Social Connectors */}
                 <div className="hero-social-group">
@@ -226,26 +208,15 @@ export default function SinglePagePortfolio() {
                     <ArrowRight size={15} className="about-btn-arrow" aria-hidden="true" />
                   </Button>
 
-                  {hasResumePdf ? (
-                    <Button
-                      href="/documents/resume.pdf"
-                      variant="secondary"
-                      download="Dhanush_Resume.pdf"
-                      className="about-cta-btn-secondary"
-                    >
-                      <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
-                      <span>Download Resume</span>
-                    </Button>
-                  ) : (
-                    <Button
-                      href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
-                      variant="secondary"
-                      className="about-cta-btn-secondary"
-                    >
-                      <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
-                      <span>Request Resume</span>
-                    </Button>
-                  )}
+                  <Button
+                    href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
+                    variant="secondary"
+                    className="about-cta-btn-secondary"
+                    title="Request resume via email"
+                  >
+                    <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
+                    <span>Request Resume</span>
+                  </Button>
                 </div>
               </div>
             </div>

@@ -144,37 +144,15 @@ export default function AboutView({ hasResumePdf = false }) {
                 <ArrowRight size={15} className="about-btn-arrow" aria-hidden="true" />
               </Button>
 
-              {hasResumePdf ? (
-                <Button
-                  href="/documents/resume.pdf"
-                  variant="secondary"
-                  download="Dhanush_Resume.pdf"
-                  onClick={handleResumeDownload}
-                  className="about-cta-btn-secondary"
-                >
-                  {downloadFeedback ? (
-                    <>
-                      <Check size={15} color="var(--status-success)" aria-hidden="true" />
-                      <span style={{ color: "var(--status-success)" }}>Download started ✓</span>
-                    </>
-                  ) : (
-                    <>
-                      <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
-                      <span>Download Resume</span>
-                    </>
-                  )}
-                </Button>
-              ) : (
-                <Button
-                  href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
-                  variant="secondary"
-                  title="Direct email transmission (Resume PDF pending upload)"
-                  className="about-cta-btn-secondary"
-                >
-                  <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
-                  <span>Request Resume</span>
-                </Button>
-              )}
+              <Button
+                href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
+                variant="secondary"
+                title="Request resume via email"
+                className="about-cta-btn-secondary"
+              >
+                <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
+                <span>Request Resume</span>
+              </Button>
             </div>
           </div>
         </div>
