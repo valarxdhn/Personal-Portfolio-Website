@@ -2,6 +2,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LiveBackground from "@/components/LiveBackground";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export const metadata = {
   title: "Dhanush | Computer Science Engineering Student & Developer",
@@ -39,17 +41,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative" }}>
-        {/* Fixed Technical Grid & Cursor Spotlight Layer */}
-        <LiveBackground />
+        {/* Lenis Smooth Inertial Scrolling Provider */}
+        <SmoothScrollProvider>
+          {/* Top Fixed Cyan Scroll Progress Indicator */}
+          <ScrollProgress />
 
-        {/* High-priority Interactive Foreground Layer */}
-        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", flex: 1 }}>
-          <Navbar />
-          <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-            {children}
-          </main>
-          <Footer />
-        </div>
+          {/* Fixed Technical Grid & Cursor Spotlight Layer */}
+          <LiveBackground />
+
+          {/* High-priority Interactive Foreground Layer */}
+          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", flex: 1 }}>
+            <Navbar />
+            <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

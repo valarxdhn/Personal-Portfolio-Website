@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 import { personalData } from "@/data/personal";
 
 const navSections = [
@@ -14,6 +15,7 @@ const navSections = [
   { id: "skills", name: "Skills", href: "#skills" },
   { id: "projects", name: "Projects", href: "#projects" },
   { id: "research", name: "Research", href: "#research" },
+  { id: "achievements", name: "Achievements", href: "#achievements" },
   { id: "contact", name: "Contact", href: "#contact" },
 ];
 
@@ -37,14 +39,11 @@ export default function Navbar() {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const observers = [];
     const sectionIds = navSections.map((s) => s.id);
 
     const observerCallback = (entries) => {
-      // Find the topmost intersecting section
       const visibleEntries = entries.filter((e) => e.isIntersecting);
       if (visibleEntries.length > 0) {
-        // Pick the one closest to the top of the viewport
         const best = visibleEntries.reduce((prev, current) =>
           prev.boundingClientRect.top > current.boundingClientRect.top ? prev : current
         );
@@ -69,14 +68,18 @@ export default function Navbar() {
     };
   }, [pathname]);
 
-  // Smooth navigation handler
+  // Smooth navigation handler supporting Lenis inertial scrolling & native anchor fallback
   const handleNavClick = useCallback(
     (e, sectionId) => {
       if (pathname === "/") {
         e.preventDefault();
         const element = document.getElementById(sectionId);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+          if (typeof window !== "undefined" && window.__lenis) {
+            window.__lenis.scrollTo(element, { offset: -80, duration: 1.0 });
+          } else {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
           window.history.pushState(null, "", `#${sectionId}`);
           setActiveSection(sectionId);
         }
@@ -163,13 +166,13 @@ export default function Navbar() {
           <span>{personalData.name}</span>
         </Link>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links with Framer Motion Gliding Active Pill */}
         <nav
           className="desktop-nav"
           style={{
             display: "none",
             alignItems: "center",
-            gap: "4px",
+            gap: "2px",
           }}
           aria-label="Main Navigation"
         >
@@ -184,18 +187,38 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, item.id)}
                 className="btn btn-ghost btn-sm nav-section-link"
                 style={{
+                  position: "relative",
                   fontSize: "13px",
                   fontWeight: isActive ? 600 : 500,
                   color: isActive ? "var(--accent)" : "var(--text-secondary)",
                   borderRadius: "var(--radius-md)",
-                  padding: "0.35rem 0.7rem",
-                  backgroundColor: isActive ? "rgba(56, 189, 248, 0.08)" : "transparent",
-                  border: isActive ? "1px solid rgba(56, 189, 248, 0.25)" : "1px solid transparent",
-                  transition: "all var(--transition-fast)",
+                  padding: "0.35rem 0.65rem",
+                  transition: "color var(--transition-fast)",
                 }}
                 aria-current={isActive ? "true" : undefined}
               >
-                {item.name}
+                {/* Smooth Gliding Active Background Pill */}
+                {isActive && (
+                  <motion.span
+                    layoutId="activeSectionPill"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "var(--radius-md)",
+                      backgroundColor: "rgba(56, 189, 248, 0.12)",
+                      border: "1px solid rgba(56, 189, 248, 0.3)",
+                      boxShadow: "0 0 12px rgba(56, 189, 248, 0.12)",
+                      zIndex: 0,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 30,
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span style={{ position: "relative", zIndex: 1 }}>{item.name}</span>
               </a>
             );
           })}
@@ -253,6 +276,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, item.id)}
                 className="btn btn-ghost"
                 style={{
+                  position: "relative",
                   justifyContent: "flex-start",
                   fontSize: "var(--text-sm)",
                   fontWeight: isActive ? 600 : 500,
@@ -266,7 +290,7 @@ export default function Navbar() {
                 }}
                 aria-current={isActive ? "true" : undefined}
               >
-                {item.name}
+                <span>{item.name}</span>
               </a>
             );
           })}
@@ -274,7 +298,7 @@ export default function Navbar() {
       )}
 
       <style jsx>{`
-        @media (min-width: 860px) {
+        @media (min-width: 960px) {
           .desktop-nav {
             display: flex !important;
           }

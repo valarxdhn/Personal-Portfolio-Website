@@ -12,10 +12,6 @@ import {
   MapPin,
   Award,
   Cpu,
-  BookOpen,
-  Calendar,
-  ExternalLink,
-  Code2,
 } from "lucide-react";
 import Button from "@/components/Button";
 import MaterialField from "@/components/MaterialField";
@@ -27,7 +23,12 @@ import SkillCard from "@/components/SkillCard";
 import ResearchCard from "@/components/ResearchCard";
 import CertificatesSection from "@/components/CertificatesSection";
 import ContactForm from "@/components/ContactForm";
-import ScrollReveal from "@/components/ScrollReveal";
+import {
+  RevealSection,
+  StaggerGrid,
+  StaggerItem,
+  SubtleParallax,
+} from "@/components/MotionPrimitives";
 
 import { personalData } from "@/data/personal";
 import { educationData } from "@/data/education";
@@ -138,42 +139,44 @@ export default function SinglePagePortfolio() {
 
       {/* ===================================================================
           2. ABOUT ME SECTION
-          Unified Profile: 4:5 Portrait Card, Narrative, Metric Badges, CTAs
+          Unified Profile: 4:5 Portrait Card with Subtle Desktop Parallax, Metrics, CTAs
           =================================================================== */}
       <section id="about" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <SectionHeading
               eyebrow="01 // BACKGROUND"
               title="About Me"
               subtitle="Computer Science Engineering student at Sahyadri College of Engineering and Management focused on backend software development, algorithms, and practical engineering solutions."
               align="left"
             />
-          </ScrollReveal>
+          </RevealSection>
 
-          <ScrollReveal delay={80}>
+          <RevealSection delay={0.06}>
             <div className="about-bio-grid">
-              {/* Left: 4:5 Vertical Portrait Container */}
+              {/* Left: 4:5 Vertical Portrait Container with Subtle Desktop Parallax */}
               <div>
-                <div className="about-portrait-card">
-                  <Image
-                    src={personalData.profileImage}
-                    alt={personalData.profileImageAlt}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 280px, 300px"
-                    className="about-portrait-img"
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "linear-gradient(to top, rgba(11, 15, 23, 0.75) 0%, rgba(11, 15, 23, 0) 40%)",
-                      pointerEvents: "none",
-                    }}
-                    aria-hidden="true"
-                  />
-                </div>
+                <SubtleParallax offset={15}>
+                  <div className="about-portrait-card">
+                    <Image
+                      src={personalData.profileImage}
+                      alt={personalData.profileImageAlt}
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 280px, 300px"
+                      className="about-portrait-img"
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "linear-gradient(to top, rgba(11, 15, 23, 0.75) 0%, rgba(11, 15, 23, 0) 40%)",
+                        pointerEvents: "none",
+                      }}
+                      aria-hidden="true"
+                    />
+                  </div>
+                </SubtleParallax>
               </div>
 
               {/* Right: Bio Narrative & Scannable Indicators */}
@@ -246,26 +249,26 @@ export default function SinglePagePortfolio() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          </RevealSection>
         </div>
       </section>
 
       {/* ===================================================================
           3. EDUCATION & ACADEMIC STANDING SECTION
-          Verified Records: Sahyadri College (B.E.), PU College (PCMB), SSLC
+          Verified Records with StaggerGrid Cascading Entrances
           =================================================================== */}
       <section id="education" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <SectionHeading
               eyebrow="02 // ACADEMIC STANDING"
               title="Education & Academic Standing"
               subtitle="Verified academic milestones demonstrating foundational rigor, mathematical discipline, and consistent scholastic performance."
               align="left"
             />
-          </ScrollReveal>
+          </RevealSection>
 
-          <ScrollReveal delay={100}>
+          <RevealSection delay={0.06}>
             <div
               className="card"
               style={{
@@ -275,110 +278,113 @@ export default function SinglePagePortfolio() {
                 borderRadius: "var(--radius-lg)",
               }}
             >
-              {educationData.map((item, idx) => (
-                <div key={item.id}>
-                  {idx > 0 && <div className="academic-divider" />}
+              <StaggerGrid staggerDelay={0.08}>
+                {educationData.map((item, idx) => (
+                  <StaggerItem key={item.id}>
+                    {idx > 0 && <div className="academic-divider" />}
 
-                  <div className="academic-entry">
-                    {/* Top Row: Institution Name & Status Badge */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        flexWrap: "wrap",
-                        gap: "var(--space-2)",
-                        marginBottom: "var(--space-2)",
-                      }}
-                    >
-                      <div>
-                        <h3 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
-                          {item.institution}
-                        </h3>
-                        <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 500, margin: "2px 0 0 0" }}>
-                          {item.degree} {item.field && `• ${item.field}`}
-                        </p>
+                    <div className="academic-entry">
+                      {/* Top Row: Institution Name & Status Badge */}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "flex-start",
+                          flexWrap: "wrap",
+                          gap: "var(--space-2)",
+                          marginBottom: "var(--space-2)",
+                        }}
+                      >
+                        <div>
+                          <h3 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
+                            {item.institution}
+                          </h3>
+                          <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 500, margin: "2px 0 0 0" }}>
+                            {item.degree} {item.field && `• ${item.field}`}
+                          </p>
+                        </div>
+
+                        {/* Status Indicator */}
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            padding: "0.25rem 0.65rem",
+                            borderRadius: "var(--radius-full)",
+                            fontSize: "11px",
+                            fontFamily: "var(--font-mono)",
+                            fontWeight: 600,
+                            backgroundColor: item.current ? "rgba(16, 185, 129, 0.08)" : "var(--bg-tertiary)",
+                            border: item.current ? "1px solid rgba(16, 185, 129, 0.3)" : "1px solid var(--border)",
+                            color: item.current ? "var(--status-success)" : "var(--text-muted)",
+                          }}
+                        >
+                          {item.current && (
+                            <span
+                              style={{
+                                width: "6px",
+                                height: "6px",
+                                borderRadius: "50%",
+                                backgroundColor: "var(--status-success)",
+                                boxShadow: "0 0 6px var(--status-success)",
+                              }}
+                              aria-hidden="true"
+                            />
+                          )}
+                          <span>{item.statusBadge}</span>
+                        </span>
                       </div>
 
-                      {/* Status Indicator */}
-                      <span
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          padding: "0.25rem 0.65rem",
-                          borderRadius: "var(--radius-full)",
-                          fontSize: "11px",
-                          fontFamily: "var(--font-mono)",
-                          fontWeight: 600,
-                          backgroundColor: item.current ? "rgba(16, 185, 129, 0.08)" : "var(--bg-tertiary)",
-                          border: item.current ? "1px solid rgba(16, 185, 129, 0.3)" : "1px solid var(--border)",
-                          color: item.current ? "var(--status-success)" : "var(--text-muted)",
-                        }}
-                      >
-                        {item.current && (
-                          <span
-                            style={{
-                              width: "6px",
-                              height: "6px",
-                              borderRadius: "50%",
-                              backgroundColor: "var(--status-success)",
-                              boxShadow: "0 0 6px var(--status-success)",
-                            }}
-                            aria-hidden="true"
-                          />
-                        )}
-                        <span>{item.statusBadge}</span>
-                      </span>
-                    </div>
+                      {/* Academic Score Pill */}
+                      <div style={{ margin: "var(--space-2) 0 var(--space-3) 0" }}>
+                        <span
+                          style={{
+                            display: "inline-block",
+                            padding: "0.25rem 0.65rem",
+                            backgroundColor: "var(--bg-tertiary)",
+                            border: "1px solid var(--border)",
+                            borderRadius: "var(--radius-sm)",
+                            fontSize: "11px",
+                            fontFamily: "var(--font-mono)",
+                            fontWeight: 600,
+                            color: "var(--text-primary)",
+                          }}
+                        >
+                          {item.cgpa ? `First-Year CGPA: ${item.cgpa}` : `${item.scoreLabel}: ${item.score}`}
+                        </span>
+                      </div>
 
-                    {/* Academic Score Pill */}
-                    <div style={{ margin: "var(--space-2) 0 var(--space-3) 0" }}>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "0.25rem 0.65rem",
-                          backgroundColor: "var(--bg-tertiary)",
-                          border: "1px solid var(--border)",
-                          borderRadius: "var(--radius-sm)",
-                          fontSize: "11px",
-                          fontFamily: "var(--font-mono)",
-                          fontWeight: 600,
-                          color: "var(--text-primary)",
-                        }}
-                      >
-                        {item.cgpa ? `First-Year CGPA: ${item.cgpa}` : `${item.scoreLabel}: ${item.score}`}
-                      </span>
+                      {/* Metadata Row */}
+                      <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0, fontFamily: "var(--font-mono)" }}>
+                        Location: {item.location} • Status: {item.status}
+                      </p>
                     </div>
-
-                    {/* Metadata Row */}
-                    <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0, fontFamily: "var(--font-mono)" }}>
-                      Location: {item.location} • Status: {item.status}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                  </StaggerItem>
+                ))}
+              </StaggerGrid>
             </div>
-          </ScrollReveal>
+          </RevealSection>
         </div>
       </section>
 
       {/* ===================================================================
           4. CORE TECHNICAL STACK SECTION
-          Interactive 3D Skill Cards (Languages, Frontend, Backend, Tools & Concepts)
+          Interactive 3D Skill Cards Cascading with StaggerGrid
           =================================================================== */}
       <section id="skills" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <SectionHeading
               eyebrow="03 // CORE COMPETENCIES"
               title="Technical Skills"
               subtitle="Programming languages, database frameworks, and developer tools applied in coursework, algorithmic problem-solving, and web development."
               align="left"
             />
-          </ScrollReveal>
+          </RevealSection>
 
-          <div
+          <StaggerGrid
+            staggerDelay={0.08}
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
@@ -386,21 +392,21 @@ export default function SinglePagePortfolio() {
             }}
           >
             {skillCategories.map((category, idx) => (
-              <ScrollReveal key={category.name} delay={idx * 60}>
+              <StaggerItem key={category.name}>
                 <SkillCard category={category} index={idx} />
-              </ScrollReveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
       {/* ===================================================================
           5. FEATURED PROJECTS SECTION
-          Production-Grade Systems (Dynamic Train ETA, VoltCharge, CampusLoop)
+          Production-Grade Systems Cascading with StaggerGrid
           =================================================================== */}
       <section id="projects" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <div
               style={{
                 display: "flex",
@@ -419,15 +425,15 @@ export default function SinglePagePortfolio() {
                 </p>
               </div>
             </div>
-          </ScrollReveal>
+          </RevealSection>
 
-          <div className="grid grid-cols-3">
-            {projectsData.map((project, idx) => (
-              <ScrollReveal key={project.id} delay={idx * 80}>
+          <StaggerGrid staggerDelay={0.08} className="grid grid-cols-3">
+            {projectsData.map((project) => (
+              <StaggerItem key={project.id}>
                 <ProjectCard project={project} />
-              </ScrollReveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
@@ -437,23 +443,23 @@ export default function SinglePagePortfolio() {
           =================================================================== */}
       <section id="research" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <SectionHeading
               eyebrow="05 // ACADEMIC RESEARCH"
               title="Research & Publications"
               subtitle="Peer-reviewed scientific contributions in student retention prediction, explainable AI, and international conference presentations."
               align="left"
             />
-          </ScrollReveal>
+          </RevealSection>
 
-          <div style={{ display: "grid", gap: "var(--space-6)", maxWidth: "860px" }}>
-            <ScrollReveal delay={50}>
+          <StaggerGrid staggerDelay={0.1} style={{ display: "grid", gap: "var(--space-6)", maxWidth: "860px" }}>
+            <StaggerItem>
               <ResearchCard paper={publishedPaper} />
-            </ScrollReveal>
-            <ScrollReveal delay={120}>
+            </StaggerItem>
+            <StaggerItem>
               <ResearchCard paper={conferencePresentation} isConference />
-            </ScrollReveal>
-          </div>
+            </StaggerItem>
+          </StaggerGrid>
         </div>
       </section>
 
@@ -461,7 +467,9 @@ export default function SinglePagePortfolio() {
           7. CERTIFICATIONS & ACHIEVEMENTS SECTION
           Interactive Modals, Categorized Credentials, and Uncompromising Verification
           =================================================================== */}
-      <CertificatesSection />
+      <RevealSection>
+        <CertificatesSection />
+      </RevealSection>
 
       {/* ===================================================================
           8. CONTACT SECTION
@@ -469,7 +477,7 @@ export default function SinglePagePortfolio() {
           =================================================================== */}
       <section id="contact" className="section">
         <div className="container">
-          <ScrollReveal>
+          <RevealSection>
             <div
               style={{
                 display: "grid",
@@ -590,7 +598,7 @@ export default function SinglePagePortfolio() {
                 <ContactForm isConfigured={Boolean(process.env.CONTACT_EMAIL_API_KEY)} />
               </div>
             </div>
-          </ScrollReveal>
+          </RevealSection>
         </div>
       </section>
     </>

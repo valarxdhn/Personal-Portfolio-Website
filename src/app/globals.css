@@ -107,6 +107,19 @@ section[id] {
   scroll-margin-top: 80px;
 }
 
+/* Top Scroll Progress Indicator */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--accent);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+  z-index: 9999;
+  pointer-events: none;
+}
+
 /* Scroll Reveal Entrance Animations */
 .scroll-reveal {
   opacity: 0;
