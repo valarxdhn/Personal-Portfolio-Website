@@ -38,7 +38,7 @@ export default function ProjectDetailPage({ params }) {
         {/* Breadcrumb */}
         <div style={{ marginBottom: "var(--space-6)" }}>
           <Link
-            href="/projects"
+            href="/#projects"
             style={{
               display: "inline-flex",
               alignItems: "center",

@@ -1,25 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { personalData } from "@/data/personal";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Achievements", href: "/achievements" },
-  { name: "Contact", href: "/contact" },
+const navSections = [
+  { id: "home", name: "Home", href: "#home" },
+  { id: "about", name: "About", href: "#about" },
+  { id: "education", name: "Education", href: "#education" },
+  { id: "skills", name: "Skills", href: "#skills" },
+  { id: "projects", name: "Projects", href: "#projects" },
+  { id: "research", name: "Research", href: "#research" },
+  { id: "contact", name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Background blur opacity on scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -29,9 +33,69 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Section observer using native IntersectionObserver (no expensive scroll listeners)
   useEffect(() => {
-    setMobileMenuOpen(false);
+    if (pathname !== "/") return;
+
+    const observers = [];
+    const sectionIds = navSections.map((s) => s.id);
+
+    const observerCallback = (entries) => {
+      // Find the topmost intersecting section
+      const visibleEntries = entries.filter((e) => e.isIntersecting);
+      if (visibleEntries.length > 0) {
+        // Pick the one closest to the top of the viewport
+        const best = visibleEntries.reduce((prev, current) =>
+          prev.boundingClientRect.top > current.boundingClientRect.top ? prev : current
+        );
+        setActiveSection(best.target.id);
+      }
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      rootMargin: "-20% 0px -65% 0px",
+      threshold: [0, 0.2, 0.5],
+    });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        observer.observe(el);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [pathname]);
+
+  // Smooth navigation handler
+  const handleNavClick = useCallback(
+    (e, sectionId) => {
+      if (pathname === "/") {
+        e.preventDefault();
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", `#${sectionId}`);
+          setActiveSection(sectionId);
+        }
+      }
+      setMobileMenuOpen(false);
+    },
+    [pathname]
+  );
+
+  // Close mobile drawer on escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <header
@@ -39,7 +103,7 @@ export default function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: scrolled ? "rgba(12, 16, 26, 0.92)" : "rgba(7, 9, 14, 0.82)",
+        backgroundColor: scrolled ? "rgba(11, 15, 23, 0.94)" : "rgba(11, 15, 23, 0.82)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         borderBottom: "1px solid var(--border)",
@@ -55,9 +119,10 @@ export default function Navbar() {
           height: "64px",
         }}
       >
-        {/* Brand Logo */}
+        {/* Brand Logo & Name */}
         <Link
-          href="/"
+          href="/#home"
+          onClick={(e) => handleNavClick(e, "home")}
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -68,6 +133,7 @@ export default function Navbar() {
             fontSize: "var(--text-lg)",
             letterSpacing: "-0.01em",
           }}
+          aria-label="Dhanush - Home"
         >
           <span
             style={{
@@ -78,7 +144,7 @@ export default function Navbar() {
               width: "36px",
               height: "36px",
               borderRadius: "var(--radius-md)",
-              backgroundColor: "rgba(12, 16, 26, 0.75)",
+              backgroundColor: "rgba(15, 20, 32, 0.85)",
               border: "1px solid var(--border)",
               overflow: "hidden",
               boxShadow: "0 2px 10px rgba(0, 0, 0, 0.4)",
@@ -88,8 +154,8 @@ export default function Navbar() {
             <Image
               src={personalData.logoImage || "/images/logo-mark.png"}
               alt="Dhanush Logo"
-              width={32}
-              height={32}
+              width={30}
+              height={30}
               priority
               style={{ objectFit: "contain" }}
             />
@@ -103,38 +169,39 @@ export default function Navbar() {
           style={{
             display: "none",
             alignItems: "center",
-            gap: "var(--space-1)",
+            gap: "4px",
           }}
           aria-label="Main Navigation"
         >
-          {navLinks.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
+          {navSections.map((item) => {
+            const isActive = activeSection === item.id;
+            const targetHref = pathname === "/" ? item.href : `/${item.href}`;
 
             return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="btn btn-ghost btn-sm"
+              <a
+                key={item.id}
+                href={targetHref}
+                onClick={(e) => handleNavClick(e, item.id)}
+                className="btn btn-ghost btn-sm nav-section-link"
                 style={{
-                  fontSize: "var(--text-sm)",
+                  fontSize: "13px",
                   fontWeight: isActive ? 600 : 500,
                   color: isActive ? "var(--accent)" : "var(--text-secondary)",
                   borderRadius: "var(--radius-md)",
-                  padding: "0.4rem 0.75rem",
-                  backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
+                  padding: "0.35rem 0.7rem",
+                  backgroundColor: isActive ? "rgba(56, 189, 248, 0.08)" : "transparent",
+                  border: isActive ? "1px solid rgba(56, 189, 248, 0.25)" : "1px solid transparent",
+                  transition: "all var(--transition-fast)",
                 }}
+                aria-current={isActive ? "true" : undefined}
               >
-                {link.name}
-              </Link>
+                {item.name}
+              </a>
             );
           })}
-
         </nav>
 
-        {/* Mobile Nav Toggle */}
+        {/* Mobile Hamburger Toggle */}
         <div
           className="mobile-nav-toggle-group"
           style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
@@ -148,6 +215,7 @@ export default function Navbar() {
             style={{
               border: "1px solid var(--border)",
               borderRadius: "var(--radius-md)",
+              backgroundColor: "rgba(15, 20, 32, 0.6)",
             }}
           >
             {mobileMenuOpen ? (
@@ -162,54 +230,55 @@ export default function Navbar() {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div
+          className="mobile-drawer-menu"
           style={{
             borderTop: "1px solid var(--border)",
-            backgroundColor: "var(--bg-secondary)",
+            backgroundColor: "rgba(11, 15, 23, 0.98)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
             padding: "var(--space-4) var(--space-6)",
             display: "flex",
             flexDirection: "column",
             gap: "var(--space-1)",
           }}
         >
-          {navLinks.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
+          {navSections.map((item) => {
+            const isActive = activeSection === item.id;
+            const targetHref = pathname === "/" ? item.href : `/${item.href}`;
 
             return (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+              <a
+                key={item.id}
+                href={targetHref}
+                onClick={(e) => handleNavClick(e, item.id)}
                 className="btn btn-ghost"
                 style={{
                   justifyContent: "flex-start",
                   fontSize: "var(--text-sm)",
                   fontWeight: isActive ? 600 : 500,
                   color: isActive ? "var(--accent)" : "var(--text-primary)",
-                  backgroundColor: isActive ? "var(--accent-subtle)" : "transparent",
+                  backgroundColor: isActive ? "rgba(56, 189, 248, 0.1)" : "transparent",
+                  borderLeft: isActive ? "3px solid var(--accent)" : "3px solid transparent",
                   padding: "0.6rem 0.85rem",
                   borderRadius: "var(--radius-sm)",
                   width: "100%",
+                  textAlign: "left",
                 }}
+                aria-current={isActive ? "true" : undefined}
               >
-                {link.name}
-              </Link>
+                {item.name}
+              </a>
             );
           })}
         </div>
       )}
 
       <style jsx>{`
-        @media (min-width: 768px) {
+        @media (min-width: 860px) {
           .desktop-nav {
             display: flex !important;
           }
           .mobile-menu-btn {
-            display: none !important;
-          }
-          .mobile-theme-toggle {
             display: none !important;
           }
         }

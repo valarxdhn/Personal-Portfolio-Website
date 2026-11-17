@@ -14,7 +14,7 @@ export default function CertificatesSection() {
       : certificatesData.filter((c) => c.category === activeCategory);
 
   return (
-    <section id="certifications" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+    <section id="achievements" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="container">
         {/* Section Header */}
         <div

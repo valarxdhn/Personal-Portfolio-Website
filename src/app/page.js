@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,44 +10,59 @@ import {
   Mail,
   GraduationCap,
   MapPin,
+  Award,
+  Cpu,
+  BookOpen,
+  Calendar,
+  ExternalLink,
+  Code2,
 } from "lucide-react";
 import Button from "@/components/Button";
 import MaterialField from "@/components/MaterialField";
 import HeroCard from "@/components/HeroCard";
 import TelemetryRibbon from "@/components/TelemetryRibbon";
+import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import SkillCard from "@/components/SkillCard";
 import ResearchCard from "@/components/ResearchCard";
 import CertificatesSection from "@/components/CertificatesSection";
 import ContactForm from "@/components/ContactForm";
+import ScrollReveal from "@/components/ScrollReveal";
+
 import { personalData } from "@/data/personal";
-import { projectsData } from "@/data/projects";
+import { educationData } from "@/data/education";
 import { skillCategories } from "@/data/skills";
+import { projectsData } from "@/data/projects";
 import { publishedPaper, conferencePresentation } from "@/data/research";
 import { socialLinks } from "@/data/social";
 
-export default function HomePage() {
-  const githubUrl = socialLinks.find((s) => s.name === "GitHub")?.url || "https://github.com/valarxdhn";
-  const linkedinUrl = socialLinks.find((s) => s.name === "LinkedIn")?.url || "https://linkedin.com";
+export const metadata = {
+  title: "Dhanush | Computer Science Engineering Student & Software Developer",
+  description:
+    "Single-page developer portfolio of Dhanush: academic background, Sahyadri College B.E. CSE (CGPA: 8.85), core technical stack, real-world engineering projects, IJIRT research publication, and verified achievements.",
+};
 
-  // Check if a real resume PDF has been placed in public/documents/resume.pdf
+export default function SinglePagePortfolio() {
+  const githubUrl = socialLinks.find((s) => s.name === "GitHub")?.url || "https://github.com/valarxdhn";
+  const linkedinUrl = socialLinks.find((s) => s.name === "LinkedIn")?.url || "https://linkedin.com/in/dhanushmk14";
+
+  // Check if a verified resume PDF is present on disk
   const resumeFilePath = path.join(process.cwd(), "public", "documents", "resume.pdf");
   const hasResumePdf = fs.existsSync(resumeFilePath);
 
   return (
     <>
       {/* ===================================================================
-          1. AURAL HERO EXPERIENCE (ThreeUI Inspired)
-          Interactive Material Field + Precision Telemetry + 3D Hero Card
+          1. HERO / HOME SECTION
+          AURAL Interactive Experience: Procedural Material Field & 3D Hero Card
           =================================================================== */}
-      <section className="aural-hero-section">
-        {/* Procedural Acoustic Material Field (WebGL / Canvas) */}
+      <section id="home" className="aural-hero-section">
+        {/* Procedural WebGL/Canvas Acoustic Depth Canvas */}
         <MaterialField />
 
         <div className="container aural-hero-container">
-            {/* Hero Two-Column Architecture */}
           <div className="aural-hero-grid">
-            {/* Left Column: Lead Content & Actions */}
+            {/* Left Column: Greeting, Identity & Primary Actions */}
             <div className="aural-hero-lead">
               <p className="aural-hero-greeting">Hi, I'm</p>
               <h1 className="aural-hero-name">{personalData.name}</h1>
@@ -60,7 +76,7 @@ export default function HomePage() {
               {/* Action Controls */}
               <div className="aural-hero-actions">
                 <Button href="#projects" variant="primary">
-                  <span>Explore Engineering</span>
+                  <span>Explore Projects</span>
                   <ArrowRight size={15} aria-hidden="true" />
                 </Button>
 
@@ -69,9 +85,10 @@ export default function HomePage() {
                     href="/documents/resume.pdf"
                     variant="secondary"
                     download="Dhanush_Resume.pdf"
+                    title="Direct PDF download (77.7 KB)"
                   >
                     <FileDown size={15} aria-hidden="true" />
-                    <span>Download Dossier (PDF)</span>
+                    <span>Download Resume</span>
                   </Button>
                 ) : (
                   <Button
@@ -80,10 +97,11 @@ export default function HomePage() {
                     title="Direct email transmission (Resume PDF pending upload)"
                   >
                     <FileDown size={15} aria-hidden="true" />
-                    <span>Request Dossier</span>
+                    <span>Request Resume</span>
                   </Button>
                 )}
 
+                {/* Social Connectors */}
                 <div className="hero-social-group">
                   <a
                     href={githubUrl}
@@ -91,7 +109,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     aria-label="GitHub Profile"
                     className="hero-social-link"
-                    title="GitHub"
+                    title="GitHub: valarxdhn"
                   >
                     <Github size={17} aria-hidden="true" />
                   </a>
@@ -101,236 +119,478 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     aria-label="LinkedIn Profile"
                     className="hero-social-link"
-                    title="LinkedIn"
+                    title="LinkedIn: dhanushmk14"
                   >
                     <Linkedin size={17} aria-hidden="true" />
                   </a>
                 </div>
               </div>
-
             </div>
 
-            {/* Right Column: 3D Perspective Tactile Card */}
+            {/* Right Column: 3D Perspective Photo Card */}
             <HeroCard />
           </div>
         </div>
       </section>
 
-      {/* ===================================================================
-          2. TELEMETRY SPECS RIBBON (Hardware Benchmark Strip)
-          =================================================================== */}
+      {/* Telemetry Hardware Specs Ribbon */}
       <TelemetryRibbon />
 
       {/* ===================================================================
-          3. ABOUT & ENGINEERING PHILOSOPHY SECTION
+          2. ABOUT ME SECTION
+          Unified Profile: 4:5 Portrait Card, Narrative, Metric Badges, CTAs
           =================================================================== */}
       <section id="about" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <div className="section-heading">
-            <span className="aural-section-index">01 // CORE PROFILE</span>
-            <h2 className="section-title">Engineering Background</h2>
-            <p className="section-subtitle">
-              Computer science undergraduate education grounded in data structures, systems programming, and applied computational research.
-            </p>
-          </div>
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="01 // BACKGROUND"
+              title="About Me"
+              subtitle="Computer Science Engineering student at Sahyadri College of Engineering and Management focused on backend software development, algorithms, and practical engineering solutions."
+              align="left"
+            />
+          </ScrollReveal>
 
-          <div className="aural-about-grid">
-            <div className="aural-about-main">
-              <h3 style={{ fontSize: "var(--text-lg)", fontWeight: 700, marginBottom: "var(--space-3)", color: "var(--text-primary)" }}>
-                Curiosity Driven Software Engineering
-              </h3>
-              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-4)" }}>
-                {personalData.introduction}
-              </p>
-              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, margin: 0 }}>
-                I prioritize architectural clarity, algorithmic efficiency, and measurable utility over superficial complexity. Whether developing transit prediction engines, EV routing optimization, or machine learning risk classifiers, my focus is delivering deterministic, production-ready code.
-              </p>
+          <ScrollReveal delay={80}>
+            <div className="about-bio-grid">
+              {/* Left: 4:5 Vertical Portrait Container */}
+              <div>
+                <div className="about-portrait-card">
+                  <Image
+                    src={personalData.profileImage}
+                    alt={personalData.profileImageAlt}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 280px, 300px"
+                    className="about-portrait-img"
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to top, rgba(11, 15, 23, 0.75) 0%, rgba(11, 15, 23, 0) 40%)",
+                      pointerEvents: "none",
+                    }}
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
 
-              <div style={{ marginTop: "var(--space-6)" }}>
-                <Button href="/about" variant="outline" size="sm">
-                  <span>Read Full Academic Profile</span>
-                  <ArrowRight size={14} aria-hidden="true" />
-                </Button>
+              {/* Right: Bio Narrative & Scannable Indicators */}
+              <div>
+                <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, marginBottom: "var(--space-1)", color: "var(--text-primary)" }}>
+                  {personalData.name}
+                </h3>
+                <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 600, marginBottom: "var(--space-4)" }}>
+                  {personalData.headline}
+                </p>
+
+                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-4)" }}>
+                  I am a Computer Science and Engineering undergraduate student at{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>
+                    Sahyadri College of Engineering and Management
+                  </strong>{" "}
+                  in Mangalore, Karnataka, holding a verified first-year cumulative CGPA of{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>8.85 / 10.0</strong>.
+                </p>
+
+                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-5)" }}>
+                  My engineering focus centers on writing clean, deterministic software and constructing practical systems. Through computational research, competitive programming, and collegiate initiatives, I explore transportation delay estimation, electric vehicle infrastructure optimization, and applied machine learning models.
+                </p>
+
+                {/* Three Compact Metric Pills */}
+                <div className="about-metrics-row">
+                  <div className="about-metric-pill" title="First-Year Cumulative Grade Point Average">
+                    <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
+                    <span>8.85 CGPA</span>
+                  </div>
+
+                  <div className="about-metric-pill" title="IJIRT Publication & ICRICS 2026 Presentation">
+                    <Award size={13} color="var(--accent)" aria-hidden="true" />
+                    <span>1 Publication · 1 Conference Presentation</span>
+                  </div>
+
+                  <div className="about-metric-pill" title="Technical Focus Areas">
+                    <Cpu size={13} color="var(--accent)" aria-hidden="true" />
+                    <span>Backend &amp; Applied ML</span>
+                  </div>
+                </div>
+
+                {/* Secondary CTAs */}
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--space-3)" }}>
+                  <Button href="#projects" variant="primary" className="about-cta-btn-primary">
+                    <span>View Projects</span>
+                    <ArrowRight size={15} className="about-btn-arrow" aria-hidden="true" />
+                  </Button>
+
+                  {hasResumePdf ? (
+                    <Button
+                      href="/documents/resume.pdf"
+                      variant="secondary"
+                      download="Dhanush_Resume.pdf"
+                      className="about-cta-btn-secondary"
+                    >
+                      <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
+                      <span>Download Resume</span>
+                    </Button>
+                  ) : (
+                    <Button
+                      href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
+                      variant="secondary"
+                      className="about-cta-btn-secondary"
+                    >
+                      <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
+                      <span>Request Resume</span>
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
-
-            <div className="aural-about-sidebar">
-              <div className="aural-about-stat-card">
-                <span className="aural-stat-label">INSTITUTION &amp; PROGRAM</span>
-                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--text-primary)" }}>
-                  Sahyadri College of Eng. &amp; Management
-                </span>
-                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-                  B.E. Computer Science &amp; Engineering
-                </span>
-              </div>
-
-              <div className="aural-about-stat-card">
-                <span className="aural-stat-label">FIRST-YEAR STANDING</span>
-                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--accent)" }}>
-                  8.85 / 10.0 CGPA
-                </span>
-                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-                  Top Academic Distinction
-                </span>
-              </div>
-
-              <div className="aural-about-stat-card">
-                <span className="aural-stat-label">RESEARCH DEFENSE</span>
-                <span style={{ fontSize: "var(--text-sm)", fontWeight: 700, color: "var(--text-primary)" }}>
-                  ICRICS 2026 &amp; IJIRT Vol. 13
-                </span>
-                <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>
-                  Published Paper ID #206803
-                </span>
-              </div>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ===================================================================
-          4. SELECTED PROJECTS SECTION
+          3. EDUCATION & ACADEMIC STANDING SECTION
+          Verified Records: Sahyadri College (B.E.), PU College (PCMB), SSLC
           =================================================================== */}
-      <section id="projects" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+      <section id="education" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              marginBottom: "var(--space-8)",
-              flexWrap: "wrap",
-              gap: "var(--space-4)",
-            }}
-          >
-            <div>
-              <span className="aural-section-index">02 // ARCHITECTURAL REPOSITORIES</span>
-              <h2 className="section-title">Selected Projects</h2>
-              <p className="section-subtitle">
-                Software engineering applications addressing railway delay tracking, EV charging slot discovery, and collegiate event management.
-              </p>
-            </div>
-            <Link
-              href="/projects"
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="02 // ACADEMIC STANDING"
+              title="Education & Academic Standing"
+              subtitle="Verified academic milestones demonstrating foundational rigor, mathematical discipline, and consistent scholastic performance."
+              align="left"
+            />
+          </ScrollReveal>
+
+          <ScrollReveal delay={100}>
+            <div
+              className="card"
               style={{
-                fontSize: "var(--text-sm)",
-                fontWeight: 600,
-                color: "var(--accent)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
+                padding: "var(--space-6) var(--space-8)",
+                backgroundColor: "var(--bg-secondary)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-lg)",
               }}
             >
-              <span>All Projects Archive</span>
-              <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </div>
+              {educationData.map((item, idx) => (
+                <div key={item.id}>
+                  {idx > 0 && <div className="academic-divider" />}
 
-          <div className="grid grid-cols-3">
-            {projectsData.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+                  <div className="academic-entry">
+                    {/* Top Row: Institution Name & Status Badge */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        flexWrap: "wrap",
+                        gap: "var(--space-2)",
+                        marginBottom: "var(--space-2)",
+                      }}
+                    >
+                      <div>
+                        <h3 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
+                          {item.institution}
+                        </h3>
+                        <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 500, margin: "2px 0 0 0" }}>
+                          {item.degree} {item.field && `• ${item.field}`}
+                        </p>
+                      </div>
+
+                      {/* Status Indicator */}
+                      <span
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          padding: "0.25rem 0.65rem",
+                          borderRadius: "var(--radius-full)",
+                          fontSize: "11px",
+                          fontFamily: "var(--font-mono)",
+                          fontWeight: 600,
+                          backgroundColor: item.current ? "rgba(16, 185, 129, 0.08)" : "var(--bg-tertiary)",
+                          border: item.current ? "1px solid rgba(16, 185, 129, 0.3)" : "1px solid var(--border)",
+                          color: item.current ? "var(--status-success)" : "var(--text-muted)",
+                        }}
+                      >
+                        {item.current && (
+                          <span
+                            style={{
+                              width: "6px",
+                              height: "6px",
+                              borderRadius: "50%",
+                              backgroundColor: "var(--status-success)",
+                              boxShadow: "0 0 6px var(--status-success)",
+                            }}
+                            aria-hidden="true"
+                          />
+                        )}
+                        <span>{item.statusBadge}</span>
+                      </span>
+                    </div>
+
+                    {/* Academic Score Pill */}
+                    <div style={{ margin: "var(--space-2) 0 var(--space-3) 0" }}>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          padding: "0.25rem 0.65rem",
+                          backgroundColor: "var(--bg-tertiary)",
+                          border: "1px solid var(--border)",
+                          borderRadius: "var(--radius-sm)",
+                          fontSize: "11px",
+                          fontFamily: "var(--font-mono)",
+                          fontWeight: 600,
+                          color: "var(--text-primary)",
+                        }}
+                      >
+                        {item.cgpa ? `First-Year CGPA: ${item.cgpa}` : `${item.scoreLabel}: ${item.score}`}
+                      </span>
+                    </div>
+
+                    {/* Metadata Row */}
+                    <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0, fontFamily: "var(--font-mono)" }}>
+                      Location: {item.location} • Status: {item.status}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ===================================================================
-          5. TECHNICAL SKILLS SECTION
+          4. CORE TECHNICAL STACK SECTION
+          Interactive 3D Skill Cards (Languages, Frontend, Backend, Tools & Concepts)
           =================================================================== */}
       <section id="skills" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <div className="section-heading">
-            <span className="aural-section-index">03 // CORE COMPETENCIES</span>
-            <h2 className="section-title">Technical Skills</h2>
-            <p className="section-subtitle">
-              Programming languages, core foundations, and developer tools applied in coursework, algorithmic problem-solving, and web development.
-            </p>
-          </div>
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="03 // CORE COMPETENCIES"
+              title="Technical Skills"
+              subtitle="Programming languages, database frameworks, and developer tools applied in coursework, algorithmic problem-solving, and web development."
+              align="left"
+            />
+          </ScrollReveal>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
               gap: "var(--space-6)",
             }}
           >
             {skillCategories.map((category, idx) => (
-              <SkillCard key={category.name} category={category} index={idx} />
+              <ScrollReveal key={category.name} delay={idx * 60}>
+                <SkillCard category={category} index={idx} />
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ===================================================================
-          6. CERTIFICATIONS & ACHIEVEMENTS SECTION
+          5. FEATURED PROJECTS SECTION
+          Production-Grade Systems (Dynamic Train ETA, VoltCharge, CampusLoop)
           =================================================================== */}
-      <CertificatesSection />
-
-      {/* ===================================================================
-          7. RESEARCH & PUBLICATIONS SECTION
-          =================================================================== */}
-      <section id="research" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+      <section id="projects" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
-          <div className="section-heading">
-            <span className="aural-section-index">05 // ACADEMIC RESEARCH</span>
-            <h2 className="section-title">Research &amp; Publications</h2>
-            <p className="section-subtitle">
-              Published journal article and international conference defense covering applied machine learning and early-warning systems.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                marginBottom: "var(--space-8)",
+                flexWrap: "wrap",
+                gap: "var(--space-4)",
+              }}
+            >
+              <div>
+                <span className="section-eyebrow">04 // ARCHITECTURAL REPOSITORIES</span>
+                <h2 className="section-title">Featured Projects</h2>
+                <p className="section-subtitle">
+                  Software engineering applications addressing railway delay tracking, EV charging slot discovery, and collegiate event management.
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
 
-          <div style={{ display: "grid", gap: "var(--space-6)", maxWidth: "860px" }}>
-            <ResearchCard paper={publishedPaper} />
-            <ResearchCard paper={conferencePresentation} isConference />
+          <div className="grid grid-cols-3">
+            {projectsData.map((project, idx) => (
+              <ScrollReveal key={project.id} delay={idx * 80}>
+                <ProjectCard project={project} />
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ===================================================================
-          8. DIRECT TRANSMISSION / CONTACT SECTION
+          6. RESEARCH & PUBLICATIONS SECTION
+          IJIRT Peer-Reviewed Journal Article & ICRICS 2026 Conference Presentation
+          =================================================================== */}
+      <section id="research" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="05 // ACADEMIC RESEARCH"
+              title="Research & Publications"
+              subtitle="Peer-reviewed scientific contributions in student retention prediction, explainable AI, and international conference presentations."
+              align="left"
+            />
+          </ScrollReveal>
+
+          <div style={{ display: "grid", gap: "var(--space-6)", maxWidth: "860px" }}>
+            <ScrollReveal delay={50}>
+              <ResearchCard paper={publishedPaper} />
+            </ScrollReveal>
+            <ScrollReveal delay={120}>
+              <ResearchCard paper={conferencePresentation} isConference />
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ===================================================================
+          7. CERTIFICATIONS & ACHIEVEMENTS SECTION
+          Interactive Modals, Categorized Credentials, and Uncompromising Verification
+          =================================================================== */}
+      <CertificatesSection />
+
+      {/* ===================================================================
+          8. CONTACT SECTION
+          Direct Transmission: Direct Email, Location, Status & Functional Form
           =================================================================== */}
       <section id="contact" className="section">
         <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "var(--space-10)",
-              alignItems: "flex-start",
-            }}
-          >
-            <div>
-              <span className="aural-section-index">06 // DIRECT TRANSMISSION</span>
-              <h2 className="section-title">Contact</h2>
-              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-6)" }}>
-                I am actively seeking software engineering internships, technical collaborations, and research discussions. Feel free to send a message or contact directly via email.
-              </p>
+          <ScrollReveal>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                gap: "var(--space-10)",
+                alignItems: "flex-start",
+              }}
+            >
+              {/* Left Column: Direct Inquiries Information */}
+              <div>
+                <span className="section-eyebrow">07 // DIRECT TRANSMISSION</span>
+                <h2 className="section-title">Contact &amp; Collaboration</h2>
+                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-6)" }}>
+                  I am actively seeking software engineering internships, technical collaborations, and research discussions. Feel free to send an inquiry directly via the form or email.
+                </p>
 
-              <div style={{ display: "grid", gap: "var(--space-3)", fontSize: "var(--text-sm)" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                  <Mail size={16} color="var(--accent)" aria-hidden="true" />
-                  <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--text-primary)", fontWeight: 500 }}>
-                    dhanushmk95@gmail.com
-                  </a>
+                <div style={{ display: "grid", gap: "var(--space-4)", fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "var(--radius-sm)",
+                        backgroundColor: "var(--bg-secondary)",
+                        border: "1px solid var(--border)",
+                        color: "var(--accent)",
+                      }}
+                    >
+                      <Mail size={16} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Email</span>
+                      <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--text-primary)", fontWeight: 600 }}>
+                        dhanushmk95@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "var(--radius-sm)",
+                        backgroundColor: "var(--bg-secondary)",
+                        border: "1px solid var(--border)",
+                        color: "var(--accent)",
+                      }}
+                    >
+                      <MapPin size={16} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Location</span>
+                      <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>{personalData.location}</span>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "var(--radius-sm)",
+                        backgroundColor: "var(--bg-secondary)",
+                        border: "1px solid var(--border)",
+                        color: "var(--accent)",
+                      }}
+                    >
+                      <GraduationCap size={16} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Institution</span>
+                      <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>{personalData.college}</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                  <MapPin size={16} color="var(--accent)" aria-hidden="true" />
-                  <span style={{ color: "var(--text-secondary)" }}>{personalData.location}</span>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                  <GraduationCap size={16} color="var(--accent)" aria-hidden="true" />
-                  <span style={{ color: "var(--text-secondary)" }}>{personalData.college}</span>
+                {/* Status indicator */}
+                <div
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: "var(--radius-full)",
+                    backgroundColor: "rgba(16, 185, 129, 0.08)",
+                    border: "1px solid rgba(16, 185, 129, 0.28)",
+                    fontSize: "12px",
+                    color: "var(--status-success)",
+                    fontWeight: 600,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: "7px",
+                      height: "7px",
+                      borderRadius: "50%",
+                      backgroundColor: "var(--status-success)",
+                      boxShadow: "0 0 8px var(--status-success)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <span>Open for Summer / Fall Internships</span>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <ContactForm isConfigured={Boolean(process.env.CONTACT_EMAIL_API_KEY)} />
+              {/* Right Column: Functional Contact Form */}
+              <div>
+                <ContactForm isConfigured={Boolean(process.env.CONTACT_EMAIL_API_KEY)} />
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
