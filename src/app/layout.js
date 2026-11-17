@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import LiveBackground from "@/components/LiveBackground";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import ScrollProgress from "@/components/ScrollProgress";
+import Preloader from "@/components/Preloader";
 
 export const metadata = {
   title: "Dhanush | Computer Science Engineering Student & Developer",
@@ -41,6 +42,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative" }}>
+        {/* Initial Session-Scoped Sleek Preloader */}
+        <Preloader />
+
         {/* Lenis Smooth Inertial Scrolling Provider */}
         <SmoothScrollProvider>
           {/* Top Fixed Cyan Scroll Progress Indicator */}

@@ -120,6 +120,20 @@ section[id] {
   pointer-events: none;
 }
 
+/* Preloader Pulse Animation */
+@keyframes preloaderPulse {
+  0%, 100% {
+    transform: scale(0.85);
+    opacity: 0.6;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.4);
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+  }
+}
+
 /* Scroll Reveal Entrance Animations */
 .scroll-reveal {
   opacity: 0;
