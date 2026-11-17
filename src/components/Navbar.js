@@ -79,7 +79,7 @@ export default function Navbar() {
           >
             <Code2 size={16} aria-hidden="true" />
           </span>
-          <span>Dhanush</span>
+          <span>Dhanush M K</span>
         </Link>
 
         {/* Desktop Navigation Links */}

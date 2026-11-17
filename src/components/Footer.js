@@ -130,7 +130,7 @@ export default function Footer() {
             gap: "var(--space-2)",
           }}
         >
-          <span>© {new Date().getFullYear()} Dhanush. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {personalData.name}. All rights reserved.</span>
           <span>Built with Next.js & React</span>
         </div>
       </div>
