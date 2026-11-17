@@ -1,21 +1,44 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2, AlertCircle, Loader2, Mail } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Loader2, Mail, Copy, Check, ExternalLink } from "lucide-react";
 import Button from "./Button";
+import { personalData } from "@/data/personal";
 
-export default function ContactForm() {
+/**
+ * ContactForm Component
+ *
+ * Provides a genuine, verifiable contact interface:
+ * 1. If backend email provider is configured: Renders the validated interactive form that dispatches
+ *    real emails via Resend.
+ * 2. If backend email provider is NOT configured: Replaces the form with a clean, high-utility
+ *    direct contact panel with copy-to-clipboard and working mailto triggers. Zero fake confirmations.
+ */
+export default function ContactForm({ isConfigured = false }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
-    botcheck: "", // Honeypot field
+    botcheck: "",
   });
 
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [statusMessage, setStatusMessage] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const contactEmail = personalData.email || "dhanushmk95@gmail.com";
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2400);
+    } catch {
+      // Fallback if clipboard API is blocked
+      setCopied(false);
+    }
+  };
 
   const validate = () => {
     const newErrors = {};
@@ -60,7 +83,6 @@ export default function ContactForm() {
     }
 
     setStatus("loading");
-    setStatusMessage("");
 
     try {
       const response = await fetch("/api/contact", {
@@ -69,29 +91,185 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => null);
 
-      if (response.ok && data.success) {
+      if (response.ok && data?.success) {
         setStatus("success");
-        setStatusMessage(
-          data.message || "Your message has been received! Dhanush will review it shortly."
-        );
         setFormData({ name: "", email: "", subject: "", message: "", botcheck: "" });
       } else {
         setStatus("error");
-        setStatusMessage(
-          data.message ||
-            "Unable to deliver message through the form. Please reach out directly at dhanushmk95@gmail.com."
-        );
       }
     } catch {
       setStatus("error");
-      setStatusMessage(
-        "Network connection error. Please verify your connection or email directly at dhanushmk95@gmail.com."
-      );
     }
   };
 
+  // =========================================================================
+  // STATE A: Email Integration NOT Configured (Clean Direct Contact Panel)
+  // =========================================================================
+  if (!isConfigured) {
+    return (
+      <div
+        className="card"
+        style={{
+          padding: "var(--space-8)",
+          background: "var(--bg-secondary)",
+          border: "1px solid var(--border)",
+          borderRadius: "var(--radius-lg)",
+        }}
+      >
+        <div style={{ marginBottom: "var(--space-6)" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "var(--space-2)" }}>
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                backgroundColor: "var(--status-success)",
+                boxShadow: "0 0 8px var(--status-success)",
+              }}
+              aria-hidden="true"
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                color: "var(--accent)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                fontWeight: 600,
+              }}
+            >
+              Direct Transmission Channel
+            </span>
+          </div>
+          <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, marginBottom: "var(--space-2)", color: "var(--text-primary)" }}>
+            Direct Contact Panel
+          </h3>
+          <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>
+            To ensure immediate and reliable message delivery without intermediary relays, reach out directly via your preferred email application.
+          </p>
+        </div>
+
+        {/* Email Address Display Box */}
+        <div
+          style={{
+            padding: "var(--space-4) var(--space-5)",
+            backgroundColor: "var(--bg-tertiary)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-md)",
+            marginBottom: "var(--space-6)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "var(--space-3)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "var(--radius-sm)",
+                backgroundColor: "var(--accent-subtle)",
+                border: "1px solid var(--accent-border)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "var(--accent)",
+              }}
+            >
+              <Mail size={18} aria-hidden="true" />
+            </div>
+            <div>
+              <span style={{ display: "block", fontSize: "10px", fontFamily: "var(--font-mono)", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                Primary Inbox
+              </span>
+              <a
+                href={`mailto:${contactEmail}`}
+                style={{
+                  fontSize: "var(--text-base)",
+                  fontWeight: 600,
+                  color: "var(--text-primary)",
+                  textDecoration: "none",
+                }}
+              >
+                {contactEmail}
+              </a>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="btn btn-secondary btn-sm"
+            style={{ gap: "6px" }}
+            aria-label="Copy email address"
+          >
+            {copied ? (
+              <>
+                <Check size={14} color="var(--status-success)" aria-hidden="true" />
+                <span style={{ color: "var(--status-success)" }}>Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={14} aria-hidden="true" />
+                <span>Copy Address</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Primary Action Button */}
+        <div style={{ marginBottom: "var(--space-6)" }}>
+          <Button
+            href={`mailto:${contactEmail}?subject=Portfolio%20Inquiry%20-%20Dhanush`}
+            variant="primary"
+            size="lg"
+            style={{ width: "100%", justifyContent: "center", gap: "var(--space-2)" }}
+          >
+            <Send size={16} aria-hidden="true" />
+            <span>Open in Email Client</span>
+          </Button>
+        </div>
+
+        {/* Inquiry Quick-Links */}
+        <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "var(--space-4)" }}>
+          <span style={{ display: "block", fontSize: "11px", fontFamily: "var(--font-mono)", color: "var(--text-muted)", marginBottom: "var(--space-2)" }}>
+            QUICK SUBJECT PRESETS:
+          </span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
+            <a
+              href={`mailto:${contactEmail}?subject=Software%20Engineering%20Internship%20Inquiry%20-%20Dhanush`}
+              className="aural-spec-chip"
+              style={{ textDecoration: "none", color: "var(--text-secondary)", transition: "color var(--transition-fast)" }}
+            >
+              <span>+ Internship Inquiry</span>
+            </a>
+            <a
+              href={`mailto:${contactEmail}?subject=Engineering%20Collaboration%20-%20Dhanush`}
+              className="aural-spec-chip"
+              style={{ textDecoration: "none", color: "var(--text-secondary)", transition: "color var(--transition-fast)" }}
+            >
+              <span>+ Engineering Collaboration</span>
+            </a>
+            <a
+              href={`mailto:${contactEmail}?subject=Research%20Discussion%20-%20Dhanush`}
+              className="aural-spec-chip"
+              style={{ textDecoration: "none", color: "var(--text-secondary)", transition: "color var(--transition-fast)" }}
+            >
+              <span>+ Research Discussion</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // STATE B: Email Integration IS Configured (Genuine Validated Resend Form)
+  // =========================================================================
   return (
     <form
       onSubmit={handleSubmit}
@@ -125,6 +303,7 @@ export default function ContactForm() {
         aria-hidden="true"
       />
 
+      {/* Success Notification */}
       {status === "success" && (
         <div
           role="status"
@@ -145,12 +324,13 @@ export default function ContactForm() {
               Message Received
             </h4>
             <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)", margin: 0 }}>
-              {statusMessage}
+              Your message has been submitted successfully.
             </p>
           </div>
         </div>
       )}
 
+      {/* Failure Notification */}
       {status === "error" && (
         <div
           role="alert"
@@ -171,11 +351,11 @@ export default function ContactForm() {
               Notice
             </h4>
             <p style={{ fontSize: "var(--text-xs)", color: "var(--text-primary)", margin: 0 }}>
-              {statusMessage}
+              Unable to send your message right now. Please contact me directly by email.
             </p>
             <div style={{ marginTop: "var(--space-2)" }}>
               <a
-                href="mailto:dhanushmk95@gmail.com"
+                href={`mailto:${contactEmail}`}
                 style={{
                   fontSize: "var(--text-xs)",
                   color: "var(--accent)",
@@ -378,7 +558,7 @@ export default function ContactForm() {
           {status === "loading" ? (
             <>
               <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-              <span>Sending Message...</span>
+              <span>Sending your message...</span>
             </>
           ) : (
             <>
@@ -399,8 +579,8 @@ export default function ContactForm() {
         }}
       >
         Direct email alternative:{" "}
-        <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-          dhanushmk95@gmail.com
+        <a href={`mailto:${contactEmail}`} style={{ color: "var(--accent)", textDecoration: "underline" }}>
+          {contactEmail}
         </a>
       </p>
     </form>

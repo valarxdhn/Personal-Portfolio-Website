@@ -328,7 +328,7 @@ export default function HomePage() {
             </div>
 
             <div>
-              <ContactForm />
+              <ContactForm isConfigured={Boolean(process.env.CONTACT_EMAIL_API_KEY)} />
             </div>
           </div>
         </div>

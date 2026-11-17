@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 
-// In-memory rate limiting map (IP -> array of timestamps)
+// In-memory IP rate limiter (3 requests per minute per IP)
 const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 3;
 
 function isRateLimited(ip) {
@@ -19,6 +17,23 @@ function isRateLimited(ip) {
   return false;
 }
 
+/**
+ * GET /api/contact
+ * Public check to determine whether genuine backend email delivery is configured.
+ */
+export async function GET() {
+  const isConfigured = Boolean(process.env.CONTACT_EMAIL_API_KEY);
+  return NextResponse.json(
+    { configured: isConfigured },
+    { status: 200 }
+  );
+}
+
+/**
+ * POST /api/contact
+ * Handles genuine email dispatch via Resend.
+ * Strictly avoids simulated success or ephemeral filesystem storage.
+ */
 export async function POST(request) {
   try {
     const clientIp =
@@ -26,6 +41,7 @@ export async function POST(request) {
       request.headers.get("x-real-ip") ||
       "127.0.0.1";
 
+    // 1. Rate Limiting Check
     if (isRateLimited(clientIp)) {
       return NextResponse.json(
         {
@@ -36,10 +52,29 @@ export async function POST(request) {
       );
     }
 
-    const body = await request.json();
-    const { name, email, subject, message, botcheck } = body;
+    // 2. Content-Type Validation
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      return NextResponse.json(
+        { success: false, message: "Invalid request content type. Expected application/json." },
+        { status: 415 }
+      );
+    }
 
-    // Spam honeypot detection
+    // 3. Safe JSON Body Parsing
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Malformed JSON payload in request." },
+        { status: 400 }
+      );
+    }
+
+    const { name, email, subject, message, botcheck } = body || {};
+
+    // 4. Honeypot Anti-Spam Check
     if (botcheck) {
       return NextResponse.json(
         { success: false, message: "Spam submission detected." },
@@ -47,7 +82,7 @@ export async function POST(request) {
       );
     }
 
-    // Server-side field validation
+    // 5. Strict Server-Side Validation
     if (!name || typeof name !== "string" || name.trim().length < 2 || name.trim().length > 100) {
       return NextResponse.json(
         { success: false, message: "A valid name (2-100 characters) is required." },
@@ -77,20 +112,35 @@ export async function POST(request) {
       );
     }
 
+    // 6. Verify Production Email Provider Configuration
     const apiKey = process.env.CONTACT_EMAIL_API_KEY;
     const recipient = process.env.CONTACT_RECIPIENT_EMAIL || "dhanushmk95@gmail.com";
+    const fromAddress = process.env.CONTACT_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
 
-    // Scenario A: Email API Key configured (Resend provider integration)
-    if (apiKey) {
-      const emailPayload = {
-        from: process.env.CONTACT_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>",
-        to: [recipient],
-        reply_to: email.trim(),
-        subject: `[Portfolio Inquiry] ${subject.trim()} - from ${name.trim()}`,
-        text: `Name: ${name.trim()}\nEmail: ${email.trim()}\nIP: ${clientIp}\nDate: ${new Date().toISOString()}\n\nMessage:\n${message.trim()}`,
-      };
+    // If API key is not configured, do NOT fake success or save to local filesystem.
+    if (!apiKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          configured: false,
+          message: "Unable to send your message right now. Please contact me directly by email.",
+        },
+        { status: 503 }
+      );
+    }
 
-      const emailResponse = await fetch("https://api.resend.com/emails", {
+    // 7. Dispatch Genuine Email via Resend
+    const emailPayload = {
+      from: fromAddress,
+      to: [recipient],
+      reply_to: email.trim(),
+      subject: `[Portfolio Inquiry] ${subject.trim()} - from ${name.trim()}`,
+      text: `Sender Name: ${name.trim()}\nSender Email: ${email.trim()}\nClient IP: ${clientIp}\nTimestamp: ${new Date().toISOString()}\n\nSubject: ${subject.trim()}\n\nMessage:\n${message.trim()}`,
+    };
+
+    let emailResponse;
+    try {
+      emailResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,88 +148,53 @@ export async function POST(request) {
         },
         body: JSON.stringify(emailPayload),
       });
-
-      if (!emailResponse.ok) {
-        const errorData = await emailResponse.text();
-        console.error("Email service provider delivery error:", errorData);
-        return NextResponse.json(
-          {
-            success: false,
-            message: "Delivery provider rejected the message. Please contact directly via email.",
-            fallbackEmail: recipient,
-          },
-          { status: 502 }
-        );
-      }
-
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Thank you! Your message has been delivered to Dhanush's inbox.",
-        },
-        { status: 200 }
-      );
-    }
-
-    // Scenario B: No external API key configured. Store durably in local database/storage file.
-    try {
-      const storageDir = path.join(process.cwd(), "src", "data");
-      const storageFile = path.join(storageDir, "inquiries.json");
-
-      if (!fs.existsSync(storageDir)) {
-        fs.mkdirSync(storageDir, { recursive: true });
-      }
-
-      let inquiries = [];
-      if (fs.existsSync(storageFile)) {
-        try {
-          const raw = fs.readFileSync(storageFile, "utf8");
-          inquiries = JSON.parse(raw);
-          if (!Array.isArray(inquiries)) inquiries = [];
-        } catch {
-          inquiries = [];
-        }
-      }
-
-      const newInquiry = {
-        id: `inq_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-        timestamp: new Date().toISOString(),
-        name: name.trim(),
-        email: email.trim(),
-        subject: subject.trim(),
-        message: message.trim(),
-        clientIp,
-      };
-
-      inquiries.push(newInquiry);
-      fs.writeFileSync(storageFile, JSON.stringify(inquiries, null, 2), "utf8");
-
-      return NextResponse.json(
-        {
-          success: true,
-          message:
-            "Thank you! Your message has been recorded into the portfolio inquiry registry. Dhanush will review it shortly.",
-        },
-        { status: 200 }
-      );
-    } catch (storageError) {
-      console.error("Durable storage write failed:", storageError);
+    } catch {
+      // Network failure reaching provider
       return NextResponse.json(
         {
           success: false,
-          message:
-            "Unable to record message at this time. Please reach out directly to dhanushmk95@gmail.com.",
-          fallbackEmail: recipient,
+          message: "Unable to send your message right now. Please contact me directly by email.",
         },
-        { status: 503 }
+        { status: 502 }
       );
     }
-  } catch (error) {
-    console.error("Contact route unexpected error:", error);
+
+    // 8. Verify Provider Acceptance
+    if (!emailResponse.ok) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unable to send your message right now. Please contact me directly by email.",
+        },
+        { status: 502 }
+      );
+    }
+
+    const responseData = await emailResponse.json().catch(() => null);
+
+    if (!responseData || !responseData.id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unable to send your message right now. Please contact me directly by email.",
+        },
+        { status: 502 }
+      );
+    }
+
+    // 9. Genuine Provider Acceptance Confirmed
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Your message has been submitted successfully.",
+      },
+      { status: 200 }
+    );
+  } catch {
     return NextResponse.json(
       {
         success: false,
-        message: "An unexpected error occurred. Please reach out directly via email.",
+        message: "Unable to send your message right now. Please contact me directly by email.",
       },
       { status: 500 }
     );
