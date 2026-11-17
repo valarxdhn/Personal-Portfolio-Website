@@ -14,7 +14,6 @@ import {
 import Button from "@/components/Button";
 import MaterialField from "@/components/MaterialField";
 import HeroCard from "@/components/HeroCard";
-import TelemetryRibbon from "@/components/TelemetryRibbon";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import SkillCard from "@/components/SkillCard";
@@ -115,9 +114,6 @@ export default function SinglePagePortfolio() {
           </div>
         </div>
       </section>
-
-      {/* Telemetry Hardware Specs Ribbon */}
-      <TelemetryRibbon />
 
       {/* ===================================================================
           2. ABOUT ME SECTION
