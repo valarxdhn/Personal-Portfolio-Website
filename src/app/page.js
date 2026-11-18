@@ -12,8 +12,6 @@ import {
   Cpu,
 } from "lucide-react";
 import Button from "@/components/Button";
-import MaterialField from "@/components/MaterialField";
-import HeroCard from "@/components/HeroCard";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import SkillCard from "@/components/SkillCard";
@@ -48,27 +46,31 @@ export default function SinglePagePortfolio() {
     <>
       {/* ===================================================================
           1. HERO / HOME SECTION
-          AURAL Interactive Experience: Procedural Material Field & 3D Hero Card
+          Concept A: The Editorial Split
           =================================================================== */}
-      <section id="home" className="aural-hero-section">
-        {/* Procedural WebGL/Canvas Acoustic Depth Canvas */}
-        <MaterialField />
+      <section id="home" className="editorial-hero-section">
+        <div className="container">
+          <div className="editorial-hero-grid">
+            {/* Left Column: Eyebrow, Display Typography, Narrative & Actions */}
+            <div>
+              <div className="editorial-hero-meta-strip">
+                <span>01 // PORTFOLIO</span>
+                <span style={{ color: "var(--border)" }}>•</span>
+                <span>MANGALORE, KARNATAKA</span>
+              </div>
 
-        <div className="container aural-hero-container">
-          <div className="aural-hero-grid">
-            {/* Left Column: Greeting, Identity & Primary Actions */}
-            <div className="aural-hero-lead">
-              <p className="aural-hero-greeting">Hi, I'm</p>
-              <h1 className="aural-hero-name">{personalData.name}</h1>
-              <p className="aural-hero-headline">{personalData.headline}</p>
+              <h1 className="editorial-hero-title">DHANUSH</h1>
 
-              <p className="aural-hero-intro">
-                I build practical software applications with an interest in backend engineering, data structures, and applied AI.
-                Currently an undergraduate at Sahyadri College of Engineering and Management (First-Year CGPA: 8.85).
+              <p className="editorial-hero-role">
+                {personalData.headline}
+              </p>
+
+              <p className="editorial-hero-bio">
+                I build practical software applications with an interest in backend engineering, data structures, and applied AI. Currently an undergraduate at Sahyadri College of Engineering and Management (First-Year CGPA: 8.85).
               </p>
 
               {/* Action Controls */}
-              <div className="aural-hero-actions">
+              <div className="editorial-hero-actions">
                 <Button href="#projects" variant="primary">
                   <span>Explore Projects</span>
                   <ArrowRight size={15} aria-hidden="true" />
@@ -84,40 +86,67 @@ export default function SinglePagePortfolio() {
                 </Button>
 
                 {/* Social Connectors */}
-                <div className="hero-social-group">
+                <div className="editorial-hero-socials">
                   <a
                     href={githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub Profile"
-                    className="hero-social-link"
+                    className="editorial-social-btn"
                     title="GitHub: valarxdhn"
                   >
-                    <Github size={17} aria-hidden="true" />
+                    <Github size={16} aria-hidden="true" />
                   </a>
                   <a
                     href={linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn Profile"
-                    className="hero-social-link"
+                    className="editorial-social-btn"
                     title="LinkedIn: dhanushmk14"
                   >
-                    <Linkedin size={17} aria-hidden="true" />
+                    <Linkedin size={16} aria-hidden="true" />
+                  </a>
+                  <a
+                    href="mailto:dhanushmk95@gmail.com"
+                    aria-label="Direct Email"
+                    className="editorial-social-btn"
+                    title="Email: dhanushmk95@gmail.com"
+                  >
+                    <Mail size={16} aria-hidden="true" />
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: 3D Perspective Photo Card */}
-            <HeroCard />
+            {/* Right Column: 4:5 Vertical Portrait Frame */}
+            <div>
+              <div className="editorial-portrait-frame">
+                <Image
+                  src={personalData.profileImage}
+                  alt={personalData.profileImageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 360px, 420px"
+                  className="editorial-portrait-image"
+                />
+                <div className="editorial-portrait-caption">
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", fontWeight: 600, color: "#FFFFFF", letterSpacing: "0.08em" }}>
+                    DHANUSH // CSE
+                  </span>
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)" }}>
+                    Sahyadri College
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ===================================================================
           2. ABOUT ME SECTION
-          Unified Profile: 4:5 Portrait Card with Subtle Desktop Parallax, Metrics, CTAs
+          Statement-Driven 2-Column Split with Metrics Ledger
           =================================================================== */}
       <section id="about" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
@@ -131,42 +160,33 @@ export default function SinglePagePortfolio() {
           </RevealSection>
 
           <RevealSection delay={0.06}>
-            <div className="about-bio-grid">
-              {/* Left: 4:5 Vertical Portrait Container with Subtle Desktop Parallax */}
+            <div className="editorial-about-grid">
+              {/* Left Column: Bold Narrative Lead & CTAs */}
               <div>
-                <SubtleParallax offset={15}>
-                  <div className="about-portrait-card">
-                    <Image
-                      src={personalData.profileImage}
-                      alt={personalData.profileImageAlt}
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 280px, 300px"
-                      className="about-portrait-img"
-                    />
-                    <div
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        background: "linear-gradient(to top, rgba(11, 15, 23, 0.75) 0%, rgba(11, 15, 23, 0) 40%)",
-                        pointerEvents: "none",
-                      }}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </SubtleParallax>
-              </div>
-
-              {/* Right: Bio Narrative & Scannable Indicators */}
-              <div>
-                <h3 style={{ fontSize: "var(--text-xl)", fontWeight: 700, marginBottom: "var(--space-1)", color: "var(--text-primary)" }}>
-                  {personalData.name}
-                </h3>
-                <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 600, marginBottom: "var(--space-4)" }}>
-                  {personalData.headline}
+                <p className="editorial-about-lead">
+                  Constructing practical software systems centered around backend engineering, data structures, and applied computational research.
                 </p>
 
-                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-4)" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--space-3)" }}>
+                  <Button href="#projects" variant="primary">
+                    <span>View Projects</span>
+                    <ArrowRight size={15} aria-hidden="true" />
+                  </Button>
+
+                  <Button
+                    href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
+                    variant="secondary"
+                    title="Request resume via email"
+                  >
+                    <FileDown size={15} aria-hidden="true" />
+                    <span>Request Resume</span>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right Column: Bio Narrative & 3-Column Metrics Ledger */}
+              <div>
+                <p className="editorial-about-p">
                   I am a Computer Science and Engineering undergraduate student at{" "}
                   <strong style={{ color: "var(--text-primary)" }}>
                     Sahyadri College of Engineering and Management
@@ -175,44 +195,26 @@ export default function SinglePagePortfolio() {
                   <strong style={{ color: "var(--text-primary)" }}>8.85 / 10.0</strong>.
                 </p>
 
-                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.75, marginBottom: "var(--space-5)" }}>
+                <p className="editorial-about-p">
                   My engineering focus centers on writing clean, deterministic software and constructing practical systems. Through computational research, competitive programming, and collegiate initiatives, I explore transportation delay estimation, electric vehicle infrastructure optimization, and applied machine learning models.
                 </p>
 
-                {/* Three Compact Metric Pills */}
-                <div className="about-metrics-row">
-                  <div className="about-metric-pill" title="First-Year Cumulative Grade Point Average">
-                    <GraduationCap size={13} color="var(--accent)" aria-hidden="true" />
-                    <span>8.85 CGPA</span>
+                {/* 3-Column Metrics Ledger */}
+                <div className="editorial-metrics-ledger">
+                  <div className="editorial-metric-block">
+                    <span className="editorial-metric-val">8.85</span>
+                    <span className="editorial-metric-lbl">CGPA (First Year)</span>
                   </div>
 
-                  <div className="about-metric-pill" title="IJIRT Publication & ICRICS 2026 Presentation">
-                    <Award size={13} color="var(--accent)" aria-hidden="true" />
-                    <span>1 Publication · 1 Conference Presentation</span>
+                  <div className="editorial-metric-block">
+                    <span className="editorial-metric-val">2 Works</span>
+                    <span className="editorial-metric-lbl">IJIRT &amp; ICRICS</span>
                   </div>
 
-                  <div className="about-metric-pill" title="Technical Focus Areas">
-                    <Cpu size={13} color="var(--accent)" aria-hidden="true" />
-                    <span>Backend &amp; Applied ML</span>
+                  <div className="editorial-metric-block">
+                    <span className="editorial-metric-val">3 Repos</span>
+                    <span className="editorial-metric-lbl">Engineering Systems</span>
                   </div>
-                </div>
-
-                {/* Secondary CTAs */}
-                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "var(--space-3)" }}>
-                  <Button href="#projects" variant="primary" className="about-cta-btn-primary">
-                    <span>View Projects</span>
-                    <ArrowRight size={15} className="about-btn-arrow" aria-hidden="true" />
-                  </Button>
-
-                  <Button
-                    href="mailto:dhanushmk95@gmail.com?subject=Resume%20Request%20-%20Dhanush"
-                    variant="secondary"
-                    className="about-cta-btn-secondary"
-                    title="Request resume via email"
-                  >
-                    <FileDown size={15} className="about-btn-download-icon" aria-hidden="true" />
-                    <span>Request Resume</span>
-                  </Button>
                 </div>
               </div>
             </div>
@@ -222,7 +224,7 @@ export default function SinglePagePortfolio() {
 
       {/* ===================================================================
           3. EDUCATION & ACADEMIC STANDING SECTION
-          Verified Records with StaggerGrid Cascading Entrances
+          Chronological Academic Ledger with Period Tags and Score Badges
           =================================================================== */}
       <section id="education" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div className="container">
@@ -236,96 +238,29 @@ export default function SinglePagePortfolio() {
           </RevealSection>
 
           <RevealSection delay={0.06}>
-            <div
-              className="card"
-              style={{
-                padding: "var(--space-6) var(--space-8)",
-                backgroundColor: "var(--bg-secondary)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius-lg)",
-              }}
-            >
+            <div className="editorial-ledger">
               <StaggerGrid staggerDelay={0.08}>
-                {educationData.map((item, idx) => (
+                {educationData.map((item) => (
                   <StaggerItem key={item.id}>
-                    {idx > 0 && <div className="academic-divider" />}
+                    <div className="editorial-ledger-item">
+                      {/* Column 1: Period */}
+                      <span className="editorial-ledger-period">{item.period}</span>
 
-                    <div className="academic-entry">
-                      {/* Top Row: Institution Name & Status Badge */}
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-start",
-                          flexWrap: "wrap",
-                          gap: "var(--space-2)",
-                          marginBottom: "var(--space-2)",
-                        }}
-                      >
-                        <div>
-                          <h3 style={{ fontSize: "var(--text-base)", fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
-                            {item.institution}
-                          </h3>
-                          <p style={{ fontSize: "var(--text-sm)", color: "var(--accent)", fontWeight: 500, margin: "2px 0 0 0" }}>
-                            {item.degree} {item.field && `• ${item.field}`}
-                          </p>
-                        </div>
-
-                        {/* Status Indicator */}
-                        <span
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            padding: "0.25rem 0.65rem",
-                            borderRadius: "var(--radius-full)",
-                            fontSize: "11px",
-                            fontFamily: "var(--font-mono)",
-                            fontWeight: 600,
-                            backgroundColor: item.current ? "rgba(16, 185, 129, 0.08)" : "var(--bg-tertiary)",
-                            border: item.current ? "1px solid rgba(16, 185, 129, 0.3)" : "1px solid var(--border)",
-                            color: item.current ? "var(--status-success)" : "var(--text-muted)",
-                          }}
-                        >
-                          {item.current && (
-                            <span
-                              style={{
-                                width: "6px",
-                                height: "6px",
-                                borderRadius: "50%",
-                                backgroundColor: "var(--status-success)",
-                                boxShadow: "0 0 6px var(--status-success)",
-                              }}
-                              aria-hidden="true"
-                            />
-                          )}
-                          <span>{item.statusBadge}</span>
-                        </span>
+                      {/* Column 2: Institution, Degree, Field, Location */}
+                      <div>
+                        <h3 className="editorial-ledger-inst">{item.institution}</h3>
+                        <p className="editorial-ledger-degree">
+                          {item.degree} {item.field && `• ${item.field}`}
+                        </p>
+                        <p className="editorial-ledger-meta">
+                          Location: {item.location} • Status: {item.status}
+                        </p>
                       </div>
 
-                      {/* Academic Score Pill */}
-                      <div style={{ margin: "var(--space-2) 0 var(--space-3) 0" }}>
-                        <span
-                          style={{
-                            display: "inline-block",
-                            padding: "0.25rem 0.65rem",
-                            backgroundColor: "var(--bg-tertiary)",
-                            border: "1px solid var(--border)",
-                            borderRadius: "var(--radius-sm)",
-                            fontSize: "11px",
-                            fontFamily: "var(--font-mono)",
-                            fontWeight: 600,
-                            color: "var(--text-primary)",
-                          }}
-                        >
-                          {item.cgpa ? `First-Year CGPA: ${item.cgpa}` : `${item.scoreLabel}: ${item.score}`}
-                        </span>
-                      </div>
-
-                      {/* Metadata Row */}
-                      <p style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)", margin: 0, fontFamily: "var(--font-mono)" }}>
-                        Location: {item.location} • Status: {item.status}
-                      </p>
+                      {/* Column 3: Score Badge */}
+                      <span className="editorial-score-badge">
+                        {item.cgpa ? `First-Year CGPA: ${item.cgpa}` : `${item.scoreLabel}: ${item.score}`}
+                      </span>
                     </div>
                   </StaggerItem>
                 ))}
@@ -394,10 +329,10 @@ export default function SinglePagePortfolio() {
             </div>
           </RevealSection>
 
-          <StaggerGrid staggerDelay={0.08} className="grid grid-cols-3">
-            {projectsData.map((project) => (
+          <StaggerGrid staggerDelay={0.08} className="editorial-projects-stack">
+            {projectsData.map((project, idx) => (
               <StaggerItem key={project.id}>
-                <ProjectCard project={project} />
+                <ProjectCard project={project} index={idx} />
               </StaggerItem>
             ))}
           </StaggerGrid>
@@ -445,89 +380,31 @@ export default function SinglePagePortfolio() {
       <section id="contact" className="section">
         <div className="container">
           <RevealSection>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                gap: "var(--space-10)",
-                alignItems: "flex-start",
-              }}
-            >
+            <div className="editorial-contact-grid">
               {/* Left Column: Direct Inquiries Information */}
               <div>
                 <span className="section-eyebrow">07 // DIRECT TRANSMISSION</span>
-                <h2 className="section-title">Contact &amp; Collaboration</h2>
-                <p style={{ fontSize: "var(--text-sm)", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-6)" }}>
-                  I am actively seeking software engineering internships, technical collaborations, and research discussions. Feel free to send an inquiry directly via the form or email.
+                <h2 className="editorial-contact-lead">Let&apos;s Connect</h2>
+                <p className="editorial-contact-sub">
+                  I am actively seeking software engineering internships, technical collaborations, and applied computational research discussions. Feel free to send an inquiry directly via the form or email.
                 </p>
 
-                <div style={{ display: "grid", gap: "var(--space-4)", fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                    <span
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "var(--radius-sm)",
-                        backgroundColor: "var(--bg-secondary)",
-                        border: "1px solid var(--border)",
-                        color: "var(--accent)",
-                      }}
-                    >
-                      <Mail size={16} aria-hidden="true" />
-                    </span>
-                    <div>
-                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Email</span>
-                      <a href="mailto:dhanushmk95@gmail.com" style={{ color: "var(--text-primary)", fontWeight: 600 }}>
-                        dhanushmk95@gmail.com
-                      </a>
-                    </div>
+                <div className="editorial-contact-rows">
+                  <div className="editorial-contact-row">
+                    <span className="editorial-contact-row-lbl">Email</span>
+                    <a href="mailto:dhanushmk95@gmail.com" className="editorial-contact-row-val">
+                      dhanushmk95@gmail.com
+                    </a>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                    <span
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "var(--radius-sm)",
-                        backgroundColor: "var(--bg-secondary)",
-                        border: "1px solid var(--border)",
-                        color: "var(--accent)",
-                      }}
-                    >
-                      <MapPin size={16} aria-hidden="true" />
-                    </span>
-                    <div>
-                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Location</span>
-                      <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>{personalData.location}</span>
-                    </div>
+                  <div className="editorial-contact-row">
+                    <span className="editorial-contact-row-lbl">Location</span>
+                    <span className="editorial-contact-row-val">{personalData.location}</span>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                    <span
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "32px",
-                        height: "32px",
-                        borderRadius: "var(--radius-sm)",
-                        backgroundColor: "var(--bg-secondary)",
-                        border: "1px solid var(--border)",
-                        color: "var(--accent)",
-                      }}
-                    >
-                      <GraduationCap size={16} aria-hidden="true" />
-                    </span>
-                    <div>
-                      <span style={{ display: "block", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Institution</span>
-                      <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>{personalData.college}</span>
-                    </div>
+                  <div className="editorial-contact-row">
+                    <span className="editorial-contact-row-lbl">Institution</span>
+                    <span className="editorial-contact-row-val">{personalData.college}</span>
                   </div>
                 </div>
 

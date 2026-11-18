@@ -1,180 +1,199 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Github, ExternalLink } from "lucide-react";
+import { ArrowRight, Github, ExternalLink, TrainFront, Zap, Calendar } from "lucide-react";
 import Button from "./Button";
 
 /**
  * ProjectCard Component
- * Premium Interactive 3D Project Card.
+ * Editorial Showcase Row for Architectural Noir.
  *
- * Features:
- * - Subtle 3D perspective tilt reacting smoothly to mouse movement.
- * - Dynamic light-source shadow and specular glare spotlight.
- * - Stereoscopic elevation of internal elements (title, badges, actions).
- * - Preserves all original project links, slugs, descriptions, and highlights.
- * - Coarse-pointer & reduced-motion detection for graceful mobile fallbacks.
- * - Zero layout shifts, consistent grid dimensions.
+ * Implements Vantra Studio's structured editorial showcase:
+ * - Numbered index indicator (`[ 01 ]`, `[ 02 ]`, `[ 03 ]`).
+ * - Distinctive architectural domain telemetry for each project.
+ * - Monospace technology tokens and status indicator.
+ * - Direct route to `/projects/[slug]` for deep architectural breakdown.
+ * - Preserves all existing links, slugs, descriptions, and highlights.
  */
-export default function ProjectCard({ project }) {
-  const cardRef = useRef(null);
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
-  const [shadow, setShadow] = useState({ x: 0, y: 4, blur: 14, opacity: 0.35 });
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    const coarseQuery = window.matchMedia("(pointer: coarse), (hover: none)");
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const update = () => {
-      setIsCoarsePointer(coarseQuery.matches || motionQuery.matches);
-    };
-
-    update();
-    coarseQuery.addEventListener("change", update);
-    motionQuery.addEventListener("change", update);
-    return () => {
-      coarseQuery.removeEventListener("change", update);
-      motionQuery.removeEventListener("change", update);
-    };
-  }, []);
-
-  const handleMouseMove = useCallback((e) => {
-    if (isCoarsePointer || !cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    // Restrained subtle tilt (max ~4.5 degrees)
-    const rotateX = ((y - centerY) / centerY) * -4.5;
-    const rotateY = ((x - centerX) / centerX) * 4.5;
-
-    const shadowX = ((x - centerX) / centerX) * -8;
-    const shadowY = 12 + ((y - centerY) / centerY) * -6;
-
-    setTransform(
-      `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px) scale3d(1.012, 1.012, 1.012)`
-    );
-
-    setGlare({
-      x: (x / rect.width) * 100,
-      y: (y / rect.height) * 100,
-      opacity: 0.18,
-    });
-
-    setShadow({
-      x: shadowX,
-      y: shadowY,
-      blur: 28,
-      opacity: 0.55,
-    });
-  }, [isCoarsePointer]);
-
-  const handleMouseEnter = useCallback(() => {
-    if (isCoarsePointer) return;
-    setIsHovered(true);
-  }, [isCoarsePointer]);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
-    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)");
-    setGlare((prev) => ({ ...prev, opacity: 0 }));
-    setShadow({ x: 0, y: 4, blur: 14, opacity: 0.35 });
-  }, []);
-
+export default function ProjectCard({ project, index = 0 }) {
   if (!project) return null;
 
+  const projectNumber = String(index + 1).padStart(2, "0");
+
+  // Determine distinctive domain styling and telemetry module
+  let variantClass = "";
+  let domainTelemetry = null;
+
+  if (project.slug === "dynamic-train-eta") {
+    variantClass = "project-variant-transit";
+    domainTelemetry = (
+      <div className="project-spec-module">
+        <div className="project-spec-header">
+          <TrainFront size={13} aria-hidden="true" />
+          <span>Route Telemetry &amp; Delay Mitigation</span>
+        </div>
+        <div className="route-checkpoints-flow" aria-label="Route checkpoints">
+          <div className="checkpoint-node">
+            <span className="checkpoint-dot active" />
+            <span>Origin</span>
+          </div>
+          <div className="checkpoint-line" />
+          <div className="checkpoint-node">
+            <span className="checkpoint-dot active" />
+            <span>Intermediate</span>
+          </div>
+          <div className="checkpoint-line" />
+          <div className="checkpoint-node">
+            <span className="checkpoint-dot" />
+            <span>Terminal</span>
+          </div>
+        </div>
+        <div className="project-spec-metric-row">
+          <span>Historical Transit Analytics</span>
+          <span className="project-spec-metric-val">Dynamic Recalculation</span>
+        </div>
+      </div>
+    );
+  } else if (project.slug === "voltcharge") {
+    variantClass = "project-variant-ev";
+    domainTelemetry = (
+      <div className="project-spec-module">
+        <div className="project-spec-header">
+          <Zap size={13} aria-hidden="true" />
+          <span>EV Hub Specs &amp; Connector Matrix</span>
+        </div>
+        <div className="connector-chips-grid">
+          <span className="connector-chip">CCS-2 · 150kW DC</span>
+          <span className="connector-chip">Type-2 · 22kW AC</span>
+          <span className="connector-chip">CHAdeMO · 50kW</span>
+        </div>
+        <div className="project-spec-metric-row">
+          <span>Slot Availability Engine</span>
+          <span className="project-spec-metric-val">Conflict-Free Lock</span>
+        </div>
+      </div>
+    );
+  } else if (project.slug === "campusloop") {
+    variantClass = "project-variant-campus";
+    domainTelemetry = (
+      <div className="project-spec-module">
+        <div className="project-spec-header">
+          <Calendar size={13} aria-hidden="true" />
+          <span>Collegiate Activity Feed</span>
+        </div>
+        <div className="campus-category-pills">
+          <span className="campus-pill">Technical &amp; Hackathons</span>
+          <span className="campus-pill">Workshops</span>
+          <span className="campus-pill">Club Notices</span>
+        </div>
+        <div className="project-spec-metric-row">
+          <span>Event Directory Sync</span>
+          <span className="project-spec-metric-val">Realtime Alerts</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <article
-      ref={cardRef}
-      className="card interactive-project-card"
-      style={{
-        transform,
-        boxShadow: `${shadow.x.toFixed(1)}px ${shadow.y.toFixed(1)}px ${shadow.blur}px rgba(0, 0, 0, ${shadow.opacity}), 0 0 20px rgba(56, 189, 248, ${isHovered ? 0.08 : 0})`,
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Specular Glare Overlay */}
-      <div
-        className="project-card-glare"
-        style={{
-          background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255, 255, 255, 0.2) 0%, rgba(56, 189, 248, 0.08) 40%, transparent 70%)`,
-          opacity: glare.opacity,
-        }}
-        aria-hidden="true"
-      />
+    <article className={`editorial-project-row ${variantClass}`}>
+      {/* 1. Project Index */}
+      <div>
+        <span className="editorial-project-num">[ {projectNumber} ]</span>
+      </div>
 
-      {/* Header: Status and Tech Category */}
-      <div className="project-card-layer-header">
-        <span className="project-card-status">
-          {project.status || "In Development"}
-        </span>
+      {/* 2. Narrative Column */}
+      <div>
+        <div className="editorial-project-status">
+          <span
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              backgroundColor: project.status === "In Development" ? "var(--status-success)" : "var(--accent-platinum)",
+            }}
+            aria-hidden="true"
+          />
+          <span>{project.status || "In Development"}</span>
+        </div>
 
-        {project.technologies && project.technologies[0] && (
-          <span className="project-card-primary-badge">
-            {project.technologies[0]}
-          </span>
+        <h3 className="editorial-project-heading">
+          <Link
+            href={`/projects/${project.slug}`}
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            {project.title}
+          </Link>
+        </h3>
+
+        <p className="editorial-project-tagline">{project.tagline}</p>
+        <p className="editorial-project-desc">{project.description}</p>
+
+        {/* Key Focus Highlights */}
+        {project.mainFocus && project.mainFocus.length > 0 && (
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 0,
+              margin: "0 0 var(--space-4) 0",
+              display: "grid",
+              gap: "6px",
+            }}
+          >
+            {project.mainFocus.slice(0, 3).map((item, i) => (
+              <li
+                key={i}
+                style={{
+                  fontSize: "12px",
+                  color: "var(--text-secondary)",
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "8px",
+                }}
+              >
+                <span style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>—</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
 
-      {/* Project Title */}
-      <h3 className="project-card-title">
-        <Link
-          href={`/projects/${project.slug}`}
-          className="project-card-title-link"
-        >
-          {project.title}
-        </Link>
-      </h3>
+      {/* 3. Spec, Tech Stack & Navigation CTAs */}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+        <div>
+          {/* Distinctive Domain Telemetry Visualization */}
+          {domainTelemetry}
 
-      {/* Description */}
-      <p className="project-card-description">
-        {project.description}
-      </p>
-
-      {/* Key Focus Highlights */}
-      {project.mainFocus && project.mainFocus.length > 0 && (
-        <ul className="project-card-focus-list">
-          {project.mainFocus.slice(0, 3).map((item, idx) => (
-            <li key={idx} className="project-card-focus-item">
-              <span className="project-card-focus-dot" aria-hidden="true" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* Technology Tags */}
-      {project.technologies && (
-        <div className="project-card-tech-group">
-          {project.technologies.map((tech) => (
-            <span key={tech} className="project-card-tech-tag">
-              {tech}
-            </span>
-          ))}
+          {/* Applied Technologies */}
+          <span
+            style={{
+              display: "block",
+              fontFamily: "var(--font-mono)",
+              fontSize: "11px",
+              color: "var(--text-muted)",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              marginBottom: "var(--space-2)",
+            }}
+          >
+            Technologies
+          </span>
+          <div className="editorial-tags-row" style={{ marginBottom: "var(--space-6)" }}>
+            {project.technologies.map((tech) => (
+              <span key={tech} className="editorial-tag">
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
-      )}
 
-      {/* Actions: Clear Details Link + Real External Links Only */}
-      <div className="project-card-actions-row">
-        <Link
-          href={`/projects/${project.slug}`}
-          className="project-card-details-link"
-        >
-          <span>Read Technical Overview</span>
-          <ArrowRight size={13} aria-hidden="true" />
-        </Link>
+        {/* Actions */}
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "var(--space-3)", marginTop: "auto" }}>
+          <Button href={`/projects/${project.slug}`} variant="primary" size="sm">
+            <span>Project Details</span>
+            <ArrowRight size={13} aria-hidden="true" />
+          </Button>
 
-        {/* Real links only (no fake buttons) */}
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
           {project.githubUrl && (
             <Button href={project.githubUrl} isExternal variant="outline" size="sm">
               <Github size={13} aria-hidden="true" />
