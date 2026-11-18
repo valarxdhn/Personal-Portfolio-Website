@@ -17,14 +17,16 @@ const EASE_EXIT = [0.22, 1, 0.36, 1];
  * - Automatically skips if prefers-reduced-motion is active
  */
 export default function Preloader() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     // 1. Session check: Run once per browser session
     try {
       const hasShown = sessionStorage.getItem("portfolio_preloader_shown");
       if (hasShown) {
-        setLoading(false);
         return;
       }
     } catch {
@@ -40,20 +42,22 @@ export default function Preloader() {
       try {
         sessionStorage.setItem("portfolio_preloader_shown", "true");
       } catch {}
-      setLoading(false);
       return;
     }
 
-    // 3. Smooth loading sequence: 850ms bar fill + 100ms settle
+    // 3. Smooth non-blocking loading sequence: 650ms bar fill
+    setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
       try {
         sessionStorage.setItem("portfolio_preloader_shown", "true");
       } catch {}
-    }, 950);
+    }, 650);
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!mounted || !loading) return null;
 
   return (
     <AnimatePresence>

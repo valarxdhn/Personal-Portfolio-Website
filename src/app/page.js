@@ -152,7 +152,7 @@ export default function SinglePagePortfolio() {
         <div className="container">
           <RevealSection>
             <SectionHeading
-              eyebrow="01 // BACKGROUND"
+              eyebrow="01 // ABOUT ME"
               title="About Me"
               subtitle="Computer Science Engineering student at Sahyadri College of Engineering and Management focused on backend software development, algorithms, and practical engineering solutions."
               align="left"
@@ -320,7 +320,7 @@ export default function SinglePagePortfolio() {
               }}
             >
               <div>
-                <span className="section-eyebrow">04 // ARCHITECTURAL REPOSITORIES</span>
+                <span className="section-eyebrow">04 // FEATURED PROJECTS</span>
                 <h2 className="section-title">Featured Projects</h2>
                 <p className="section-subtitle">
                   Software engineering applications addressing railway delay tracking, EV charging slot discovery, and collegiate event management.
@@ -340,7 +340,7 @@ export default function SinglePagePortfolio() {
       </section>
 
       {/* ===================================================================
-          6. RESEARCH & PUBLICATIONS SECTION
+          5. RESEARCH & PUBLICATIONS SECTION
           IJIRT Peer-Reviewed Journal Article & ICRICS 2026 Conference Presentation
           =================================================================== */}
       <section id="research" className="section" style={{ borderBottom: "1px solid var(--border)" }}>
@@ -366,12 +366,23 @@ export default function SinglePagePortfolio() {
       </section>
 
       {/* ===================================================================
-          7. CERTIFICATIONS & ACHIEVEMENTS SECTION
-          Interactive Modals, Categorized Credentials, and Uncompromising Verification
+          6. ACHIEVEMENTS & CREDENTIALS SECTION
+          Milestone Archive & Verified Industry Credentials
           =================================================================== */}
-      <RevealSection>
-        <CertificatesSection />
-      </RevealSection>
+      <section
+        id="achievements"
+        className="section"
+        style={{
+          scrollMarginTop: "80px",
+          borderBottom: "1px solid var(--border)",
+        }}
+      >
+        <div className="container">
+          <RevealSection>
+            <CertificatesSection />
+          </RevealSection>
+        </div>
+      </section>
 
       {/* ===================================================================
           8. CONTACT SECTION
